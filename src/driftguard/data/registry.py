@@ -118,6 +118,11 @@ class TableSpec(_Frozen):
     size_bytes: int | None = Field(default=None, ge=0)
     size_source: str | None = None
     sha256: str | None = Field(default=None, pattern=_SHA256)
+    n_rows: int | None = Field(default=None, ge=0)
+    archive_filename: str | None = None
+    archive_sha256: str | None = Field(default=None, pattern=_SHA256)
+    archive_size_bytes: int | None = Field(default=None, ge=0)
+    verified_on: dt.date | None = None
     schema_status: Literal["provisional", "confirmed"]
     schema_source: str
     na_values: list[str] = Field(default_factory=list)

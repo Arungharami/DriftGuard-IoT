@@ -81,5 +81,38 @@ def smoke(
     typer.echo(f"run directory: {summary['run_dir']}")
 
 
+@app.command()
+def train(
+    config: Annotated[Path, typer.Option(exists=True, dir_okay=False, help="Experiment config.")],
+    output_dir: Annotated[Path, typer.Option(help="Run output root.")] = Path("experiments/runs"),
+    kind: Annotated[str, typer.Option(help="development | research")] = "development",
+    save_models: Annotated[bool, typer.Option(help="Persist fitted pipelines")] = True,
+) -> None:
+    """Train and evaluate the configured baselines; writes a v2 manifest and metrics."""
+    from driftguard.experiments import run_experiment
+
+    if kind not in {"development", "research"}:
+        typer.echo("kind must be 'development' or 'research'", err=True)
+        raise typer.Exit(code=2)
+    try:
+        result = run_experiment(
+            load_experiment_config(config), output_dir, kind=kind, save_models=save_models
+        )
+    except (FileNotFoundError, ValueError) as exc:
+        typer.echo(f"ERROR: {exc}", err=True)
+        raise typer.Exit(code=1) from exc
+    typer.echo(result["reportability"])
+    typer.echo(
+        f"protocol={result['protocol']} dataset={result['dataset']} "
+        f"n_train={result['n_train']} n_test={result['n_test']}"
+    )
+    for name, m in result["metrics"].items():
+        typer.echo(
+            f"  {name}: macro_f1={m['macro_f1']:.4f} micro_f1={m['micro_f1']:.4f} "
+            f"mcc={m['mcc']:.4f}"
+        )
+    typer.echo(f"run directory: {result['run_dir']}")
+
+
 if __name__ == "__main__":  # pragma: no cover
     app()

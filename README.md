@@ -2,9 +2,9 @@
 
 **Trustworthy, drift-aware and resource-efficient intrusion detection across IoT and IIoT environments.**
 
-> **Status: M1 (dataset registry).** No model has been trained on a real dataset. The repository
-> contains **no research results**. Any metric printed by the smoke command is computed
-> on synthetic data and is explicitly labelled as such.
+> **Status: M2 (leakage-safe baselines).** Only bounded development runs exist. The repository
+> contains **no research results**. Every run manifest states whether it is reportable,
+> and synthetic and development runs are always NON-REPORTABLE.
 
 ## Scientific positioning
 
@@ -70,6 +70,7 @@ driftguard --help
 driftguard validate-config configs/experiments/smoke-synthetic.yaml
 driftguard smoke                     # synthetic end-to-end run; writes experiments/runs/<run_id>/
 driftguard data list                 # dataset registry: license, acquisition, schema status
+driftguard train --config configs/experiments/m2-leakage_safe-synthetic.yaml   # NON-REPORTABLE demo
 
 ruff check . && ruff format --check .
 mypy

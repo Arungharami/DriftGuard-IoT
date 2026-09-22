@@ -1,17 +1,8 @@
-# DT/RF/MLP Stacking baseline: Decision Tree and Random Forest as base learners,
-# MLP as the final/meta estimator. This architecture (which model is base vs. meta)
-# is this project's own documented reading of "DT/RF/MLP Stacking" - not confirmed
-# against the reference paper's full text, which was inaccessible (see
-# paper/methodology.md). All three sub-models' seeds come from the experiment config.
+# Stacking: DT + RF base estimators, MLP final estimator (verified, Sec. III-C).
+# Sub-model hyperparameters use library defaults; cv=5 is scikit-learn's default.
+# The reference paper (Ismail et al. 2025, Sec. III-C) reports no hyperparameters, so this
+# config uses the library defaults (an assumption recorded in every run manifest). The
+# random seed comes from the experiment config.
 name: stacking
 params:
   cv: 5
-  dt:
-    max_depth: 12
-    min_samples_leaf: 2
-  rf:
-    n_estimators: 100
-    max_depth: 12
-  mlp:
-    hidden_layer_sizes: [64]
-    max_iter: 300

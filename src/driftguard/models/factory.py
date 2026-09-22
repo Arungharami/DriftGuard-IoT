@@ -1,16 +1,11 @@
-"""Estimator factory keyed by ``ModelConfig.name``.
+"""Estimator factory for the five reference baselines.
 
-Five reproduction baselines (M2), matching the reference paper's named model set:
-Decision Tree, Random Forest, Bagging, DT/RF/MLP Stacking, LightGBM. The exact
-per-model hyperparameters used in the paper could not be confirmed (IEEE Xplore full
-text was inaccessible from this environment - see paper/methodology.md); every default
-below is this project's own documented choice, overridable per-experiment via
-``ModelConfig.params``, never presented as reproducing an unconfirmed paper setting.
-
-The stacking ensemble's own architecture (which model is a base learner vs. the final/
-meta estimator) is also not confirmed from the accessible abstract. "DT/RF/MLP
-Stacking" is implemented as the conventional reading - DT and RF as base learners
-feeding an MLP meta-learner - documented as an assumption, not a verified fact.
+Verified against the reference paper (Ismail et al. 2025, Sec. III-C, read 2026-09-22):
+Decision Tree, Random Forest, Bagging, Stacking with DT and RF as base estimators and an
+MLP as the final estimator, and LightGBM. The paper reports **no hyperparameters**, so
+the defaults here are the library defaults (an assumption, recorded in every manifest),
+overridable per model config. Seeds always come from the experiment config;
+``random_state`` in model params is rejected so a run is reproducible from its manifest.
 """
 
 from __future__ import annotations
@@ -26,6 +21,7 @@ from sklearn.tree import DecisionTreeClassifier
 from driftguard.config import ModelConfig
 
 _SEED_IN_PARAMS_ERROR = "set the seed in the experiment config, not in model params"
+_STACKING_KEYS = frozenset({"dt", "rf", "mlp", "cv", "stack_method", "passthrough"})
 
 
 def _reject_seed_in_params(params: dict[str, Any]) -> None:
@@ -33,39 +29,64 @@ def _reject_seed_in_params(params: dict[str, Any]) -> None:
         raise ValueError(_SEED_IN_PARAMS_ERROR)
 
 
-def _build_stacking(params: dict[str, Any], seed: int) -> StackingClassifier:
-    remaining = dict(params)
-    dt_params = remaining.pop("dt", {})
-    rf_params = remaining.pop("rf", {})
-    mlp_params = remaining.pop("mlp", {})
-    cv = remaining.pop("cv", 5)
+def _build_stacking(params: dict[str, Any], seed: int, n_jobs: int) -> StackingClassifier:
+    unknown = set(params) - _STACKING_KEYS
+    if unknown:
+        raise ValueError(f"unknown stacking params: {sorted(unknown)}")
+    dt_params = dict(params.get("dt") or {})
+    rf_params = dict(params.get("rf") or {})
+    mlp_params = dict(params.get("mlp") or {})
     for sub in (dt_params, rf_params, mlp_params):
         _reject_seed_in_params(sub)
-    if remaining:
-        raise ValueError(f"unknown stacking params: {sorted(remaining)}")
+    rf_params.setdefault("n_jobs", n_jobs)
+    extra = {k: params[k] for k in ("stack_method", "passthrough") if k in params}
+    return StackingClassifier(
+        estimators=[
+            ("dt", DecisionTreeClassifier(random_state=seed, **dt_params)),
+            ("rf", RandomForestClassifier(random_state=seed, **rf_params)),
+        ],
+        final_estimator=MLPClassifier(random_state=seed, **mlp_params),
+        cv=params.get("cv", 5),
+        n_jobs=n_jobs,
+        **extra,
+    )
 
-    estimators: list[tuple[str, ClassifierMixin]] = [
-        ("dt", DecisionTreeClassifier(random_state=seed, **dt_params)),
-        ("rf", RandomForestClassifier(random_state=seed, **rf_params)),
-    ]
-    final_estimator = MLPClassifier(random_state=seed, **mlp_params)
-    return StackingClassifier(estimators=estimators, final_estimator=final_estimator, cv=cv)
 
-
-def build_estimator(config: ModelConfig, seed: int) -> ClassifierMixin:
-    _reject_seed_in_params(config.params)
+def build_estimator(config: ModelConfig, seed: int, n_jobs: int = 1) -> ClassifierMixin:
+    params = dict(config.params)
+    _reject_seed_in_params(params)
 
     if config.name == "decision_tree":
-        return DecisionTreeClassifier(random_state=seed, **config.params)
+        return DecisionTreeClassifier(random_state=seed, **params)
     if config.name == "random_forest":
-        return RandomForestClassifier(random_state=seed, **config.params)
+        params.setdefault("n_jobs", n_jobs)
+        return RandomForestClassifier(random_state=seed, **params)
     if config.name == "bagging":
-        # estimator=None lets scikit-learn default to a DecisionTreeClassifier, its own
-        # documented default - not a paper-confirmed choice (see module docstring).
-        return BaggingClassifier(random_state=seed, **config.params)
+        # estimator=None: scikit-learn's default base estimator is a DecisionTreeClassifier.
+        # The paper does not state Bagging's base estimator.
+        params.setdefault("n_jobs", n_jobs)
+        return BaggingClassifier(random_state=seed, **params)
     if config.name == "stacking":
-        return _build_stacking(config.params, seed)
+        return _build_stacking(params, seed, n_jobs)
     if config.name == "lightgbm":
-        return LGBMClassifier(random_state=seed, **config.params)
-
+        params.setdefault("n_jobs", n_jobs)
+        params.setdefault("verbose", -1)  # silence stdout logging; not a modelling choice
+        params.setdefault("deterministic", True)
+        params.setdefault("force_row_wise", True)
+        return LGBMClassifier(random_state=seed, **params)
     raise NotImplementedError(f"model {config.name!r} is not a registered ModelName")
+
+
+def describe_params(estimator: ClassifierMixin) -> dict[str, Any]:
+    """JSON-safe snapshot of an estimator's full parameter set, for the run manifest."""
+    out: dict[str, Any] = {}
+    for key, value in sorted(estimator.get_params(deep=True).items()):
+        if isinstance(value, bool | int | float | str) or value is None:
+            out[key] = value
+        elif isinstance(value, (list, tuple)) and all(
+            isinstance(v, bool | int | float | str) for v in value
+        ):
+            out[key] = list(value)
+        else:
+            out[key] = type(value).__name__
+    return out

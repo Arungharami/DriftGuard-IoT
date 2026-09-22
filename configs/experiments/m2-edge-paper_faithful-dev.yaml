@@ -1,0 +1,25 @@
+# M2 bounded development run: edge_iiotset, paper_faithful protocol. NON-REPORTABLE (bounded subset).
+# Resampling ratio 2.8517 = paper Table 4 model-ready size / original size, so the class
+# proportions and relative size follow the paper; leakage_safe applies it to train only.
+name: m2-edge-paper-faithful-dev
+seed: 20260922
+dataset: ../datasets/edge_iiotset-dev.yaml
+models:
+  - ../models/decision_tree_default.yaml
+  - ../models/random_forest.yaml
+  - ../models/bagging.yaml
+  - ../models/stacking.yaml
+  - ../models/lightgbm.yaml
+split:
+  strategy: stratified_holdout
+  test_size: 0.3
+n_jobs: -1
+preprocessing:
+  protocol: paper_faithful
+  mi_threshold: 0.1
+  mi_max_samples: null
+  deduplicate: false
+  resampling:
+    strategy: paper_proportional
+    ratio: 2.8517
+    random_state: 42

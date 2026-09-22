@@ -1,0 +1,7 @@
+# Bounded development subset of the official Edge-IIoTset ML table (registry card).
+name: edge-iiotset-dev
+kind: edge_iiotset
+table: ml_edgeiiot
+target: attack_type
+row_limit: 60000
+min_per_class: 500

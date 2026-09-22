@@ -1,17 +1,15 @@
-"""Persisting a fitted pipeline (M2 exit criterion: "persisted pipelines").
+"""Persisting a fitted pipeline (preprocessing and model in one artifact).
 
-A fitted pipeline bundles preprocessing and the model together (see
-preprocessing/pipeline.py), so persisting it is what makes a run's predictions
-reproducible from the artifact alone, without re-fitting anything. Saved artifacts are
-never committed to the repository (see artifacts/README.md) and are identified by the
-SHA-256 of the serialized file, the same provenance convention used for data
-(reporting/provenance.py).
+Artifacts are identified by the SHA-256 of the serialized file and are never committed
+(see artifacts/README.md). joblib/pickle files can execute code when loaded, so
+``load_verified_pipeline`` refuses any file whose hash differs from the one recorded in
+the run manifest. Only load artifacts this project produced.
 """
 
 from __future__ import annotations
 
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import joblib
 
@@ -22,13 +20,29 @@ if TYPE_CHECKING:
     from sklearn.pipeline import Pipeline
 
 
-def save_pipeline(pipeline: Pipeline | ImbPipeline, path: str | Path) -> str:
+class ArtifactIntegrityError(RuntimeError):
+    pass
+
+
+def save_pipeline(pipeline: Pipeline | ImbPipeline | Any, path: str | Path) -> str:
     """Serialize a fitted pipeline with joblib and return the artifact's SHA-256."""
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    joblib.dump(pipeline, path)
+    joblib.dump(pipeline, path, compress=3)
     return sha256_file(path)
 
 
 def load_pipeline(path: str | Path) -> Pipeline | ImbPipeline:
+    """Load without verification. Prefer ``load_verified_pipeline``."""
     return joblib.load(Path(path))
+
+
+def load_verified_pipeline(path: str | Path, expected_sha256: str) -> Pipeline | ImbPipeline:
+    path = Path(path)
+    actual = sha256_file(path)
+    if actual != expected_sha256:
+        raise ArtifactIntegrityError(
+            f"{path.name}: SHA-256 {actual} does not match the manifest ({expected_sha256}); "
+            "refusing to unpickle"
+        )
+    return joblib.load(path)

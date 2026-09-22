@@ -92,7 +92,8 @@ def test_fingerprint_extracts_archives_and_writes_manifest(data_root: Path) -> N
         zf.writestr("wustl_iiot_2021.csv", "a,b\n1,2\n")
     result = runner.invoke(app, ["data", "fingerprint", "wustl_iiot_2021"])
     assert result.exit_code == 0, result.output
-    assert "unrecorded" in result.stdout
+    # The card records the official file's SHA-256 (M2), so a stand-in file must mismatch.
+    assert "mismatch" in result.stdout
     manifest = json.loads(
         (data_root / "manifests" / "wustl_iiot_2021.json").read_text(encoding="utf-8")
     )

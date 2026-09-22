@@ -32,21 +32,21 @@
         {
           "id": "ml_edgeiiot",
           "filename": "ML-EdgeIIoT-dataset.csv",
-          "schema_status": "provisional",
+          "schema_status": "confirmed",
           "n_columns": 63,
-          "n_candidate_features": 46,
+          "n_candidate_features": 43,
           "n_private_columns": 14,
           "label_column": "Attack_label",
           "attack_type_column": "Attack_type",
           "timestamp_column": "frame.time",
-          "fingerprint_recorded": false
+          "fingerprint_recorded": true
         },
         {
           "id": "dnn_edgeiiot",
           "filename": "DNN-EdgeIIoT-dataset.csv",
           "schema_status": "provisional",
           "n_columns": 63,
-          "n_candidate_features": 46,
+          "n_candidate_features": 43,
           "n_private_columns": 14,
           "label_column": "Attack_label",
           "attack_type_column": "Attack_type",
@@ -160,14 +160,14 @@
         {
           "id": "wustl_iiot_2021",
           "filename": "wustl_iiot_2021.csv",
-          "schema_status": "provisional",
+          "schema_status": "confirmed",
           "n_columns": 49,
           "n_candidate_features": 41,
           "n_private_columns": 5,
           "label_column": "Target",
           "attack_type_column": "Traffic",
           "timestamp_column": "StartTime",
-          "fingerprint_recorded": false
+          "fingerprint_recorded": true
         }
       ]
     }

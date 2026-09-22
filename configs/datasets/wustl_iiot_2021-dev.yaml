@@ -1,0 +1,7 @@
+# Bounded development subset of the official WUSTL-IIOT-2021 table (registry card).
+# Stratified by attack type, drawn before any split; min_per_class keeps rare classes.
+name: wustl-iiot-2021-dev
+kind: wustl_iiot_2021
+target: attack_type
+row_limit: 100000
+min_per_class: 212

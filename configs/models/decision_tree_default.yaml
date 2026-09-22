@@ -1,6 +1,6 @@
-# Bagging, library defaults (10 decision trees; the paper does not state the base estimator).
+# Decision Tree, library defaults (M2). configs/models/decision_tree.yaml is the M0 smoke config.
 # The reference paper (Ismail et al. 2025, Sec. III-C) reports no hyperparameters, so this
 # config uses the library defaults (an assumption recorded in every run manifest). The
 # random seed comes from the experiment config.
-name: bagging
+name: decision_tree
 params: {}

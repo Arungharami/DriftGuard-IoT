@@ -34,7 +34,7 @@ export type MilestoneStatus = "in_progress" | "planned" | "complete";
 export const MILESTONES: { id: string; title: string; status: MilestoneStatus }[] = [
   { id: "M0", title: "Repository, architecture, scientific protocol, CI", status: "in_progress" },
   { id: "M1", title: "Dataset registry, synthetic fixtures, Kaggle integration, provenance", status: "in_progress" },
-  { id: "M2", title: "Leakage-safe preprocessing and five configurable baselines", status: "planned" },
+  { id: "M2", title: "Leakage-safe preprocessing and five configurable baselines", status: "in_progress" },
   { id: "M3", title: "Reproducible single-dataset benchmark and reporting", status: "planned" },
   { id: "M4", title: "Cross-dataset schemas, chronological evaluation, domain shift", status: "planned" },
   { id: "M5", title: "Drift detector and adaptation-policy evaluation", status: "planned" },

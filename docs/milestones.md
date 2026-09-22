@@ -8,8 +8,8 @@ publication require explicit approval from the project owner.
 | ID | Scope | Exit criteria |
 | --- | --- | --- |
 | **M0** | Repository initialisation, architecture, scientific protocol, CI | Package installs; smoke CLI runs; synthetic tests, lint, types, hygiene, audit and portal build pass in CI |
-| **M1** | Dataset registry, synthetic fixtures, Kaggle adapter, provenance | Registry and license manifests for 3 datasets; Kaggle download with user credentials; SHA-256 manifests; reproducible subsets |
-| M2 | Leakage-safe preprocessing; five configurable baselines | DT, RF, Bagging, DT/RF/MLP Stacking and LightGBM; train-only MI, SMOTE and undersampling; duplicate and leakage audit; persisted pipelines |
+| M1 | Dataset registry, synthetic fixtures, Kaggle adapter, provenance | Registry and license manifests for 3 datasets; Kaggle download with user credentials; SHA-256 manifests; reproducible subsets |
+| **M2** | Leakage-safe preprocessing; five configurable baselines | DT, RF, Bagging, DT/RF/MLP Stacking and LightGBM; train-only MI, SMOTE and undersampling; duplicate and leakage audit; persisted pipelines |
 | M3 | Reproducible single-dataset benchmark and reporting | Bootstrap CIs; research-kind manifests; result exporter to the portal schema |
 | M4 | Cross-dataset schema, chronological evaluation, domain shift | Aligned schema; timestamp validation; rolling-origin evaluation; cross-dataset pairs |
 | M5 | Drift detector and adaptation policy | Independently evaluated detector; retain/recalibrate/retrain policy vs no adaptation and periodic retraining; drift-library ADR |
