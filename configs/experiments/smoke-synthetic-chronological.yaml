@@ -1,0 +1,9 @@
+# M0 smoke run with a chronological split over drifted synthetic data.
+name: smoke-synthetic-chronological
+seed: 20260922
+dataset: ../datasets/synthetic-drift.yaml
+models:
+  - ../models/decision_tree.yaml
+split:
+  strategy: chronological
+  test_size: 0.3

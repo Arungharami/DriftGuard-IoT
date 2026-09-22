@@ -1,0 +1,9 @@
+# M0 smoke run: validates the pipeline end to end on synthetic data.
+name: smoke-synthetic
+seed: 20260922
+dataset: ../datasets/synthetic.yaml
+models:
+  - ../models/decision_tree.yaml
+split:
+  strategy: stratified_holdout
+  test_size: 0.25

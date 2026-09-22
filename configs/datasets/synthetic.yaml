@@ -1,0 +1,14 @@
+# Synthetic flow table used by CI and smoke runs. NOT a research dataset.
+name: synthetic-flows
+kind: synthetic
+label_column: label
+timestamp_column: timestamp
+categorical_columns: [proto]
+drop_columns: []
+synthetic:
+  n_samples: 2000
+  class_proportions:
+    normal: 0.70
+    dos: 0.15
+    scan: 0.10
+    injection: 0.05
