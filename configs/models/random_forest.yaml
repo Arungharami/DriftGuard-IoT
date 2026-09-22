@@ -1,0 +1,8 @@
+# Random Forest baseline. The random seed comes from the experiment config.
+# Hyperparameters are this project's own documented default, not a confirmed
+# reproduction of the reference paper (full text inaccessible - see paper/methodology.md).
+name: random_forest
+params:
+  n_estimators: 100
+  max_depth: 12
+  min_samples_leaf: 2

@@ -21,6 +21,15 @@ DatasetKind = Literal["synthetic", "ton_iot", "wustl_iiot_2021", "edge_iiotset"]
 ModelName = Literal["decision_tree", "random_forest", "bagging", "stacking", "lightgbm"]
 SplitStrategy = Literal["stratified_holdout", "chronological"]
 
+# "reference" = best-effort reproduction of the settings confirmed in the reference
+# paper's abstract (mutual-information feature selection; everything else the abstract
+# does not state is left at this pipeline's own documented default, never guessed as a
+# paper fact - see paper/methodology.md). "improved" = DriftGuard-IoT's own
+# leakage-hardened pipeline, free to add steps (e.g. resampling, stricter duplicate
+# exclusion) the reference paper may not use.
+PreprocessingKind = Literal["reference", "improved"]
+ResamplingStrategy = Literal["none", "smote", "random_undersample", "smote_then_undersample"]
+
 
 class _Strict(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
@@ -79,12 +88,38 @@ class SplitConfig(_Strict):
     test_size: float = Field(gt=0.0, lt=1.0)
 
 
+class FeatureSelectionConfig(_Strict):
+    """Train-only mutual-information feature selection (docs/scientific-protocol.md §3.2-3.3)."""
+
+    enabled: bool = False
+    k: int | None = Field(default=None, ge=1, description="Top-k features by MI; None keeps all")
+
+
+class ResamplingConfig(_Strict):
+    """Train-only class-imbalance handling, applied after the train/test split (§3.2-3.3)."""
+
+    strategy: ResamplingStrategy = "none"
+    sampling_strategy: str | float = "auto"
+    k_neighbors: int = Field(default=5, ge=1, description="SMOTE only; must be < smallest class")
+
+
+class PreprocessingConfig(_Strict):
+    kind: PreprocessingKind
+    feature_selection: FeatureSelectionConfig = Field(default_factory=FeatureSelectionConfig)
+    resampling: ResamplingConfig = Field(default_factory=ResamplingConfig)
+
+
 class ExperimentConfig(_Strict):
     name: str = Field(pattern=r"^[a-z0-9][a-z0-9_-]*$")
     seed: int = Field(ge=0)
     dataset: DatasetConfig
     models: list[ModelConfig] = Field(min_length=1)
     split: SplitConfig
+    # Optional and defaulting to None (not a bare PreprocessingConfig default) so every
+    # M0/M1 experiment config committed before this field existed keeps validating
+    # unchanged; None is handled as "no feature selection, no resampling" wherever a
+    # pipeline is built from this config.
+    preprocessing: PreprocessingConfig | None = None
 
     @model_validator(mode="after")
     def _split_matches_dataset(self) -> ExperimentConfig:

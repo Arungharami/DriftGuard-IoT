@@ -1,0 +1,7 @@
+# Bagging baseline. estimator is left unset so scikit-learn defaults to a
+# DecisionTreeClassifier (sklearn's own documented default) - not a confirmed
+# reproduction of the reference paper's base estimator choice, which is unstated in
+# the accessible abstract (see paper/methodology.md).
+name: bagging
+params:
+  n_estimators: 50

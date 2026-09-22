@@ -90,7 +90,8 @@ def test_successful_download_records_provenance(edge: DatasetCard, tmp_path: Pat
     saved = json.loads((dest / "acquisition.json").read_text(encoding="utf-8"))
     assert saved["kaggle_slug"] == edge.acquisition.kaggle.slug  # type: ignore[union-attr]
     cmd = runner.calls[0]
-    assert cmd[:4] == ["kaggle", "datasets", "download", "-d"]
+    assert cmd[:4] == ["kaggle", "datasets", "download", edge.acquisition.kaggle.slug]  # type: ignore[union-attr]
+    assert "-d" not in cmd  # removed in kaggle CLI 2.x
     assert "-f" in cmd
     # Credentials never appear in argv or in the provenance record.
     joined = " ".join(cmd) + json.dumps(saved)

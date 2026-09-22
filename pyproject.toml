@@ -27,6 +27,7 @@ dependencies = [
   "scikit-learn>=1.5",
   "imbalanced-learn>=0.12",
   "lightgbm>=4.3",
+  "joblib>=1.4",
   "pydantic>=2.7",
   "pyyaml>=6.0",
   "typer>=0.12",
@@ -73,7 +74,7 @@ warn_unreachable = true
 plugins = ["pydantic.mypy"]
 
 [[tool.mypy.overrides]]
-module = ["sklearn.*", "imblearn.*", "lightgbm.*", "scipy.*", "shap.*", "pandas.*"]
+module = ["sklearn.*", "imblearn.*", "lightgbm.*", "scipy.*", "shap.*", "pandas.*", "joblib.*"]
 ignore_missing_imports = true
 
 # ---------------------------------------------------------------- pytest
