@@ -81,7 +81,7 @@ Portal:
 ```bash
 cd apps/research-portal
 npm ci
-npm run lint && npm run typecheck && npm run build
+npm run lint && npm run typecheck && npm test && npm run build
 ```
 
 ## Data policy
