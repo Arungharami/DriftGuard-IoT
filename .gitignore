@@ -1,0 +1,73 @@
+# ---------------------------------------------------------------- secrets
+.env
+.env.*
+!.env.example
+kaggle.json
+.kaggle/
+*.pem
+*.key
+.vercel/
+.huggingface/
+
+# ---------------------------------------------------------------- datasets (never commit)
+data/*
+!data/README.md
+*.zip
+*.7z
+*.rar
+*.tar
+*.tar.gz
+*.tgz
+*.pcap
+*.pcapng
+*.parquet
+*.feather
+
+# ---------------------------------------------------------------- run outputs & artifacts
+experiments/*
+!experiments/README.md
+artifacts/*
+!artifacts/README.md
+*.pkl
+*.pickle
+*.joblib
+*.onnx
+*.pt
+*.pth
+*.safetensors
+*.ckpt
+mlruns/
+catboost_info/
+
+# ---------------------------------------------------------------- python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.python-version
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.ipynb_checkpoints/
+
+# ---------------------------------------------------------------- node / next
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+npm-debug.log*
+
+# ---------------------------------------------------------------- os / editors
+.DS_Store
+Thumbs.db
+.idea/
+*.swp
