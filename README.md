@@ -2,7 +2,7 @@
 
 **Trustworthy, drift-aware and resource-efficient intrusion detection across IoT and IIoT environments.**
 
-> **Status: M0 (foundation).** No model has been trained on a real dataset. The repository
+> **Status: M1 (dataset registry).** No model has been trained on a real dataset. The repository
 > contains **no research results**. Any metric printed by the smoke command is computed
 > on synthetic data and is explicitly labelled as such.
 
@@ -69,6 +69,7 @@ pip install -e ".[dev]" -c requirements/constraints-py311.txt
 driftguard --help
 driftguard validate-config configs/experiments/smoke-synthetic.yaml
 driftguard smoke                     # synthetic end-to-end run; writes experiments/runs/<run_id>/
+driftguard data list                 # dataset registry: license, acquisition, schema status
 
 ruff check . && ruff format --check .
 mypy
@@ -86,9 +87,11 @@ npm run lint && npm run typecheck && npm test && npm run build
 
 ## Data policy
 
-Raw datasets are **never** committed. They are retrieved locally (Kaggle adapter, M1) with
-the user's own credentials, fingerprinted with SHA-256, and kept under `data/`, which is
-git-ignored. CI uses synthetic fixtures only. See [data/README.md](data/README.md).
+Raw datasets are **never** committed. They are acquired locally (manual download from the
+publisher, or the Kaggle adapter for Edge-IIoTset's first-party upload) with the user's own
+credentials, fingerprinted with SHA-256, and kept under `data/`, which is git-ignored. CI
+uses synthetic fixtures only. See [docs/datasets.md](docs/datasets.md) and
+[data/README.md](data/README.md).
 
 ## Milestones
 

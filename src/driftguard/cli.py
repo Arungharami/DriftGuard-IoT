@@ -12,6 +12,7 @@ from pydantic import ValidationError
 from driftguard import __version__
 from driftguard.config import load_experiment_config
 from driftguard.data.synthetic import generate_synthetic_flows
+from driftguard.data_cli import data_app
 from driftguard.reporting.provenance import environment_snapshot
 
 app = typer.Typer(
@@ -20,6 +21,7 @@ app = typer.Typer(
     no_args_is_help=True,
     add_completion=False,
 )
+app.add_typer(data_app, name="data")
 
 DEFAULT_SMOKE_CONFIG = Path("configs/experiments/smoke-synthetic.yaml")
 

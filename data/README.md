@@ -3,27 +3,23 @@
 This directory is **local-only**. Everything here except this README is git-ignored and
 blocked by the CI hygiene check.
 
-Planned layout (created by the M1 tooling):
-
 ```
 data/
-  raw/<dataset>/<version>/        original downloads, unmodified
-  manifests/<dataset>.json        source URL, version, license, citation, SHA-256 per file
-  subsets/<dataset>/<subset-id>/  reproducible development samples (seeded)
+  raw/<dataset_id>/            original downloads (unmodified) + safely extracted archives
+  manifests/<dataset_id>.json  SHA-256 fingerprints of every raw file
+  reports/                     data-quality reports (descriptive, may contain private values)
+  subsets/<dataset_id>/<id>/   deterministic development subsets + manifests
 ```
 
-## Datasets
+Dataset provenance, license terms, citations and schemas are defined in the registry
+(`src/driftguard/data/catalog/*.yaml`). See [docs/datasets.md](../docs/datasets.md) for the
+acquisition, fingerprinting, validation and quality workflow, and
+[ADR 0002](../docs/adr/0002-dataset-registry-and-acquisition.md) for the policy.
 
-The license, redistribution terms and citation requirements below are **not yet
-verified**. M1 records them from the original publishers' pages, not from third-party
-mirrors, before any data is used.
+| Dataset | License / terms (checked 2026-09-22) | Acquisition |
+| --- | --- | --- |
+| TON_IoT | Publisher terms: free academic use, commercial use by permission, 8 citations | Manual, from UNSW |
+| WUSTL-IIOT-2021 | No license stated; citation requested | Manual, from WUSTL |
+| Edge-IIoTset | CC BY-NC-SA 4.0 (first-party Kaggle upload) | `driftguard data download edge_iiotset --accept-license` |
 
-| Dataset | Original publisher | License / terms | Status |
-| --- | --- | --- | --- |
-| TON_IoT | UNSW Canberra Cyber | To be verified (M1) | Not downloaded |
-| WUSTL-IIOT-2021 | Washington University in St. Louis | To be verified (M1) | Not downloaded |
-| Edge-IIoTset | Dataset authors (see original publication) | To be verified (M1) | Not downloaded |
-
-Kaggle mirrors may be used for versioned retrieval if their contents are fingerprinted
-and their provenance to the original release is documented. Retrieval uses the user's own
-Kaggle credentials (see `.env.example`); CI never downloads datasets.
+Never commit anything from this directory, and never use unapproved third-party mirrors.

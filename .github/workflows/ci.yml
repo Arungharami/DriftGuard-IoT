@@ -53,6 +53,8 @@ jobs:
         run: mypy
       - name: Pytest (synthetic fixtures only)
         run: pytest -m "not slow and not real_data" --cov --cov-report=term-missing
+      - name: Portal dataset catalog in sync with registry
+        run: driftguard data export-catalog --check
       - name: CLI smoke run
         run: |
           driftguard validate-config configs/experiments/smoke-synthetic.yaml

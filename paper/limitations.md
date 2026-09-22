@@ -6,7 +6,10 @@
   or against any research question.
 - The reference paper's exact preprocessing order, hyperparameters and split ratios have
   not yet been checked against its text (see `methodology.md`).
-- Dataset licenses and redistribution terms are unverified (`data/README.md`).
+- Dataset terms were checked on 2026-09-22 (`docs/datasets.md`). WUSTL-IIOT-2021 states
+  no license, and Edge-IIoTset's additional IEEE DataPort terms were not checked on a
+  primary page. No derived artifact may be released until a license review is done.
+- All three table schemas are provisional until validated against downloaded headers.
 - Only the pinned dependency set is tested, and only on Python 3.11.
 
 ## Anticipated threats

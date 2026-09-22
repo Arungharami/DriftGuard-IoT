@@ -1,0 +1,118 @@
+# WUSTL-IIOT-2021 dataset card.
+# Facts checked on the publisher page (http://www.cse.wustl.edu/~jain/iiot2/index.html)
+# on 2026-09-22: citation, download link, archive size, record counts, the 41-feature
+# design and the publisher's instruction to drop six leaky columns.
+# No license is stated on the publisher page.
+# The column list is PROVISIONAL. The publisher table gives descriptive names such as
+# "Source Packets (Spkts)", not exact CSV headers. Confirm against the downloaded header.
+id: wustl_iiot_2021
+name: WUSTL-IIOT-2021
+publisher: Washington University in St. Louis (Zolanvari, Teixeira, Gupta, Khan, Jain)
+homepage: http://www.cse.wustl.edu/~jain/iiot2/index.html
+description: >-
+  Network flow records (Argus features) from an IIoT testbed emulating industrial control
+  systems, with command-injection, reconnaissance, DoS and backdoor traffic. The publisher
+  reports 1,194,464 observations (87,016 attack, 1,107,448 normal) and 41 features after
+  removal of six leaky columns.
+license:
+  name: No license stated by the publisher
+  source_url: http://www.cse.wustl.edu/~jain/iiot2/index.html
+  verified_on: 2026-09-22
+  terms_excerpt: >-
+    Please cite this dataset as follows: M. Zolanvari, M. A. Teixeira, L. Gupta, K. M.
+    Khan, and R. Jain. "WUSTL-IIOT-2021 Dataset for IIoT Cybersecurity Research,"
+    Washington University in St. Louis, USA, October 2021.
+  academic_use: not_stated
+  commercial_use: not_stated
+  raw_redistribution: not_stated
+  derived_artifact_redistribution: requires_review
+  attribution_required: true
+  notes: >-
+    The page publishes the data for cybersecurity research and asks for a citation, but
+    grants no explicit license. Use for this academic study is on that basis. Written
+    confirmation from the publisher should be sought before releasing any derived
+    artifact.
+citations:
+  - text: >-
+      M. Zolanvari, M. A. Teixeira, L. Gupta, K. M. Khan, and R. Jain. WUSTL-IIOT-2021
+      Dataset for IIoT Cybersecurity Research. Washington University in St. Louis, USA,
+      October 2021. http://www.cse.wustl.edu/~jain/iiot2/index.html
+  - text: >-
+      M. Zolanvari, M. A. Teixeira, L. Gupta, K. M. Khan, and R. Jain. Machine
+      learning-based network vulnerability analysis of Industrial Internet of Things.
+      IEEE Internet of Things Journal 6 (2019): 6822-6834.
+acquisition:
+  method: manual
+  url: http://www.cse.wustl.edu/~jain/iiot2/index.html
+  instructions: >-
+    Download wustl_iiot_2021.zip from the publisher page ("Download ... from HERE"; the
+    page states 106,192,911 bytes). Place the archive under data/raw/wustl_iiot_2021/,
+    then run `driftguard data fingerprint wustl_iiot_2021` to fingerprint and safely
+    extract it.
+  unapproved_mirrors: >-
+    Kaggle hosts several third-party re-uploads (checked 2026-09-22), some labelled MIT
+    or CC-BY. They are not first-party and are not approved as a source.
+default_table: wustl_iiot_2021
+tables:
+  - id: wustl_iiot_2021
+    filename: wustl_iiot_2021.csv
+    description: >-
+      Full flow table. Source archive wustl_iiot_2021.zip (106,192,911 bytes per the
+      publisher).
+    size_bytes: null
+    sha256: null
+    schema_status: provisional
+    schema_source: >-
+      Publisher's 41-feature table mapped to Argus-style header names, plus the six
+      columns the publisher says to remove and the two label columns. Not yet confirmed
+      against a downloaded header.
+    columns:
+      - {name: StartTime, dtype: string, role: timestamp, exclude_reason: "publisher: unique to attacks, exposes attack type"}
+      - {name: LastTime, dtype: string, role: identifier, exclude_reason: "publisher: unique to attacks, exposes attack type"}
+      - {name: SrcAddr, dtype: string, role: identifier, exclude_reason: "publisher: unique to attacks, exposes attack type"}
+      - {name: DstAddr, dtype: string, role: identifier, exclude_reason: "publisher: unique to attacks, exposes attack type"}
+      - {name: Mean, dtype: float}
+      - {name: Sport, dtype: int}
+      - {name: Dport, dtype: int}
+      - {name: SrcPkts, dtype: int}
+      - {name: DstPkts, dtype: int}
+      - {name: TotPkts, dtype: int}
+      - {name: DstBytes, dtype: int}
+      - {name: SrcBytes, dtype: int}
+      - {name: TotBytes, dtype: int}
+      - {name: SrcLoad, dtype: float}
+      - {name: DstLoad, dtype: float}
+      - {name: Load, dtype: float}
+      - {name: SrcRate, dtype: float}
+      - {name: DstRate, dtype: float}
+      - {name: Rate, dtype: float}
+      - {name: SrcLoss, dtype: float}
+      - {name: DstLoss, dtype: float}
+      - {name: Loss, dtype: float}
+      - {name: pLoss, dtype: float}
+      - {name: SrcJitter, dtype: float}
+      - {name: DstJitter, dtype: float}
+      - {name: SIntPkt, dtype: float}
+      - {name: DIntPkt, dtype: float}
+      - {name: Proto, dtype: category}
+      - {name: Dur, dtype: float}
+      - {name: TcpRtt, dtype: float}
+      - {name: IdleTime, dtype: float}
+      - {name: Sum, dtype: float}
+      - {name: Min, dtype: float}
+      - {name: Max, dtype: float}
+      - {name: sDSb, dtype: int}
+      - {name: sTtl, dtype: float}
+      - {name: dTtl, dtype: float}
+      - {name: sIpId, dtype: int, role: identifier, exclude_reason: "publisher: unique to attacks, exposes attack type"}
+      - {name: dIpId, dtype: int, role: identifier, exclude_reason: "publisher: unique to attacks, exposes attack type"}
+      - {name: SAppBytes, dtype: int}
+      - {name: DAppBytes, dtype: int}
+      - {name: TotAppByte, dtype: int}
+      - {name: SynAck, dtype: float}
+      - {name: RunTime, dtype: float}
+      - {name: sTos, dtype: int}
+      - {name: SrcJitAct, dtype: float}
+      - {name: DstJitAct, dtype: float}
+      - {name: Traffic, dtype: category, role: attack_type}
+      - {name: Target, dtype: int, role: label}

@@ -1,0 +1,139 @@
+# Edge-IIoTset dataset card.
+# Kaggle metadata was read from the public Kaggle API on 2026-09-22: owner, license,
+# version, last update, total size and the per-file sizes below.
+# The column list is PROVISIONAL: Kaggle's metadata does not expose column names for these
+# files, so the list follows the dataset paper's feature description. Confirm it against
+# the downloaded header.
+id: edge_iiotset
+name: Edge-IIoTset
+publisher: Ferrag, Friha, Hamouda, Maglaras, Janicke
+homepage: https://www.kaggle.com/datasets/mohamedamineferrag/edgeiiotset-cyber-security-dataset-of-iot-iiot
+description: >-
+  IoT/IIoT cyber-security dataset from a seven-layer testbed (more than 10 IoT device
+  types), with fourteen attacks in five threat families. It is distributed with raw
+  per-scenario CSV/PCAP files and two pre-selected tables for ML and DL.
+license:
+  name: CC BY-NC-SA 4.0 (as listed on the first-party Kaggle upload)
+  source_url: https://www.kaggle.com/datasets/mohamedamineferrag/edgeiiotset-cyber-security-dataset-of-iot-iiot
+  verified_on: 2026-09-22
+  terms_excerpt: >-
+    Kaggle license field: CC BY-NC-SA 4.0 (dataset owner: Mohamed Amine FERRAG).
+  academic_use: permitted
+  commercial_use: prohibited
+  raw_redistribution: permitted_with_conditions
+  derived_artifact_redistribution: requires_review
+  attribution_required: true
+  notes: >-
+    CC BY-NC-SA 4.0 permits non-commercial sharing with attribution and share-alike. A
+    web search snippet attributes additional publisher terms (commercial use by
+    permission) to IEEE DataPort, but they were not checked on a primary page. By project
+    policy raw data is not redistributed. Whether share-alike applies to trained models
+    needs review before any release.
+citations:
+  - text: >-
+      M. A. Ferrag, O. Friha, D. Hamouda, L. Maglaras, H. Janicke. Edge-IIoTset: A New
+      Comprehensive Realistic Cyber Security Dataset of IoT and IIoT Applications for
+      Centralized and Federated Learning. IEEE Access 10 (2022): 40281-40306.
+    doi: 10.1109/ACCESS.2022.3165809
+acquisition:
+  method: kaggle
+  url: https://www.kaggle.com/datasets/mohamedamineferrag/edgeiiotset-cyber-security-dataset-of-iot-iiot
+  instructions: >-
+    `driftguard data download edge_iiotset --accept-license` downloads only the ML table
+    (about 82 MB) using your own Kaggle credentials. The full dataset is about 11.2 GB
+    and includes PCAP captures.
+  kaggle:
+    slug: mohamedamineferrag/edgeiiotset-cyber-security-dataset-of-iot-iiot
+    first_party: true
+    approved: true
+    license_name: CC BY-NC-SA 4.0
+    version: 5
+    verified_on: 2026-09-22
+    notes: Uploaded by the dataset's lead author; last updated 2022-03-18; 11,248,814,873 bytes in total.
+default_table: ml_edgeiiot
+tables:
+  - id: ml_edgeiiot
+    filename: ML-EdgeIIoT-dataset.csv
+    relative_path: Edge-IIoTset dataset/Selected dataset for ML and DL/ML-EdgeIIoT-dataset.csv
+    description: Pre-selected table for classical ML.
+    size_bytes: 82184390
+    size_source: Kaggle file metadata, 2026-09-22
+    sha256: null
+    schema_status: provisional
+    schema_source: >-
+      Feature list from the Edge-IIoTset paper (61 features plus Attack_label and
+      Attack_type, plus capture metadata columns); not yet confirmed against a header.
+    columns: &edge_columns
+      - {name: frame.time, dtype: string, role: timestamp}
+      - {name: ip.src_host, dtype: string, role: identifier}
+      - {name: ip.dst_host, dtype: string, role: identifier}
+      - {name: arp.dst.proto_ipv4, dtype: string, role: identifier}
+      - {name: arp.opcode, dtype: float}
+      - {name: arp.hw.size, dtype: float}
+      - {name: arp.src.proto_ipv4, dtype: string, role: identifier}
+      - {name: icmp.checksum, dtype: float}
+      - {name: icmp.seq_le, dtype: float}
+      - {name: icmp.transmit_timestamp, dtype: float}
+      - {name: icmp.unused, dtype: float}
+      - {name: http.file_data, dtype: string, role: payload}
+      - {name: http.content_length, dtype: float}
+      - {name: http.request.uri.query, dtype: string, role: payload}
+      - {name: http.request.method, dtype: category}
+      - {name: http.referer, dtype: string, role: payload}
+      - {name: http.request.full_uri, dtype: string, role: payload}
+      - {name: http.request.version, dtype: category}
+      - {name: http.response, dtype: float}
+      - {name: http.tls_port, dtype: float}
+      - {name: tcp.ack, dtype: float}
+      - {name: tcp.ack_raw, dtype: float}
+      - {name: tcp.checksum, dtype: float}
+      - {name: tcp.connection.fin, dtype: float}
+      - {name: tcp.connection.rst, dtype: float}
+      - {name: tcp.connection.syn, dtype: float}
+      - {name: tcp.connection.synack, dtype: float}
+      - {name: tcp.dstport, dtype: float}
+      - {name: tcp.flags, dtype: float}
+      - {name: tcp.flags.ack, dtype: float}
+      - {name: tcp.len, dtype: float}
+      - {name: tcp.options, dtype: string, role: payload}
+      - {name: tcp.payload, dtype: string, role: payload}
+      - {name: tcp.seq, dtype: float}
+      - {name: tcp.srcport, dtype: string, role: identifier, exclude_reason: "host/session identifier; review in M2"}
+      - {name: udp.port, dtype: float}
+      - {name: udp.stream, dtype: float}
+      - {name: udp.time_delta, dtype: float}
+      - {name: dns.qry.name, dtype: string, role: payload}
+      - {name: dns.qry.name.len, dtype: string}
+      - {name: dns.qry.qu, dtype: float}
+      - {name: dns.qry.type, dtype: float}
+      - {name: dns.retransmission, dtype: float}
+      - {name: dns.retransmit_request, dtype: float}
+      - {name: dns.retransmit_request_in, dtype: float}
+      - {name: mqtt.conack.flags, dtype: string}
+      - {name: mqtt.conflag.cleansess, dtype: float}
+      - {name: mqtt.conflags, dtype: float}
+      - {name: mqtt.hdrflags, dtype: float}
+      - {name: mqtt.len, dtype: float}
+      - {name: mqtt.msg_decoded_as, dtype: float}
+      - {name: mqtt.msg, dtype: string, role: payload}
+      - {name: mqtt.msgtype, dtype: float}
+      - {name: mqtt.proto_len, dtype: float}
+      - {name: mqtt.protoname, dtype: category}
+      - {name: mqtt.topic, dtype: string, role: payload}
+      - {name: mqtt.topic_len, dtype: float}
+      - {name: mqtt.ver, dtype: float}
+      - {name: mbtcp.len, dtype: float}
+      - {name: mbtcp.trans_id, dtype: float}
+      - {name: mbtcp.unit_id, dtype: float}
+      - {name: Attack_label, dtype: int, role: label}
+      - {name: Attack_type, dtype: category, role: attack_type}
+  - id: dnn_edgeiiot
+    filename: DNN-EdgeIIoT-dataset.csv
+    relative_path: Edge-IIoTset dataset/Selected dataset for ML and DL/DNN-EdgeIIoT-dataset.csv
+    description: Pre-selected table for deep learning (larger).
+    size_bytes: 1217413981
+    size_source: Kaggle file metadata, 2026-09-22
+    sha256: null
+    schema_status: provisional
+    schema_source: Assumed to share the ML table's columns; not yet confirmed.
+    columns: *edge_columns

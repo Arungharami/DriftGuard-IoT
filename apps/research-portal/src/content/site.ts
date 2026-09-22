@@ -25,7 +25,7 @@ export const REPO_URL ="https://github.com/Arungharami/DriftGuard-IoT";
 
 export const REFERENCE_PAPER = {
   citation:
-    "Ismail, Dandan and Qushou (2025). Intrusion Detection in IoT and IIoT: Comparing Lightweight Machine Learning Techniques Using TON_IoT, WUSTL-IIOT-2021, and EdgeIIoTset Datasets. IEEE Access.",
+    "Ismail, Dandan and Qushou (2025). Intrusion Detection in IoT and IIoT: Comparing Lightweight Machine Learning Techniques Using TON_IoT, WUSTL-IIOT-2021, and EdgeIIoTset Datasets. IEEE Access 13 (2025): 73468–73485.",
   doi: "10.1109/ACCESS.2025.3554083",
 };
 
@@ -33,7 +33,7 @@ export type MilestoneStatus = "in_progress" | "planned" | "complete";
 
 export const MILESTONES: { id: string; title: string; status: MilestoneStatus }[] = [
   { id: "M0", title: "Repository, architecture, scientific protocol, CI", status: "in_progress" },
-  { id: "M1", title: "Dataset registry, synthetic fixtures, Kaggle integration, provenance", status: "planned" },
+  { id: "M1", title: "Dataset registry, synthetic fixtures, Kaggle integration, provenance", status: "in_progress" },
   { id: "M2", title: "Leakage-safe preprocessing and five configurable baselines", status: "planned" },
   { id: "M3", title: "Reproducible single-dataset benchmark and reporting", status: "planned" },
   { id: "M4", title: "Cross-dataset schemas, chronological evaluation, domain shift", status: "planned" },

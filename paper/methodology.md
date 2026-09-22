@@ -13,13 +13,13 @@ SMOTE and undersampling the paper uses and in what order.
 
 | Step | Class | Implementation status | Verified against paper |
 | --- | --- | --- | --- |
-| Datasets: TON_IoT, WUSTL-IIOT-2021, Edge-IIoTset | R | Not started (M1) | No |
+| Datasets: TON_IoT, WUSTL-IIOT-2021, Edge-IIoTset | R | Registry, license/provenance, provisional schemas, fingerprints, quality reports (M1); no data downloaded yet | Which TON_IoT subset and Edge-IIoTset table the paper used: **No** |
 | Mutual-information feature selection (train-only) | R (to confirm) | Not started (M2) | No |
 | SMOTE / undersampling (train-only) | R (to confirm) | Not started (M2) | No |
 | Decision Tree baseline | R | Factory stub with DT only (M0); configurable in M2 | No |
 | Random Forest, Bagging, DT/RF/MLP Stacking, LightGBM | R | Not started (M2) | No |
 | Split-before-fit, persisted pipelines | E (protocol hardening) | Implemented for synthetic data (M0) | n/a |
-| Duplicate and target-leakage audit | E | Not started (M2) | n/a |
+| Duplicate and target-leakage audit | E | Descriptive indicators implemented (M1 quality report); audit decisions M2 | n/a |
 | Bootstrap confidence intervals, multi-seed runs | E | Not started (M3) | n/a |
 | Chronological and rolling-origin evaluation | E | Chronological holdout implemented (M0); rolling-origin M4 | n/a |
 | Cross-dataset evaluation over an aligned schema | E | Not started (M4) | n/a |

@@ -12,6 +12,13 @@
 - The browser never receives an API token. The portal calls the inference Space only
   through a server-side route (M8).
 
+## Kaggle adapter
+
+`driftguard data download` never reads, prints or stores credential values. It only
+checks that credentials are present, and the official `kaggle` CLI reads them. It
+requires `--accept-license`, aborts if the live Kaggle license differs from the
+registry, and inside the repository refuses destinations outside `data/`.
+
 ## Blocked content
 
 `scripts/check_repo_hygiene.py` runs in CI (and optionally as a pre-commit hook). It
