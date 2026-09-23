@@ -115,3 +115,7 @@ Python/package versions, platform, and git commit. A result may be published onl
 ## 9. Changelog
 
 - 0.1 (2026-09-22): initial protocol (M0).
+- 0.2 (2026-09-22): M2. Reference methodology verified (docs/reference-paper-verification.md);
+  run manifests v2 enforce reportability (§8); exact duplicates on model-visible columns are
+  removed before splitting (§3); numeric-looking categories are canonicalised to remove
+  export artifacts.

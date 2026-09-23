@@ -6,34 +6,43 @@ Every step is classified as:
 - **Extension (E).** Independent work.
 - **Proposal (P).** Designed but not yet implemented or evaluated.
 
-"Verified against paper" means the step was checked against the published text of the
-reference study. As of M0 **no step has been checked**. Pipeline details must be confirmed
-against the paper before M2 closes, including which of mutual-information selection,
-SMOTE and undersampling the paper uses and in what order.
+The reference methodology was **verified from the full text on 2026-09-22**. See
+[docs/reference-paper-verification.md](../docs/reference-paper-verification.md) for the
+exact facts, the text–figure discrepancies and the leakage risks.
 
 | Step | Class | Implementation status | Verified against paper |
 | --- | --- | --- | --- |
-| Datasets: TON_IoT, WUSTL-IIOT-2021, Edge-IIoTset | R | Registry, license/provenance, provisional schemas, fingerprints, quality reports (M1); no data downloaded yet | Which TON_IoT subset and Edge-IIoTset table the paper used: **No** |
-| Mutual-information feature selection (train-only) | R (to confirm) | Not started (M2) | No |
-| SMOTE / undersampling (train-only) | R (to confirm) | Not started (M2) | No |
-| Decision Tree baseline | R | Factory stub with DT only (M0); configurable in M2 | No |
-| Random Forest, Bagging, DT/RF/MLP Stacking, LightGBM | R | Not started (M2) | No |
-| Split-before-fit, persisted pipelines | E (protocol hardening) | Implemented for synthetic data (M0) | n/a |
-| Duplicate and target-leakage audit | E | Descriptive indicators implemented (M1 quality report); audit decisions M2 | n/a |
+| Datasets: TON_IoT Train_Test network (211,043 rows), WUSTL full table, Edge-IIoTset ML table | R | WUSTL and Edge-IIoTset official files downloaded, fingerprinted, schemas confirmed (M2); TON_IoT blocked (sign-in) | **Yes**: row/class counts equal Table 4 for WUSTL and Edge-IIoTset |
+| Target: multi-class attack type | R | Implemented (`target: attack_type`) | Yes (Table 4) |
+| MI universe = numeric columns | R | `paper_mi_universe` | Yes: equals Figs. 3 and 4 on official files; TON_IoT inferred from Fig. 2 |
+| MI ≥ 0.1 selection | R (paper_faithful: full data) / E (leakage_safe: train only) | `MutualInformationSelector` | Yes (Sec. III-A) |
+| SMOTE then RandomUnderSampler, proportional targets, random_state 42 | R (full data) / E (train only) | `proportional_resample`, `ProportionalResampler` | Yes (Sec. III-B, Table 4) |
+| 70:30 split | R | Both protocols | Yes (Sec. III-B); stratification is not stated and is used only in leakage_safe |
+| DT, RF, Bagging, LightGBM | R | `build_estimator`, library defaults | Model set yes; hyperparameters **not reported** by the paper |
+| Stacking: DT + RF base, MLP final | R | `build_estimator("stacking")` | Yes (Sec. III-C) |
+| Precision, Recall, Micro-F1, model size, training time | R | `classification_metrics`; manifest timings and artifact size | Yes (Sec. IV, Table 7) |
+| Deduplication before split, split before any fitting | E | `leakage_safe` protocol | n/a (paper does neither) |
+| Identifier/payload/export-artifact exclusion | E | Registry roles and `exclude_reason` | n/a (paper retains ports and IP-IDs, contradicting its own text) |
+| Category canonicalisation ('0' vs '0.0') | E | `CategoricalCanonicalizer` | n/a |
+| Post-split duplicate/leakage audit | E | `audit_leakage` (manifest) | n/a |
+| Macro-F1, MCC, balanced accuracy, per-class recall, PR-AUC | E | `classification_metrics` | n/a |
 | Bootstrap confidence intervals, multi-seed runs | E | Not started (M3) | n/a |
-| Chronological and rolling-origin evaluation | E | Chronological holdout implemented (M0); rolling-origin M4 | n/a |
-| Cross-dataset evaluation over an aligned schema | E | Not started (M4) | n/a |
-| Feature-drift detector (PSI/KS, calibrated thresholds) | P → E | Not started (M5) | n/a |
-| Adaptation policy (retain / recalibrate / retrain) | P → E | Not started (M5) | n/a |
-| Periodic-retraining and no-adaptation comparators | E | Not started (M5) | n/a |
-| Resource benchmarking | E (extends the paper's lightweight focus) | Not started (M6) | No |
+| Chronological and rolling-origin evaluation | E | Chronological holdout (M0); rolling-origin M4 | n/a |
+| Cross-dataset evaluation (TON_IoT → WUSTL, Table 8 features) | R/E | Not started (M4) | Table 8 features recorded |
+| Feature-drift detector, adaptation policy, comparators | P → E | Not started (M5) | n/a |
+| Resource benchmarking beyond fit time and size | E | Not started (M6) | n/a |
 | SHAP and feature-selection stability | E | Not started (M6) | n/a |
 
-## Differences from the reference protocol
+## Differences from the reference protocol (leakage_safe)
 
-Recorded here as they are discovered, with justification. Known intentional differences
-in M0: none yet confirmed. Expected differences, to be confirmed:
-
-- Transformers and resamplers are fitted on training data only, whatever the reference
-  paper's order of operations.
-- Confidence intervals and multi-seed variance are reported.
+1. Exact duplicates on model-visible columns are removed before splitting.
+2. The split happens before any fitting. MI, encoders, imputers and resampling are fitted
+   on the training partition only, and the test partition keeps its original
+   distribution.
+3. Ports are candidate features (as in the paper's figures), but WUSTL's `sIpId`, `dIpId`,
+   addresses and timestamps are excluded per the publisher. So are Edge-IIoTset's
+   identifiers, payload fields and three label-encoding export artifacts.
+4. Categorical columns are ordinal-encoded after canonicalisation. The paper's MI
+   universe used numeric columns only.
+5. The primary metric is macro-F1, not micro-F1, because micro-F1 equals accuracy in
+   single-label multi-class problems and hides minority-class failures.

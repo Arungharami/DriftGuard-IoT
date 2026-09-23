@@ -1,0 +1,8 @@
+# Stacking: DT + RF base estimators, MLP final estimator (verified, Sec. III-C).
+# Sub-model hyperparameters use library defaults; cv=5 is scikit-learn's default.
+# The reference paper (Ismail et al. 2025, Sec. III-C) reports no hyperparameters, so this
+# config uses the library defaults (an assumption recorded in every run manifest). The
+# random seed comes from the experiment config.
+name: stacking
+params:
+  cv: 5

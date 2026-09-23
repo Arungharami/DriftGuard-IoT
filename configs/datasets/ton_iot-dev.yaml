@@ -1,0 +1,7 @@
+# Bounded development subset of the official TON_IoT Train_Test network table.
+# Blocked until the file is downloaded manually from UNSW (see docs/datasets.md).
+name: ton-iot-dev
+kind: ton_iot
+target: attack_type
+row_limit: 100000
+min_per_class: 500

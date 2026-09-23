@@ -3,6 +3,14 @@
 All commands run from the repository root with the package installed. Data lives under
 `data/` (git-ignored) or under `$DRIFTGUARD_DATA_ROOT`.
 
+## Acquisition status (2026-09-22)
+
+| Dataset | Status |
+| --- | --- |
+| WUSTL-IIOT-2021 | Official archive downloaded (106,192,911 bytes, as stated by the publisher); schema confirmed; SHA-256 recorded in the card |
+| Edge-IIoTset | ML table downloaded via the adapter (82,184,390 bytes, as in Kaggle metadata); schema confirmed; SHA-256 recorded |
+| TON_IoT | **Blocked:** the UNSW SharePoint link redirects to a Microsoft sign-in, so a team member must download `train_test_network.csv` in a browser |
+
 ## License and provenance summary (checked 2026-09-22)
 
 | Dataset | Source checked | License / terms | Academic | Commercial | Raw redistribution | Acquisition |

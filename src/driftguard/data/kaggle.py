@@ -146,14 +146,15 @@ def download_kaggle_dataset(
     dest = ensure_safe_destination(dest, repo_root)
     dest.mkdir(parents=True, exist_ok=True)
 
+    # The dataset is positional: kaggle CLI 2.x removed the `-d` option (1.x accepts both).
     requested = list(files or [])
     commands = (
         [
-            [exe, "datasets", "download", "-d", source.slug, "-f", f, "-p", str(dest), "-q"]
+            [exe, "datasets", "download", source.slug, "-f", f, "-p", str(dest), "-q"]
             for f in requested
         ]
         if requested
-        else [[exe, "datasets", "download", "-d", source.slug, "-p", str(dest), "-q"]]
+        else [[exe, "datasets", "download", source.slug, "-p", str(dest), "-q"]]
     )
     before = {p.resolve() for p in dest.rglob("*") if p.is_file()}
     for cmd in commands:

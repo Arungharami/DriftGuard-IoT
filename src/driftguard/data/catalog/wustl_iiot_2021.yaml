@@ -3,8 +3,8 @@
 # on 2026-09-22: citation, download link, archive size, record counts, the 41-feature
 # design and the publisher's instruction to drop six leaky columns.
 # No license is stated on the publisher page.
-# The column list is PROVISIONAL. The publisher table gives descriptive names such as
-# "Source Packets (Spkts)", not exact CSV headers. Confirm against the downloaded header.
+# Schema CONFIRMED and fingerprints recorded 2026-09-22 against the official archive downloaded
+# from the publisher page (archive size matches the page's stated 106,192,911 bytes exactly).
 id: wustl_iiot_2021
 name: WUSTL-IIOT-2021
 publisher: Washington University in St. Louis (Zolanvari, Teixeira, Gupta, Khan, Jain)
@@ -59,13 +59,19 @@ tables:
     description: >-
       Full flow table. Source archive wustl_iiot_2021.zip (106,192,911 bytes per the
       publisher).
-    size_bytes: null
-    sha256: null
-    schema_status: provisional
+    size_bytes: 409800698
+    size_source: official archive extracted 2026-09-22
+    sha256: f897b24578cc6fdeb3e7a0e9ff63efd5bbdc926a545abbda725e0dbb348c6bca
+    n_rows: 1194464
+    archive_filename: wustl_iiot_2021.zip
+    archive_sha256: d80ef62029ff8a494061668c3b47f69ddce1fdd7784dae7ca9bd3f3c58d0763b
+    archive_size_bytes: 106192911
+    verified_on: 2026-09-22
+    schema_status: confirmed
     schema_source: >-
-      Publisher's 41-feature table mapped to Argus-style header names, plus the six
-      columns the publisher says to remove and the two label columns. Not yet confirmed
-      against a downloaded header.
+      Header of the official file (49 columns, exact names and order) validated
+      2026-09-22; full-file value types parse as declared; row and class counts equal
+      the publisher's and the reference paper's Table 4.
     columns:
       - {name: StartTime, dtype: string, role: timestamp, exclude_reason: "publisher: unique to attacks, exposes attack type"}
       - {name: LastTime, dtype: string, role: identifier, exclude_reason: "publisher: unique to attacks, exposes attack type"}
@@ -94,7 +100,7 @@ tables:
       - {name: DstJitter, dtype: float}
       - {name: SIntPkt, dtype: float}
       - {name: DIntPkt, dtype: float}
-      - {name: Proto, dtype: category}
+      - {name: Proto, dtype: int}
       - {name: Dur, dtype: float}
       - {name: TcpRtt, dtype: float}
       - {name: IdleTime, dtype: float}

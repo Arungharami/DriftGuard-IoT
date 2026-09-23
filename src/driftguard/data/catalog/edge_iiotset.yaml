@@ -1,9 +1,8 @@
 # Edge-IIoTset dataset card.
 # Kaggle metadata was read from the public Kaggle API on 2026-09-22: owner, license,
 # version, last update, total size and the per-file sizes below.
-# The column list is PROVISIONAL: Kaggle's metadata does not expose column names for these
-# files, so the list follows the dataset paper's feature description. Confirm it against
-# the downloaded header.
+# ml_edgeiiot: schema CONFIRMED and fingerprint recorded 2026-09-22 from the first-party
+# Kaggle download (size equals Kaggle's file metadata). dnn_edgeiiot remains provisional.
 id: edge_iiotset
 name: Edge-IIoTset
 publisher: Ferrag, Friha, Hamouda, Maglaras, Janicke
@@ -57,12 +56,17 @@ tables:
     relative_path: Edge-IIoTset dataset/Selected dataset for ML and DL/ML-EdgeIIoT-dataset.csv
     description: Pre-selected table for classical ML.
     size_bytes: 82184390
-    size_source: Kaggle file metadata, 2026-09-22
-    sha256: null
-    schema_status: provisional
+    size_source: Kaggle file metadata, 2026-09-22 (equal to the downloaded file)
+    sha256: 53101fad091af20bee815860962a5016b802ee45d456a141042f6183094c3c1a
+    n_rows: 157800
+    archive_filename: ML-EdgeIIoT-dataset.csv.zip
+    archive_sha256: f9c586c0a7610bfcd95c5a802e6af62140b2f59bfe3d5073be88fb0dd4a7f972
+    archive_size_bytes: 14114589
+    verified_on: 2026-09-22
+    schema_status: confirmed
     schema_source: >-
-      Feature list from the Edge-IIoTset paper (61 features plus Attack_label and
-      Attack_type, plus capture metadata columns); not yet confirmed against a header.
+      Header of the official file (63 columns, exact names and order) validated
+      2026-09-22; row and class counts equal the reference paper's Table 4.
     columns: &edge_columns
       - {name: frame.time, dtype: string, role: timestamp}
       - {name: ip.src_host, dtype: string, role: identifier}
@@ -103,13 +107,13 @@ tables:
       - {name: udp.stream, dtype: float}
       - {name: udp.time_delta, dtype: float}
       - {name: dns.qry.name, dtype: string, role: payload}
-      - {name: dns.qry.name.len, dtype: string}
+      - {name: dns.qry.name.len, dtype: string, exclude_reason: "export artifact: '0' in every normal row, '0.0' in every attack row (label purity 1.0, verified 2026-09-22); also contains hostnames"}
       - {name: dns.qry.qu, dtype: float}
       - {name: dns.qry.type, dtype: float}
       - {name: dns.retransmission, dtype: float}
       - {name: dns.retransmit_request, dtype: float}
       - {name: dns.retransmit_request_in, dtype: float}
-      - {name: mqtt.conack.flags, dtype: string}
+      - {name: mqtt.conack.flags, dtype: string, exclude_reason: "export artifact: '0'/'0x00000000' only in normal rows, '0.0' only in attack rows (label purity 1.0, verified 2026-09-22)"}
       - {name: mqtt.conflag.cleansess, dtype: float}
       - {name: mqtt.conflags, dtype: float}
       - {name: mqtt.hdrflags, dtype: float}
@@ -118,7 +122,7 @@ tables:
       - {name: mqtt.msg, dtype: string, role: payload}
       - {name: mqtt.msgtype, dtype: float}
       - {name: mqtt.proto_len, dtype: float}
-      - {name: mqtt.protoname, dtype: category}
+      - {name: mqtt.protoname, dtype: category, exclude_reason: "export artifact: '0'/'MQTT' only in normal rows, '0.0' only in attack rows (label purity 1.0, verified 2026-09-22)"}
       - {name: mqtt.topic, dtype: string, role: payload}
       - {name: mqtt.topic_len, dtype: float}
       - {name: mqtt.ver, dtype: float}

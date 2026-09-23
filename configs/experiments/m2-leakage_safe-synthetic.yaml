@@ -1,0 +1,21 @@
+# M2 CI/demo run of the leakage_safe protocol on SYNTHETIC data. Outputs are NON-REPORTABLE.
+name: m2-leakage-safe-synthetic
+seed: 20260922
+dataset: ../datasets/synthetic.yaml
+models:
+  - ../models/decision_tree_default.yaml
+  - ../models/random_forest.yaml
+  - ../models/bagging.yaml
+  - ../models/stacking.yaml
+  - ../models/lightgbm.yaml
+split:
+  strategy: stratified_holdout
+  test_size: 0.3
+preprocessing:
+  protocol: leakage_safe
+  mi_threshold: 0.1
+  deduplicate: true
+  resampling:
+    strategy: paper_proportional
+    ratio: 2.0
+    random_state: 42
