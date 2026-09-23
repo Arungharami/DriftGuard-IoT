@@ -84,9 +84,13 @@ def test_smoke_is_reproducible(repo_root: Path, tmp_path: Path) -> None:
     assert a["metrics"] == b["metrics"]
 
 
-def test_unimplemented_models_fail_loudly() -> None:
-    with pytest.raises(NotImplementedError, match="M2"):
-        build_estimator(ModelConfig(name="lightgbm"), seed=0)
+def test_all_five_m2_baselines_are_now_implemented() -> None:
+    # M0 through M1 kept a deliberate NotImplementedError here for every model but
+    # Decision Tree (see models/factory.py's original docstring: "scheduled for
+    # milestone M2"). M2 implements all five; this replaces that guard with the
+    # opposite assertion - see tests/test_models_factory.py for full coverage of each.
+    for name in ("decision_tree", "random_forest", "bagging", "stacking", "lightgbm"):
+        build_estimator(ModelConfig(name=name), seed=0)
 
 
 def test_seed_must_not_be_set_in_model_params() -> None:

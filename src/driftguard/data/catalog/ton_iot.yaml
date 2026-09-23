@@ -1,0 +1,128 @@
+# TON_IoT dataset card.
+# License text quoted from the publisher page on the verification date below.
+# The column list is PROVISIONAL: it has not yet been confirmed against a downloaded file
+# header. Confirm with `driftguard data validate ton_iot --file <csv>` and then set
+# schema_status: confirmed and record sha256 in a reviewed PR.
+id: ton_iot
+name: TON_IoT
+publisher: UNSW Canberra Cyber (Dr Nour Moustafa)
+homepage: https://research.unsw.edu.au/projects/toniot-datasets
+description: >-
+  Heterogeneous IoT/IIoT telemetry, operating-system and network datasets collected on a
+  testbed at UNSW Canberra. The publisher distributes raw, processed and Train_Test
+  subsets. This project's candidate table is the Train_Test network subset; which subset
+  the reference study used must be confirmed against its text (M2).
+license:
+  name: TON_IoT terms of use (publisher-specific, no standard license)
+  source_url: https://research.unsw.edu.au/projects/toniot-datasets
+  verified_on: 2026-09-22
+  terms_excerpt: >-
+    Free use of the TON_IoT datasets for academic research purposes is hereby granted in
+    perpetuity. Use for commercial purposes is allowable after asking the author, Dr Nour
+    Moustafa, who has asserted his right under the Copyright. To whom intend the use of
+    the TON_IoT datasets have to cite the above eight papers.
+  academic_use: permitted
+  commercial_use: permission_required
+  raw_redistribution: not_stated
+  derived_artifact_redistribution: requires_review
+  attribution_required: true
+  notes: >-
+    The terms do not grant redistribution. This project never redistributes raw data and
+    treats release of trained models or derived statistics as requiring review.
+citations:
+  - text: >-
+      Moustafa, N. A new distributed architecture for evaluating AI-based security systems
+      at the edge: Network TON_IoT datasets. Sustainable Cities and Society (2021): 102994.
+  - text: >-
+      Booij, T. M., et al. ToN IoT: The role of heterogeneity and the need for
+      standardization of features and attack types in IoT network intrusion datasets.
+      IEEE Internet of Things Journal (2021).
+  - text: >-
+      Alsaedi, A., et al. TON_IoT telemetry dataset: a new generation dataset of IoT and
+      IIoT for data-driven intrusion detection systems. IEEE Access 8 (2020): 165130-165150.
+  - text: >-
+      Moustafa, N., et al. Federated TON_IoT Windows datasets for evaluating AI-based
+      security applications. IEEE TrustCom 2020.
+  - text: >-
+      Moustafa, N., Ahmed, M., Ahmed, S. Data analytics-enabled intrusion detection:
+      evaluations of ToN_IoT Linux datasets. IEEE TrustCom 2020.
+  - text: >-
+      Moustafa, N. New generations of Internet of Things datasets for cybersecurity
+      applications based machine learning: TON_IoT datasets. eResearch Australasia
+      Conference, 2019.
+  - text: >-
+      Moustafa, N. A systemic IoT-Fog-Cloud architecture for big-data analytics and cyber
+      security systems: a review of fog computing. arXiv:1906.01055 (2019).
+  - text: >-
+      Ashraf, J., et al. IoTBoT-IDS: A novel statistical learning-enabled botnet detection
+      framework for protecting networks of smart cities. Sustainable Cities and Society
+      (2021): 103041.
+acquisition:
+  method: manual
+  url: https://research.unsw.edu.au/projects/toniot-datasets
+  instructions: >-
+    Follow the download link on the publisher page (UNSW SharePoint), open
+    Train_Test_datasets and download the network Train_Test CSV. Place it under
+    data/raw/ton_iot/ and run `driftguard data fingerprint ton_iot`.
+  unapproved_mirrors: >-
+    Kaggle hosts many third-party re-uploads of TON_IoT (checked 2026-09-22), several
+    labelled MIT, Apache-2.0, CC0 or CC-BY. Re-uploaders cannot relicense the
+    publisher's terms, so none are approved as a source.
+default_table: train_test_network
+tables:
+  - id: train_test_network
+    filename: train_test_network.csv
+    description: Train_Test network subset (Zeek-derived flow features with labels).
+    sha256: null
+    schema_status: provisional
+    schema_source: >-
+      Column names as documented for the TON_IoT network dataset; not yet confirmed
+      against a downloaded header.
+    na_values: ["-"]
+    columns:
+      - {name: ts, dtype: int, role: timestamp}
+      - {name: src_ip, dtype: string, role: identifier}
+      - {name: src_port, dtype: int, role: identifier, exclude_reason: "host/session identifier; review in M2"}
+      - {name: dst_ip, dtype: string, role: identifier}
+      - {name: dst_port, dtype: int}
+      - {name: proto, dtype: category}
+      - {name: service, dtype: category}
+      - {name: duration, dtype: float}
+      - {name: src_bytes, dtype: int}
+      - {name: dst_bytes, dtype: int}
+      - {name: conn_state, dtype: category}
+      - {name: missed_bytes, dtype: int}
+      - {name: src_pkts, dtype: int}
+      - {name: src_ip_bytes, dtype: int}
+      - {name: dst_pkts, dtype: int}
+      - {name: dst_ip_bytes, dtype: int}
+      - {name: dns_query, dtype: string, role: payload}
+      - {name: dns_qclass, dtype: int}
+      - {name: dns_qtype, dtype: int}
+      - {name: dns_rcode, dtype: int}
+      - {name: dns_AA, dtype: category}
+      - {name: dns_RD, dtype: category}
+      - {name: dns_RA, dtype: category}
+      - {name: dns_rejected, dtype: category}
+      - {name: ssl_version, dtype: category}
+      - {name: ssl_cipher, dtype: category}
+      - {name: ssl_resumed, dtype: category}
+      - {name: ssl_established, dtype: category}
+      - {name: ssl_subject, dtype: string, role: payload}
+      - {name: ssl_issuer, dtype: string, role: payload}
+      - {name: http_trans_depth, dtype: string}
+      - {name: http_method, dtype: category}
+      - {name: http_uri, dtype: string, role: payload}
+      - {name: http_referrer, dtype: string, role: payload, optional: true}
+      - {name: http_version, dtype: category}
+      - {name: http_request_body_len, dtype: int}
+      - {name: http_response_body_len, dtype: int}
+      - {name: http_status_code, dtype: int}
+      - {name: http_user_agent, dtype: string, role: payload}
+      - {name: http_orig_mime_types, dtype: category}
+      - {name: http_resp_mime_types, dtype: category}
+      - {name: weird_name, dtype: category}
+      - {name: weird_addl, dtype: category}
+      - {name: weird_notice, dtype: category}
+      - {name: label, dtype: int, role: label}
+      - {name: type, dtype: category, role: attack_type}

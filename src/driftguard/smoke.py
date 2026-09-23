@@ -38,6 +38,8 @@ def frame_fingerprint(df: pd.DataFrame) -> str:
 
 def _split(df: pd.DataFrame, config: ExperimentConfig) -> Split:
     ds, sp = config.dataset, config.split
+    if ds.label_column is None:
+        raise ValueError("smoke datasets require label_column")
     if sp.strategy == "chronological" and ds.timestamp_column is not None:
         return chronological_holdout(df, ds.timestamp_column, sp.test_size)
     return stratified_holdout(df, ds.label_column, sp.test_size, config.seed)
@@ -45,7 +47,7 @@ def _split(df: pd.DataFrame, config: ExperimentConfig) -> Split:
 
 def run_smoke(config: ExperimentConfig, output_root: str | Path) -> dict[str, Any]:
     ds = config.dataset
-    if ds.kind != "synthetic" or ds.synthetic is None:
+    if ds.kind != "synthetic" or ds.synthetic is None or ds.label_column is None:
         raise ValueError("the smoke run only accepts synthetic datasets")
     syn = ds.synthetic
 

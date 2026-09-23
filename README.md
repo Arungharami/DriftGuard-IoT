@@ -2,9 +2,9 @@
 
 **Trustworthy, drift-aware and resource-efficient intrusion detection across IoT and IIoT environments.**
 
-> **Status: M0 (foundation).** No model has been trained on a real dataset. The repository
-> contains **no research results**. Any metric printed by the smoke command is computed
-> on synthetic data and is explicitly labelled as such.
+> **Status: M2 (leakage-safe baselines).** Only bounded development runs exist. The repository
+> contains **no research results**. Every run manifest states whether it is reportable,
+> and synthetic and development runs are always NON-REPORTABLE.
 
 ## Scientific positioning
 
@@ -69,6 +69,8 @@ pip install -e ".[dev]" -c requirements/constraints-py311.txt
 driftguard --help
 driftguard validate-config configs/experiments/smoke-synthetic.yaml
 driftguard smoke                     # synthetic end-to-end run; writes experiments/runs/<run_id>/
+driftguard data list                 # dataset registry: license, acquisition, schema status
+driftguard train --config configs/experiments/m2-leakage_safe-synthetic.yaml   # NON-REPORTABLE demo
 
 ruff check . && ruff format --check .
 mypy
@@ -86,9 +88,11 @@ npm run lint && npm run typecheck && npm test && npm run build
 
 ## Data policy
 
-Raw datasets are **never** committed. They are retrieved locally (Kaggle adapter, M1) with
-the user's own credentials, fingerprinted with SHA-256, and kept under `data/`, which is
-git-ignored. CI uses synthetic fixtures only. See [data/README.md](data/README.md).
+Raw datasets are **never** committed. They are acquired locally (manual download from the
+publisher, or the Kaggle adapter for Edge-IIoTset's first-party upload) with the user's own
+credentials, fingerprinted with SHA-256, and kept under `data/`, which is git-ignored. CI
+uses synthetic fixtures only. See [docs/datasets.md](docs/datasets.md) and
+[data/README.md](data/README.md).
 
 ## Milestones
 
@@ -109,3 +113,11 @@ Arun Kumar Gharami, Shefatha Rabbany and Ankith Gajam (Florida Atlantic Universi
 **Not yet chosen.** A code license, and the terms under which trained artifacts may be
 redistributed (which depend on each dataset's license), are open decisions for the project
 owner. Until a license is added, all rights are reserved by the authors.
+
+### M5 readiness
+
+The [M0–M4 audit](docs/m5-audit.md) found M3/M4 and local real datasets absent.
+M5 provides tested offline evaluation primitives and interactive readiness evidence on
+`/experiments`; **the real-data research campaign remains blocked**. See the
+[protocol and reproduction commands](docs/m5-protocol.md). No M5 research metrics,
+deployment, or merge are claimed.

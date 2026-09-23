@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { M5Readiness } from "@/components/M5Readiness";
 import { ResultsChart } from "@/components/ResultsChart";
 import { PageHeader, Section, StatusBadge } from "@/components/ui";
 import { resultsIndex } from "@/lib/results";
@@ -14,6 +15,7 @@ export default function ExperimentsPage() {
         title="Experiments"
         lede="Results rendered exclusively from the versioned result index. Each entry must reference a research run manifest with a config hash, git commit and data fingerprints."
       />
+      <M5Readiness />
       {results.length === 0 ? (
         <div role="status" className="rounded-lg border border-line bg-surface-muted p-6">
           <p className="font-medium">No recorded research results yet.</p>

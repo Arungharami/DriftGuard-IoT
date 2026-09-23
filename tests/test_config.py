@@ -44,10 +44,23 @@ def test_synthetic_block_required_iff_synthetic() -> None:
 
 
 def test_label_cannot_be_dropped() -> None:
+    synthetic = {"n_samples": 100, "class_proportions": {"a": 0.5, "b": 0.5}}
     with pytest.raises(ValidationError, match="label_column"):
         DatasetConfig.model_validate(
-            {"name": "x", "kind": "ton_iot", "label_column": "y", "drop_columns": ["y"]}
+            {
+                "name": "x",
+                "kind": "synthetic",
+                "label_column": "y",
+                "drop_columns": ["y"],
+                "synthetic": synthetic,
+            }
         )
+
+
+def test_registry_datasets_take_label_from_card() -> None:
+    with pytest.raises(ValidationError, match="dataset card"):
+        DatasetConfig.model_validate({"name": "x", "kind": "ton_iot", "label_column": "y"})
+    assert DatasetConfig.model_validate({"name": "x", "kind": "ton_iot"}).is_registry
 
 
 @pytest.mark.parametrize("proportions", [{"a": 1.0}, {"a": 0.5, "b": 0.4}, {"a": 1.2, "b": -0.2}])

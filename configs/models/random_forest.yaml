@@ -1,0 +1,6 @@
+# Random Forest, library defaults (100 trees).
+# The reference paper (Ismail et al. 2025, Sec. III-C) reports no hyperparameters, so this
+# config uses the library defaults (an assumption recorded in every run manifest). The
+# random seed comes from the experiment config.
+name: random_forest
+params: {}
