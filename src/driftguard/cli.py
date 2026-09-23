@@ -137,5 +137,22 @@ def m5_smoke(
     typer.echo(result["notice"])
 
 
+@app.command("campaign")
+def campaign_cli(
+    config: Annotated[Path, typer.Option(exists=True)],
+    output_dir: Annotated[Path, typer.Option()],
+    research: Annotated[bool, typer.Option()] = False,
+) -> None:
+    """Run/resume a five-seed campaign; real data must pass admission first."""
+    from driftguard.platform.campaign import campaign_from_file
+
+    try:
+        result = campaign_from_file(config, output_dir, research=research)
+    except (ValueError, OSError) as exc:
+        typer.echo(f"BLOCKED: {exc}", err=True)
+        raise typer.Exit(code=2) from exc
+    typer.echo(f"{len(result['cells'])} cells; {result['publication_status']}")
+
+
 if __name__ == "__main__":  # pragma: no cover
     app()

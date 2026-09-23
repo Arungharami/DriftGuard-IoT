@@ -1,14 +1,23 @@
-# Inference Space (M7)
+---
+title: DriftGuard-IoT
+sdk: docker
+app_port: 7860
+---
 
-A separately deployed Hugging Face Space serving **evaluated** DriftGuard-IoT models.
+# DriftGuard-IoT inference service
 
-Planned design:
+Prepared FastAPI Docker Space; not a deployed or approved research model. The service
+returns `503` until the operator configures a trusted local bundle and `INFERENCE_API_KEY`.
+`POST /predict` accepts `{ "rows": [{ "feature": 1.0 }] }` with exactly the bundle's
+features, at most 128 rows. `X-Inference-Key` credentials stay on servers. `/health` has no data.
+No user-supplied pickle, remote URL or raw network trace is accepted.
 
-- Loads a versioned model artifact **together with its matching fitted preprocessing
-  pipeline** and the run manifest that produced it.
-- Strict request schema (Pydantic): exact feature names and types, finite numeric ranges,
-  maximum batch size, maximum request body size.
-- No raw datasets, traces or private artifacts are bundled.
-- Called only by the research portal's server-side route; the token is a Space secret.
+Build the Dockerfile from the **repository root**, or use the release staging script to
+copy only source, constraints, README, pyproject and app into a staging directory.
+A restricted data/model directory must never be uploaded along with this app.
 
-Not implemented in M0.
+Local launch: `uvicorn driftguard.inference.service:create_app --factory --port 7860`
+starts in unavailable mode. A reviewed deployment supplies its own mounted bundle via
+`DRIFTGUARD_BUNDLE_DIR`; bundle hashes establish integrity, not trust in the producer.
+Use a scoped server-side Hugging Face token for a private Space plus a separate
+`INFERENCE_API_KEY` for application authentication. No public release is approved yet.

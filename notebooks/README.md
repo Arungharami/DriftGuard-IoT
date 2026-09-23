@@ -1,16 +1,14 @@
-# Notebooks (M7)
+# Google Colab notebooks
 
-Planned Colab notebooks, each a thin wrapper that installs the package at a pinned commit
-and calls `driftguard` functions. No algorithm is re-implemented in a notebook.
+Synthetic defaults; remote execution not claimed.
 
-| Notebook | Purpose |
-| --- | --- |
-| `01_dataset_validation.ipynb` | Retrieve (user credentials), fingerprint, and validate schemas |
-| `02_baseline_training.ipynb` | Train the five baselines from experiment configs |
-| `03_cross_domain_evaluation.ipynb` | Chronological and cross-dataset evaluation |
-| `04_drift_experiments.ipynb` | Drift detector and adaptation-policy simulations |
-| `05_resource_benchmarking.ipynb` | Latency, memory and throughput measurements |
-
-Every notebook supports a bounded development sample (`--dev-sample N`) before a full run,
-writes run manifests, and checkpoints expensive steps to Google Drive. Committed
-notebooks must be stripped of outputs.
+- [00_environment_setup.ipynb](https://colab.research.google.com/github/Arungharami/DriftGuard-IoT/blob/integration/platform-completion/notebooks/00_environment_setup.ipynb)
+- [01_data_validation.ipynb](https://colab.research.google.com/github/Arungharami/DriftGuard-IoT/blob/integration/platform-completion/notebooks/01_data_validation.ipynb)
+- [02_baseline_models.ipynb](https://colab.research.google.com/github/Arungharami/DriftGuard-IoT/blob/integration/platform-completion/notebooks/02_baseline_models.ipynb)
+- [03_cross_domain.ipynb](https://colab.research.google.com/github/Arungharami/DriftGuard-IoT/blob/integration/platform-completion/notebooks/03_cross_domain.ipynb)
+- [04_drift_detection.ipynb](https://colab.research.google.com/github/Arungharami/DriftGuard-IoT/blob/integration/platform-completion/notebooks/04_drift_detection.ipynb)
+- [05_adaptive_learning.ipynb](https://colab.research.google.com/github/Arungharami/DriftGuard-IoT/blob/integration/platform-completion/notebooks/05_adaptive_learning.ipynb)
+- [06_robustness.ipynb](https://colab.research.google.com/github/Arungharami/DriftGuard-IoT/blob/integration/platform-completion/notebooks/06_robustness.ipynb)
+- [07_explainability.ipynb](https://colab.research.google.com/github/Arungharami/DriftGuard-IoT/blob/integration/platform-completion/notebooks/07_explainability.ipynb)
+- [08_resource_benchmark.ipynb](https://colab.research.google.com/github/Arungharami/DriftGuard-IoT/blob/integration/platform-completion/notebooks/08_resource_benchmark.ipynb)
+- [09_final_experiments.ipynb](https://colab.research.google.com/github/Arungharami/DriftGuard-IoT/blob/integration/platform-completion/notebooks/09_final_experiments.ipynb)

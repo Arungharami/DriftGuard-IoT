@@ -1,0 +1,371 @@
+[
+  {
+    "DOI": "10.1109/access.2025.3554083",
+    "title": [
+      "Intrusion Detection in IoT and IIoT: Comparing Lightweight Machine Learning Techniques Using TON_IoT, WUSTL-IIOT-2021, and EdgeIIoTset Datasets"
+    ],
+    "author": [
+      {
+        "ORCID": "https://orcid.org/0000-0001-8580-1648",
+        "authenticated-orcid": false,
+        "given": "Shereen",
+        "family": "Ismail",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Merit Network Inc., Ann Arbor, MI, USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Salah",
+        "family": "Dandan",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "School of Electrical Engineering and Computer Science, University of North Dakota, Grand Forks, ND, USA"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Ala'a",
+        "family": "Qushou",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Department of Computer Engineering, University of Jordan, Amman, Jordan"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2025
+        ]
+      ]
+    },
+    "container-title": [
+      "IEEE Access"
+    ],
+    "volume": "13",
+    "issue": null,
+    "page": "73468-73485",
+    "URL": "https://doi.org/10.1109/access.2025.3554083"
+  },
+  {
+    "DOI": "10.1109/iotm.0001.2100012",
+    "title": [
+      "A Lightweight Concept Drift Detection and Adaptation Framework for IoT Data Streams"
+    ],
+    "author": [
+      {
+        "given": "Li",
+        "family": "Yang",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Abdallah",
+        "family": "Shami",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2021,
+          6
+        ]
+      ]
+    },
+    "container-title": [
+      "IEEE Internet of Things Magazine"
+    ],
+    "volume": "4",
+    "issue": "2",
+    "page": "96-101",
+    "URL": "https://doi.org/10.1109/iotm.0001.2100012"
+  },
+  {
+    "DOI": "10.1109/access.2022.3165809",
+    "title": [
+      "Edge-IIoTset: A New Comprehensive Realistic Cyber Security Dataset of IoT and IIoT Applications for Centralized and Federated Learning"
+    ],
+    "author": [
+      {
+        "ORCID": "https://orcid.org/0000-0002-0632-3172",
+        "authenticated-orcid": false,
+        "given": "Mohamed Amine",
+        "family": "Ferrag",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Department of Computer Science, Guelma University, Guelma, Algeria"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-1160-2846",
+        "authenticated-orcid": false,
+        "given": "Othmane",
+        "family": "Friha",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Networks and Systems Laboratory (LRS), Badji Mokhtar&#x2014;Annaba University, Annaba, Algeria"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0003-2168-4192",
+        "authenticated-orcid": false,
+        "given": "Djallel",
+        "family": "Hamouda",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Labstic Laboratory, Guelma University, Guelma, Algeria"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0001-5360-9782",
+        "authenticated-orcid": false,
+        "given": "Leandros",
+        "family": "Maglaras",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "School of Computer Science and Informatics, De Montfort University, Leicester, U.K."
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-1345-2829",
+        "authenticated-orcid": false,
+        "given": "Helge",
+        "family": "Janicke",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Cyber Security Cooperative Research Centre (CSCRC), Edith Cowan University, Perth, WA, Australia"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2022
+        ]
+      ]
+    },
+    "container-title": [
+      "IEEE Access"
+    ],
+    "volume": "10",
+    "issue": null,
+    "page": "40281-40306",
+    "URL": "https://doi.org/10.1109/access.2022.3165809"
+  },
+  {
+    "DOI": "10.1109/access.2020.3022862",
+    "title": [
+      "TON_IoT Telemetry Dataset: A New Generation Dataset of IoT and IIoT for Data-Driven Intrusion Detection Systems"
+    ],
+    "author": [
+      {
+        "ORCID": "https://orcid.org/0000-0003-4588-5562",
+        "authenticated-orcid": false,
+        "given": "Abdullah",
+        "family": "Alsaedi",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0001-6127-9349",
+        "authenticated-orcid": false,
+        "given": "Nour",
+        "family": "Moustafa",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0002-1235-9673",
+        "authenticated-orcid": false,
+        "given": "Zahir",
+        "family": "Tari",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "ORCID": "https://orcid.org/0000-0001-7769-3384",
+        "authenticated-orcid": false,
+        "given": "Abdun",
+        "family": "Mahmood",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Adnan",
+        "family": "Anwar",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2020
+        ]
+      ]
+    },
+    "container-title": [
+      "IEEE Access"
+    ],
+    "volume": "8",
+    "issue": null,
+    "page": "165130-165150",
+    "URL": "https://doi.org/10.1109/access.2020.3022862"
+  },
+  {
+    "DOI": "10.1137/1.9781611972771.42",
+    "title": [
+      "Learning from Time-Changing Data with Adaptive Windowing"
+    ],
+    "author": [
+      {
+        "given": "Albert",
+        "family": "Bifet",
+        "sequence": "first",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Ricard",
+        "family": "Gavald\u00e0",
+        "sequence": "additional",
+        "affiliation": [],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2007,
+          4,
+          26
+        ]
+      ]
+    },
+    "container-title": [
+      "Proceedings of the 2007 SIAM International Conference on Data Mining"
+    ],
+    "volume": null,
+    "issue": null,
+    "page": "443-448",
+    "URL": "https://doi.org/10.1137/1.9781611972771.42"
+  }
+]

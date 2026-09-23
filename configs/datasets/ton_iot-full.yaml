@@ -1,0 +1,3 @@
+name: ton_iot-full
+kind: ton_iot
+target: attack_type

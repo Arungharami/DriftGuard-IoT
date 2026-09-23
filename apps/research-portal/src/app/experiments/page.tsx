@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { ResultsExplorer } from "@/components/ResultsExplorer";
 import { M5Readiness } from "@/components/M5Readiness";
 import { ResultsChart } from "@/components/ResultsChart";
 import { PageHeader, Section, StatusBadge } from "@/components/ui";
@@ -15,6 +16,7 @@ export default function ExperimentsPage() {
         title="Experiments"
         lede="Results rendered exclusively from the versioned result index. Each entry must reference a research run manifest with a config hash, git commit and data fingerprints."
       />
+      <ResultsExplorer results={results} />
       <M5Readiness />
       {results.length === 0 ? (
         <div role="status" className="rounded-lg border border-line bg-surface-muted p-6">
@@ -54,7 +56,7 @@ export default function ExperimentsPage() {
                           .map(([k, v]) => `${k}=${v.toFixed(4)}`)
                           .join(" ")}
                       </td>
-                      <td className="py-2 font-mono text-xs">{r.provenance.run_id}</td>
+                      <td className="py-2 font-mono text-xs"><a className="underline" href={r.provenance.manifest_url}>{r.provenance.run_id}</a></td>
                     </tr>
                   ))}
                 </tbody>

@@ -1,0 +1,55 @@
+name: Approved Vercel preview or production
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        type: choice
+        required: true
+        options: [preview, production]
+permissions:
+  contents: read
+jobs:
+  deploy:
+    if: vars.ENABLE_APPROVED_DEPLOYMENTS == 'true'
+    environment: ${{ inputs.target }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify actual human-review protection
+        run: python scripts/check_release_environment.py "$TARGET"
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TARGET: ${{ inputs.target }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci
+        working-directory: apps/research-portal
+      - run: npm run lint && npm run typecheck && npm test && npm run build
+        working-directory: apps/research-portal
+      - run: npx playwright install --with-deps chromium && npm run test:e2e
+        working-directory: apps/research-portal
+      - name: Build reviewed target and deploy
+        working-directory: apps/research-portal
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ vars.VERCEL_PROJECT_ID }}
+          TARGET: ${{ inputs.target }}
+          VERIFIED_PREVIEW_SHA: ${{ vars.VERIFIED_PREVIEW_SHA }}
+        run: |
+          test -n "$VERCEL_PROJECT_ID"
+          test -n "$VERCEL_ORG_ID"
+          if [ "$TARGET" = production ]; then
+            test "$VERIFIED_PREVIEW_SHA" = "$GITHUB_SHA"
+            npx vercel@50.37.0 pull --yes --environment=production --token="$VERCEL_TOKEN"
+            npx vercel@50.37.0 build --prod --token="$VERCEL_TOKEN"
+            npx vercel@50.37.0 deploy --prebuilt --prod --token="$VERCEL_TOKEN"
+          else
+            npx vercel@50.37.0 pull --yes --environment=preview --token="$VERCEL_TOKEN"
+            npx vercel@50.37.0 build --token="$VERCEL_TOKEN"
+            npx vercel@50.37.0 deploy --prebuilt --token="$VERCEL_TOKEN"
+          fi

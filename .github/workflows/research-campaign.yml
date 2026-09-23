@@ -1,0 +1,35 @@
+name: Approved real-data campaign
+on:
+  workflow_dispatch:
+    inputs:
+      dataset:
+        type: choice
+        required: true
+        options: [edge_iiotset, ton_iot, wustl_iiot_2021]
+permissions:
+  contents: read
+jobs:
+  campaign:
+    if: vars.ENABLE_APPROVED_RESEARCH == 'true'
+    environment: research
+    runs-on: [self-hosted, driftguard-research]
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python scripts/check_release_environment.py research
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - run: pip install -e '.[platform,explain]' -c requirements/constraints-py311.txt
+      - name: Run or resume on private licensed data volume
+        env:
+          DATASET: ${{ inputs.dataset }}
+          DRIFTGUARD_DATA_ROOT: ${{ vars.PRIVATE_DATA_ROOT }}
+          RUN_ROOT: ${{ vars.PRIVATE_RUN_ROOT }}
+        run: |
+          test -n "$DRIFTGUARD_DATA_ROOT"
+          test -n "$RUN_ROOT"
+          driftguard campaign --research --config "configs/experiments/platform-${DATASET}-full.yaml" --output-dir "$RUN_ROOT/$GITHUB_SHA/$DATASET"
+      # Deliberately no upload-artifact: raw runs/models stay on the private runner.

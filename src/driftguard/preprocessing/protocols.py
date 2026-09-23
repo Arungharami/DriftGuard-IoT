@@ -1,7 +1,7 @@
 """The two preprocessing protocols.
 
 ``leakage_safe`` (this project's protocol):
-    deduplicate on model-visible columns -> stratified split -> [fit on train only:
+    deduplicate on model-visible columns -> feature-group stratified split -> [fit on train only:
     numeric coercion, category canonicalisation, median imputation, ordinal encoding,
     zero-variance removal, MI selection, optional proportional resampling] -> model.
     Everything stateful lives in one persisted ``imblearn`` pipeline.
@@ -71,7 +71,12 @@ def prepare_leakage_safe(
     seed: int,
     deduplicate: bool,
 ) -> PreparedData:
-    """Deduplicate, then split. Nothing is fitted here."""
+    """Deduplicate, then split whole feature-identical groups. Nothing is fitted here.
+
+    Rows sharing one model-visible feature vector (after exact deduplication, these are
+    the conflicting-label rows) go to the same partition, so no test feature vector is
+    ever seen in training. Groups are stratified by their majority label.
+    """
     features = numeric_columns + categorical_columns
     visible = df[[*features, target]]
     n_in = len(visible)
@@ -79,13 +84,35 @@ def prepare_leakage_safe(
         visible = visible.drop_duplicates(keep="first")
     n_dedup = n_in - len(visible)
 
-    counts = visible[target].value_counts()
-    stratify = visible[target] if (counts >= 2).all() else None
-    train, test = train_test_split(
-        visible, test_size=test_size, random_state=seed, stratify=stratify, shuffle=True
+    # A 64-bit hash collision can only merge groups (keeping more rows together), never
+    # separate identical vectors, so it cannot introduce cross-partition leakage.
+    keys = pd.util.hash_pandas_object(visible[features], index=False).to_numpy()
+    tally = (
+        pd.DataFrame({"group": keys, "label": visible[target].to_numpy()})
+        .value_counts(dropna=False)
+        .rename("n")
+        .reset_index()
     )
-    # Feature-identical rows that still straddle the split (their labels differ).
+    tally["order"] = tally["label"].astype(str)
+    tally = tally.sort_values(["group", "n", "order"], ascending=[True, False, True])
+    majority = tally.drop_duplicates("group").set_index("group")["label"]
+    group_sizes = tally.groupby("group")["n"].agg(["size", "sum"])
+    conflicting = group_sizes[group_sizes["size"] > 1]
+
+    stratify = majority if (majority.value_counts() >= 2).all() else None
+    _, test_groups = train_test_split(
+        majority.index.to_numpy(),
+        test_size=test_size,
+        random_state=seed,
+        stratify=stratify,
+        shuffle=True,
+    )
+    in_test = np.isin(keys, test_groups)
+    train, test = visible[~in_test], visible[in_test]
+    # Guard: zero by construction.
     cross = train[features].merge(test[features].drop_duplicates(), how="inner", on=features)
+    if len(cross):
+        raise RuntimeError("feature-group split produced cross-partition feature vectors")
     return PreparedData(
         protocol="leakage_safe",
         X_train=train[features],
@@ -97,7 +124,11 @@ def prepare_leakage_safe(
         details={
             "rows_in": n_in,
             "duplicates_removed": n_dedup,
+            "split_strategy": "feature_group_stratified_holdout",
             "stratified": stratify is not None,
+            "feature_groups": len(majority),
+            "conflicting_label_groups": len(conflicting),
+            "conflicting_label_rows": int(conflicting["sum"].sum()),
             "cross_split_feature_duplicates": len(cross),
             "test_contains_synthetic_rows": False,
             "fit_scope": "train partition only",

@@ -1,0 +1,3 @@
+name: edge_iiotset-full
+kind: edge_iiotset
+target: attack_type

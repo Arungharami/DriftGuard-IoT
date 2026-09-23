@@ -71,3 +71,7 @@ npm-debug.log*
 Thumbs.db
 .idea/
 *.swp
+
+# Browser verification output
+playwright-report/
+test-results/

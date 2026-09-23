@@ -12,6 +12,7 @@ about any other hardware, including edge devices.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import time
 from dataclasses import dataclass
@@ -217,8 +218,13 @@ def run_experiment(
     kind: str = "development",
     data_root: Path | None = None,
     save_models: bool = True,
+    bootstrap_repeats: int = 0,
 ) -> dict[str, Any]:
     cfg = config.preprocessing or PreprocessingConfig()
+    if kind == "research" and config.dataset.is_registry:
+        from driftguard.platform.admission import admit_dataset
+
+        admit_dataset(config.dataset, data_root)
     data = load_dataset(config.dataset, config.seed, data_root)
     prepared = prepare(data, config)
 
@@ -234,6 +240,11 @@ def run_experiment(
         list(prepared.X_train.columns),
         str(prepared.y_train.name),
     ).to_dict()
+
+    if kind == "research" and audit["cross_partition_duplicate_rows"]:
+        raise ValueError("research blocked: feature-identical rows cross the split")
+
+    split = write_split_record(prepared, run_dir / "split.json")
 
     records: list[ModelRecord] = []
     metrics: dict[str, Any] = {}
@@ -262,6 +273,23 @@ def run_experiment(
             y_proba=np.asarray(proba) if proba is not None else None,
             proba_classes=list(pipeline.classes_) if proba is not None else None,
         )
+        from driftguard.evaluation.uncertainty import calibration_metrics, stratified_f1_interval
+
+        if bootstrap_repeats:
+            metrics[model_cfg.name]["macro_f1_ci"] = stratified_f1_interval(
+                prepared.y_test, y_pred, repeats=bootstrap_repeats, seed=config.seed
+            )
+        if proba is not None:
+            metrics[model_cfg.name]["calibration"] = calibration_metrics(
+                prepared.y_test, proba, pipeline.classes_
+            )
+        matrix = np.asarray(metrics[model_cfg.name]["confusion_matrix"]["matrix"])
+        false_positives = matrix.sum(axis=0) - np.diag(matrix)
+        negatives = matrix.sum() - matrix.sum(axis=1)
+        metrics[model_cfg.name]["false_positive_rate_per_class"] = {
+            str(label): float(fp / n) if n else None
+            for label, fp, n in zip(labels, false_positives, negatives, strict=True)
+        }
         artifact = run_dir / "models" / f"{model_cfg.name}.joblib"
         sha = save_pipeline(pipeline, artifact) if save_models else None
         records.append(
@@ -286,6 +314,7 @@ def run_experiment(
         "numeric_columns": prepared.numeric_columns,
         "categorical_columns": prepared.categorical_columns,
         "leakage_audit": audit,
+        "split_record": split,
     }
     if prepared.protocol == "paper_faithful":
         protocol_details["reference"] = {
@@ -324,6 +353,39 @@ def run_experiment(
     return {**summary, "run_dir": str(run_dir), "manifest": manifest}
 
 
+def _index_sha256(index: pd.Index) -> str:
+    return hashlib.sha256(json.dumps(sorted(map(str, index))).encode()).hexdigest()
+
+
+def _class_counts(y: pd.Series) -> dict[str, int]:
+    return {str(k): int(v) for k, v in y.value_counts().sort_index().items()}
+
+
+def write_split_record(prepared: PreparedData, path: Path) -> dict[str, Any]:
+    """Persist partition membership so the split can be re-derived and verified.
+
+    Indices are row labels of the loaded table (source row positions for registry data,
+    since loading and subsetting preserve the original index).
+    """
+    record = {
+        "protocol": prepared.protocol,
+        "train_index": sorted(map(str, prepared.X_train.index)),
+        "test_index": sorted(map(str, prepared.X_test.index)),
+    }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(record) + "\n", encoding="utf-8")
+    return {
+        "file": path.name,
+        "file_sha256": sha256_file(path),
+        "train_index_sha256": _index_sha256(prepared.X_train.index),
+        "test_index_sha256": _index_sha256(prepared.X_test.index),
+        "class_counts": {
+            "train": _class_counts(prepared.y_train),
+            "test": _class_counts(prepared.y_test),
+        },
+    }
+
+
 def _json_safe(obj: Any) -> Any:
     if isinstance(obj, dict):
         return {str(k): _json_safe(v) for k, v in obj.items()}
@@ -334,4 +396,11 @@ def _json_safe(obj: Any) -> Any:
     return obj
 
 
-__all__ = ["NON_REPORTABLE", "LoadedDataset", "load_dataset", "prepare", "run_experiment"]
+__all__ = [
+    "NON_REPORTABLE",
+    "LoadedDataset",
+    "load_dataset",
+    "prepare",
+    "run_experiment",
+    "write_split_record",
+]
