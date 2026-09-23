@@ -116,3 +116,10 @@ driftguard data validate edge_iiotset --nrows 157800   # full file; default read
 pytest -m real_data
 driftguard train --config <DT+LightGBM Edge config> --kind research
 ```
+
+## 8. Update (2026-09-23, second session)
+
+PR #12 CI passed (Python, portal, hygiene, dependency audit). The Edge-IIoTset file is
+still absent, so the real experiment is stopped. The one-seed DT + LightGBM research
+config and the step-by-step validation/verification runbook are prepared in
+[`docs/m3-edge-runbook.md`](../m3-edge-runbook.md). No real-data metric exists.
