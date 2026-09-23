@@ -1,0 +1,107 @@
+{
+  "kind": "streaming_demo_run",
+  "reportable": false,
+  "evidence_tier": "synthetic_fixture",
+  "notice": "SYNTHETIC fixture model and rows on one workstation. Demonstrates software behaviour only; not IoT/IIoT, edge-device or research evidence.",
+  "recorded_at_utc": "2026-09-23T23:30:35Z",
+  "git_commit": "3306791fbb4ca4ea3f83ddb71031ee360f55aeb4",
+  "working_tree_clean": true,
+  "broker": {
+    "software": "mosquitto version 2.1.2",
+    "listener": "127.0.0.1 (loopback, no TLS)",
+    "anonymous": false,
+    "acl": "per-role deny-by-default"
+  },
+  "commands": [
+    "driftguard stream broker-config --port 18883",
+    "mosquitto -c .local/stream/broker/mosquitto.conf",
+    "driftguard stream demo-bundle",
+    "driftguard stream worker --bundle .local/stream/synthetic-bundle --benign-label normal --max-seconds 16",
+    "driftguard stream replay --bundle .local/stream/synthetic-bundle --rate 50 --max-events 500"
+  ],
+  "model": {
+    "model_name": "decision_tree",
+    "model_version": "266562d39d67b93c",
+    "sha256": "266562d39d67b93c6ba2d333dd075504493945c47079a0f530e9fdba7bc27ea9",
+    "synthetic_data": true,
+    "publication_allowed": false,
+    "release_blockers": [
+      "owner release approval required",
+      "synthetic fixture, not a research model",
+      "NON-REPORTABLE: synthetic data; development run; source fingerprint not verified against the dataset registry"
+    ]
+  },
+  "replay": {
+    "source": "held-out rows of synthetic run stream-demo-synthetic-20260923T233004Z-5cb1beda (NON-REPORTABLE)",
+    "sent": 500,
+    "target_rate_per_s": 50.0,
+    "achieved_rate_per_s": 50.06603668684686,
+    "evidence_tier": "synthetic_fixture",
+    "timing": "imposed replay schedule; not original event time"
+  },
+  "worker_summary": {
+    "events_by_status": {
+      "predicted": 500
+    },
+    "predictions_by_decision": {
+      "dos": 70,
+      "injection": 21,
+      "normal": 357,
+      "scan": 52
+    },
+    "events_by_evidence_tier": {
+      "synthetic_fixture": 500
+    },
+    "counters": {},
+    "inference_ms": {
+      "n": 500,
+      "p50": 4.655854500015266,
+      "p95": 5.238735448256193,
+      "p99": 5.80526750163699
+    },
+    "end_to_end_ms": {
+      "n": 500,
+      "p50": 24.804499999999997,
+      "p95": 32.96269999999999,
+      "p99": 34.61338
+    },
+    "first_prediction_utc": "2026-09-23T23:30:09.223944+00:00",
+    "last_prediction_utc": "2026-09-23T23:30:19.210013+00:00",
+    "monitor_alarms": 0,
+    "model_sha256": [
+      "266562d39d67b93c6ba2d333dd075504493945c47079a0f530e9fdba7bc27ea9"
+    ],
+    "reportable": false
+  },
+  "measurement_notes": {
+    "inference_ms": "perf_counter around pipeline.predict, batch size 1, warm (model loaded), this workstation only",
+    "end_to_end_ms": "worker UTC completion minus producer replay_send_time_utc; single-host wall clock",
+    "not_measured": [
+      "cold start",
+      "CPU",
+      "RSS",
+      "broker receive time",
+      "dashboard delivery",
+      "edge hardware",
+      "energy"
+    ]
+  },
+  "environment": {
+    "python": "3.11.16",
+    "implementation": "CPython",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "machine": "arm64",
+    "packages": {
+      "driftguard-iot": "0.0.1",
+      "numpy": "2.4.6",
+      "pandas": "3.0.6",
+      "scipy": "1.17.1",
+      "scikit-learn": "1.9.1",
+      "imbalanced-learn": "0.14.2",
+      "lightgbm": "4.7.0",
+      "pydantic": "2.13.5",
+      "shap": "0.51.0"
+    },
+    "git_commit": "3306791fbb4ca4ea3f83ddb71031ee360f55aeb4"
+  }
+}
