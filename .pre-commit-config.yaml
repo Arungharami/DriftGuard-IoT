@@ -1,0 +1,20 @@
+# Optional local hooks: `pip install pre-commit && pre-commit install`.
+# CI enforces the same checks independently, so skipping hooks cannot bypass them.
+repos:
+  - repo: local
+    hooks:
+      - id: repo-hygiene
+        name: block datasets, artifacts, credentials, large files
+        entry: python scripts/check_repo_hygiene.py
+        language: system
+        pass_filenames: true
+      - id: ruff-check
+        name: ruff check
+        entry: ruff check --fix
+        language: system
+        types: [python]
+      - id: ruff-format
+        name: ruff format
+        entry: ruff format
+        language: system
+        types: [python]

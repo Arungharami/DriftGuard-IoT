@@ -1,0 +1,19 @@
+# Synthetic flow table with injected covariate shift in the final 40% of the timeline.
+# Used to exercise drift tooling in tests. NOT a research dataset.
+name: synthetic-flows-drift
+kind: synthetic
+label_column: label
+timestamp_column: timestamp
+categorical_columns: [proto]
+drop_columns: []
+synthetic:
+  n_samples: 2000
+  class_proportions:
+    normal: 0.70
+    dos: 0.15
+    scan: 0.10
+    injection: 0.05
+  drift:
+    onset_fraction: 0.6
+    scale_multiplier: 3.0
+    features: [src_bytes, mean_iat]
