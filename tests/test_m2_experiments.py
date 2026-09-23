@@ -159,7 +159,9 @@ def test_registry_run_with_unverified_file_is_non_reportable(
     raw = _synthetic_config().model_dump()
     raw["dataset"] = {"name": "fake-wustl", "kind": "wustl_iiot_2021", "target": "attack_type"}
     cfg = ExperimentConfig.model_validate(raw)
-    result = run_experiment(cfg, tmp_path / "runs", kind="research", save_models=False)
+    with pytest.raises(ValueError, match="permission"):
+        run_experiment(cfg, tmp_path / "research", kind="research", save_models=False)
+    result = run_experiment(cfg, tmp_path / "runs", kind="development", save_models=False)
     m: ExperimentManifest = result["manifest"]
     assert m.dataset.sha256_matches_registry is False
     assert m.reportable is False

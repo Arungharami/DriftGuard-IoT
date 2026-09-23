@@ -1,0 +1,33 @@
+name: Approved model publication
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        type: string
+        required: true
+      model:
+        type: choice
+        required: true
+        options: [decision_tree, random_forest, bagging, stacking, lightgbm]
+permissions:
+  contents: read
+jobs:
+  publish:
+    if: vars.ENABLE_APPROVED_RELEASES == 'true'
+    environment: model-release
+    runs-on: [self-hosted, driftguard-research]
+    steps:
+      - uses: actions/checkout@v4
+      - run: python scripts/check_release_environment.py model-release
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Publish only reviewed, licensed model
+        env:
+          RUN_ID: ${{ inputs.run_id }}
+          MODEL: ${{ inputs.model }}
+          RUN_ROOT: ${{ vars.PRIVATE_RUN_ROOT }}
+          HF_TOKEN: ${{ secrets.HF_WRITE_TOKEN }}
+        run: |
+          case "$RUN_ID" in *[!a-zA-Z0-9_-]*|'') exit 2;; esac
+          test -n "$RUN_ROOT"
+          python scripts/release_model.py --run "$RUN_ROOT/$RUN_ID" --review "$RUN_ROOT/$RUN_ID/publication-review.json" --model "$MODEL" --publish

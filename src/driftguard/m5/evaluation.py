@@ -117,10 +117,12 @@ def delayed_prequential(
     initial_time: Array,
     event_time: Array,
     label_time: Array,
-    policy: Literal["frozen", "periodic", "error_triggered"] = "frozen",
+    policy: Literal["frozen", "periodic", "error_triggered", "adwin"] = "frozen",
     period: int = 50,
     error_window: int = 50,
     error_threshold: float = 0.3,
+    detector_delta: float = 0.002,
+    max_retrain_rows: int | None = None,
 ) -> dict[str, Any]:
     """Predict each timestamp group before revealing even zero-delay labels.
 
@@ -141,10 +143,21 @@ def delayed_prequential(
         raise ValueError("timestamps must be chronological with strict initial separation")
     if np.any(label_time < event_time):
         raise ValueError("labels cannot arrive before events")
-    if policy not in {"frozen", "periodic", "error_triggered"}:
+    if policy not in {"frozen", "periodic", "error_triggered", "adwin"}:
         raise ValueError("unknown adaptation policy")
     if period < 1 or error_window < 1 or not 0 <= error_threshold <= 1:
         raise ValueError("invalid policy configuration")
+    if not 0 < detector_delta < 1 or (max_retrain_rows is not None and max_retrain_rows < 2):
+        raise ValueError("invalid detector delta or training window")
+    detector: Any = None
+    if policy == "adwin":
+        from river.drift import ADWIN
+
+        detector_factory: Any = ADWIN
+        detector = detector_factory(delta=detector_delta)
+    released: set[int] = set()
+    alarms: list[dict[str, Any]] = []
+    fit_costs: list[float] = []
     assert_isolated(initial_x, stream_x)
     model = clone(estimator).fit(initial_x, initial_y)
     predictions = np.empty(len(stream_y), dtype=initial_y.dtype)
@@ -160,11 +173,25 @@ def delayed_prequential(
         if policy == "error_triggered" and fresh >= error_window:
             recent = ordered[-error_window:]
             trigger = bool(np.mean(predictions[recent] != stream_y[recent]) > error_threshold)
+        if detector is not None:
+            for index in ordered:
+                if int(index) not in released:
+                    detector.update(float(predictions[index] != stream_y[index]))
+                    released.add(int(index))
+                    if detector.drift_detected:
+                        alarms.append({"at": float(now), "label_index": int(index)})
+                        trigger = True
         if trigger:
+            fit_started = time.perf_counter()
+            fit_x = np.concatenate([initial_x, stream_x[available]])
+            fit_y = np.concatenate([initial_y, stream_y[available]])
+            if max_retrain_rows is not None:
+                fit_x, fit_y = fit_x[-max_retrain_rows:], fit_y[-max_retrain_rows:]
             model = clone(estimator).fit(
-                np.concatenate([initial_x, stream_x[available]]),
-                np.concatenate([initial_y, stream_y[available]]),
+                fit_x,
+                fit_y,
             )
+            fit_costs.append(time.perf_counter() - fit_started)
             used = len(available)
             updates.append({"at": float(now), "released_indices": available.tolist()})
         predictions[current] = model.predict(stream_x[current])
@@ -172,6 +199,8 @@ def delayed_prequential(
         "predictions": predictions,
         "updates": updates,
         "policy": policy,
+        "alarms": alarms,
+        "refit_seconds": fit_costs,
         "unreleased_at_end": int(np.sum(label_time >= event_time[-1])),
     }
 

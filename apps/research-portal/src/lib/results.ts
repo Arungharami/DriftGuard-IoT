@@ -25,6 +25,8 @@ export const resultEntrySchema = z.object({
     .record(z.string(), z.object({ low: metricValue, high: metricValue, level: z.number() }))
     .optional(),
   provenance: z.object({
+    manifest_url: z.string().regex(/^\/manifests\/[a-f0-9]{64}\.json$/).optional(),
+    manifest_sha256: z.string().regex(/^[a-f0-9]{64}$/).optional(),
     run_id: z.string().min(1),
     kind: z.literal("research"),
     synthetic_data: z.literal(false),

@@ -1,0 +1,20 @@
+name: platform-ton-iot-full
+seed: 42
+dataset: ../datasets/ton_iot-full.yaml
+models:
+  - ../models/decision_tree_default.yaml
+  - ../models/random_forest.yaml
+  - ../models/bagging.yaml
+  - ../models/stacking.yaml
+  - ../models/lightgbm.yaml
+split:
+  strategy: stratified_holdout
+  test_size: 0.3
+n_jobs: 1
+preprocessing:
+  protocol: leakage_safe
+  mi_threshold: 0.1
+  mi_max_samples: 50000
+  deduplicate: true
+  resampling:
+    strategy: none

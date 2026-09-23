@@ -1,0 +1,55 @@
+{
+  "remote_colab_execution": false,
+  "results": [
+    {
+      "notebook": "00_environment_setup.ipynb",
+      "status": "executed_locally",
+      "code_cells": 2
+    },
+    {
+      "notebook": "01_data_validation.ipynb",
+      "status": "executed_locally",
+      "code_cells": 2
+    },
+    {
+      "notebook": "02_baseline_models.ipynb",
+      "status": "executed_locally",
+      "code_cells": 2
+    },
+    {
+      "notebook": "03_cross_domain.ipynb",
+      "status": "executed_locally",
+      "code_cells": 2
+    },
+    {
+      "notebook": "04_drift_detection.ipynb",
+      "status": "executed_locally",
+      "code_cells": 2
+    },
+    {
+      "notebook": "05_adaptive_learning.ipynb",
+      "status": "executed_locally",
+      "code_cells": 2
+    },
+    {
+      "notebook": "06_robustness.ipynb",
+      "status": "executed_locally",
+      "code_cells": 2
+    },
+    {
+      "notebook": "07_explainability.ipynb",
+      "status": "executed_locally",
+      "code_cells": 2
+    },
+    {
+      "notebook": "08_resource_benchmark.ipynb",
+      "status": "executed_locally",
+      "code_cells": 2
+    },
+    {
+      "notebook": "09_final_experiments.ipynb",
+      "status": "executed_locally",
+      "code_cells": 2
+    }
+  ]
+}

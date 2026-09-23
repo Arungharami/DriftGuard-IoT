@@ -3,9 +3,15 @@ export type NavItem = { href: string; label: string };
 export const NAV: NavItem[] = [
   { href: "/", label: "Home" },
   { href: "/research", label: "Research" },
+  { href: "/reference-paper", label: "Reference Paper" },
+  { href: "/contribution", label: "Our Contribution" },
   { href: "/architecture", label: "Architecture" },
   { href: "/datasets", label: "Datasets" },
   { href: "/experiments", label: "Experiments" },
+  { href: "/cross-domain", label: "Cross-Domain" },
+  { href: "/robustness", label: "Robustness" },
+  { href: "/resources", label: "Resources" },
+  { href: "/demo", label: "Live Demo" },
   { href: "/drift-lab", label: "Drift Lab" },
   { href: "/model-explorer", label: "Model Explorer" },
   { href: "/explainability", label: "Explainability" },
@@ -16,9 +22,9 @@ export const NAV: NavItem[] = [
 
 /** Names only; contact details are deliberately not published on the portal. */
 export const TEAM: { name: string; affiliation: string }[] = [
-  { name: "Arun Kumar Gharami", affiliation: "Florida Atlantic University" },
-  { name: "Shefatha Rabbany", affiliation: "Florida Atlantic University" },
-  { name: "Ankith Gajam", affiliation: "Florida Atlantic University" },
+  { name: "Arun Kumar Gharami", affiliation: "Grade 1 · CNT 6167 Internet of Things · Florida Atlantic University" },
+  { name: "Shefatha Rabbany", affiliation: "Grade 1 · CNT 6167 Internet of Things · Florida Atlantic University" },
+  { name: "Ankith Gajam", affiliation: "Grade 1 · CNT 6167 Internet of Things · Florida Atlantic University" },
 ];
 
 export const REPO_URL ="https://github.com/Arungharami/DriftGuard-IoT";
