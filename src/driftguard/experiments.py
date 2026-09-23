@@ -12,6 +12,7 @@ about any other hardware, including edge devices.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import time
 from dataclasses import dataclass
@@ -243,6 +244,8 @@ def run_experiment(
     if kind == "research" and audit["cross_partition_duplicate_rows"]:
         raise ValueError("research blocked: feature-identical rows cross the split")
 
+    split = write_split_record(prepared, run_dir / "split.json")
+
     records: list[ModelRecord] = []
     metrics: dict[str, Any] = {}
     for model_cfg in config.models:
@@ -311,6 +314,7 @@ def run_experiment(
         "numeric_columns": prepared.numeric_columns,
         "categorical_columns": prepared.categorical_columns,
         "leakage_audit": audit,
+        "split_record": split,
     }
     if prepared.protocol == "paper_faithful":
         protocol_details["reference"] = {
@@ -349,6 +353,39 @@ def run_experiment(
     return {**summary, "run_dir": str(run_dir), "manifest": manifest}
 
 
+def _index_sha256(index: pd.Index) -> str:
+    return hashlib.sha256(json.dumps(sorted(map(str, index))).encode()).hexdigest()
+
+
+def _class_counts(y: pd.Series) -> dict[str, int]:
+    return {str(k): int(v) for k, v in y.value_counts().sort_index().items()}
+
+
+def write_split_record(prepared: PreparedData, path: Path) -> dict[str, Any]:
+    """Persist partition membership so the split can be re-derived and verified.
+
+    Indices are row labels of the loaded table (source row positions for registry data,
+    since loading and subsetting preserve the original index).
+    """
+    record = {
+        "protocol": prepared.protocol,
+        "train_index": sorted(map(str, prepared.X_train.index)),
+        "test_index": sorted(map(str, prepared.X_test.index)),
+    }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(record) + "\n", encoding="utf-8")
+    return {
+        "file": path.name,
+        "file_sha256": sha256_file(path),
+        "train_index_sha256": _index_sha256(prepared.X_train.index),
+        "test_index_sha256": _index_sha256(prepared.X_test.index),
+        "class_counts": {
+            "train": _class_counts(prepared.y_train),
+            "test": _class_counts(prepared.y_test),
+        },
+    }
+
+
 def _json_safe(obj: Any) -> Any:
     if isinstance(obj, dict):
         return {str(k): _json_safe(v) for k, v in obj.items()}
@@ -359,4 +396,11 @@ def _json_safe(obj: Any) -> Any:
     return obj
 
 
-__all__ = ["NON_REPORTABLE", "LoadedDataset", "load_dataset", "prepare", "run_experiment"]
+__all__ = [
+    "NON_REPORTABLE",
+    "LoadedDataset",
+    "load_dataset",
+    "prepare",
+    "run_experiment",
+    "write_split_record",
+]
