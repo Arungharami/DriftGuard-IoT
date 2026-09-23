@@ -59,7 +59,9 @@ def generate_synthetic_flows(
         raise ValueError(f"drift_features must be numeric features, got {sorted(unknown)}")
 
     rng = np.random.default_rng(seed)
-    classes = list(class_proportions)
+    # Sorted, so the output depends on the mapping's content, not its key order: manifests
+    # store configs with sorted keys, and a run must be regenerable from its manifest.
+    classes = sorted(class_proportions)
     probs = np.asarray([class_proportions[c] for c in classes], dtype=float)
     probs = probs / probs.sum()
 

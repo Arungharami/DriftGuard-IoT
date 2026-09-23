@@ -44,7 +44,7 @@ jobs:
       - name: Install
         run: |
           python -m pip install --upgrade pip
-          pip install -e ".[dev,explain,platform,notebooks]" -c requirements/constraints-py311.txt
+          pip install -e ".[dev,explain,platform,notebooks,streaming]" -c requirements/constraints-py311.txt
       - name: Ruff lint
         run: ruff check --output-format=github .
       - name: Ruff format
@@ -65,6 +65,35 @@ jobs:
         run: |
           driftguard validate-config configs/experiments/smoke-synthetic.yaml
           driftguard smoke --output-dir "$RUNNER_TEMP/smoke"
+
+  mqtt:
+    name: MQTT integration (synthetic, real Mosquitto broker)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: |
+            pyproject.toml
+            requirements/constraints-py311.txt
+      - name: Install Mosquitto (broker service disabled; tests start their own)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends mosquitto
+          sudo systemctl stop mosquitto || true
+          mosquitto -h | head -1 || true
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev,platform,streaming]" -c requirements/constraints-py311.txt
+      - name: Broker auth, ACL, QoS 1, restart and end-to-end replay tests (must not skip)
+        run: |
+          set -o pipefail
+          pytest -m mqtt tests/streaming -rs 2>&1 | tee mqtt.txt
+          ! grep -q "SKIPPED" mqtt.txt
 
   audit:
     name: Dependency audit

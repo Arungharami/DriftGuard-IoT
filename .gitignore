@@ -75,3 +75,6 @@ Thumbs.db
 # Browser verification output
 playwright-report/
 test-results/
+
+# local streaming demo state: broker secrets, event store, demo bundles
+.local/

@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import json
 import math
 import secrets
 import time
@@ -13,8 +12,7 @@ import pandas as pd
 from fastapi import FastAPI, Header, HTTPException
 from pydantic import BaseModel, ConfigDict, Field
 
-from driftguard.models.persistence import load_verified_pipeline
-from driftguard.reporting.provenance import sha256_file
+from driftguard.platform.bundle import load_bundle
 
 
 class PredictRequest(BaseModel):
@@ -26,10 +24,8 @@ def create_app(bundle: Path | None = None, *, api_key: str | None = None) -> Fas
     app = FastAPI(title="DriftGuard-IoT inference", docs_url=None, redoc_url=None)
     model, metadata = None, None
     if bundle is not None:
-        metadata = json.loads((bundle / "bundle.json").read_text())
-        if sha256_file(bundle / "manifest.json") != metadata["source_manifest_sha256"]:
-            raise ValueError("source manifest integrity failure")
-        model = load_verified_pipeline(bundle / "pipeline.joblib", metadata["sha256"])
+        loaded = load_bundle(bundle)
+        model, metadata = loaded.pipeline, loaded.metadata
 
     @app.get("/health")
     def health() -> dict[str, str]:
