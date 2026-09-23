@@ -148,7 +148,8 @@ def test_replay_publishes_on_schedule_and_reports_imposed_timing() -> None:
     sent: list[bytes] = []
     stats = replay(_source(rows), sent.append, rate_per_s=200.0, max_events=20)
     assert stats["sent"] == len(sent) == 20
-    assert stats["achieved_rate_per_s"] <= 200.0 * 1.05
+    # Sleeps only ever delay sends, so the achieved rate cannot exceed the target.
+    assert 150.0 <= stats["achieved_rate_per_s"] <= 200.0
     assert "not original event time" in stats["timing"]
     with pytest.raises(ValueError):
         replay(_source(rows), sent.append, rate_per_s=0)

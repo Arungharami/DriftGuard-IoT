@@ -83,20 +83,25 @@ def replay(
     if rate_per_s <= 0:
         raise ValueError("rate must be positive")
     interval, sent = 1.0 / rate_per_s, 0
-    started = time.monotonic()
-    for sequence, payload in encode_messages(source):
+    first = last = 0.0
+    for _, payload in encode_messages(source):
         if max_events is not None and sent >= max_events:
             break
-        delay = started + sequence * interval - time.monotonic()
-        if delay > 0:
-            time.sleep(delay)
+        if sent == 0:
+            first = time.monotonic()  # the schedule is anchored to the first actual send
+        else:
+            delay = first + sent * interval - time.monotonic()
+            if delay > 0:
+                time.sleep(delay)
+        last = time.monotonic()
         publish(payload)
         sent += 1
-    elapsed = time.monotonic() - started
+    # N sends span N-1 intervals; dividing N by the span would overstate the rate.
+    span = last - first
     return {
         "sent": sent,
         "target_rate_per_s": rate_per_s,
-        "achieved_rate_per_s": sent / elapsed if elapsed > 0 else None,
+        "achieved_rate_per_s": (sent - 1) / span if sent > 1 and span > 0 else None,
         "evidence_tier": source.evidence_tier,
         "timing": "imposed replay schedule; not original event time",
     }
