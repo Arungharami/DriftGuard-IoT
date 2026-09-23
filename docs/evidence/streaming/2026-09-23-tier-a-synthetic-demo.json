@@ -3,8 +3,8 @@
   "reportable": false,
   "evidence_tier": "synthetic_fixture",
   "notice": "SYNTHETIC fixture model and rows on one workstation. Demonstrates software behaviour only; not IoT/IIoT, edge-device or research evidence.",
-  "recorded_at_utc": "2026-09-23T23:30:35Z",
-  "git_commit": "3306791fbb4ca4ea3f83ddb71031ee360f55aeb4",
+  "recorded_at_utc": "2026-09-23T23:40:28Z",
+  "git_commit": "d331c8f1d292fea1300474872017650500eab618",
   "working_tree_clean": true,
   "broker": {
     "software": "mosquitto version 2.1.2",
@@ -32,10 +32,10 @@
     ]
   },
   "replay": {
-    "source": "held-out rows of synthetic run stream-demo-synthetic-20260923T233004Z-5cb1beda (NON-REPORTABLE)",
+    "source": "held-out rows of synthetic run stream-demo-synthetic-20260923T233957Z-5cb1beda (NON-REPORTABLE)",
     "sent": 500,
     "target_rate_per_s": 50.0,
-    "achieved_rate_per_s": 50.06603668684686,
+    "achieved_rate_per_s": 49.96667073363509,
     "evidence_tier": "synthetic_fixture",
     "timing": "imposed replay schedule; not original event time"
   },
@@ -55,18 +55,18 @@
     "counters": {},
     "inference_ms": {
       "n": 500,
-      "p50": 4.655854500015266,
-      "p95": 5.238735448256193,
-      "p99": 5.80526750163699
+      "p50": 4.6889790010027355,
+      "p95": 5.502348202207941,
+      "p99": 5.889264337383793
     },
     "end_to_end_ms": {
       "n": 500,
-      "p50": 24.804499999999997,
-      "p95": 32.96269999999999,
-      "p99": 34.61338
+      "p50": 24.898,
+      "p95": 28.097599999999996,
+      "p99": 34.562470000000005
     },
-    "first_prediction_utc": "2026-09-23T23:30:09.223944+00:00",
-    "last_prediction_utc": "2026-09-23T23:30:19.210013+00:00",
+    "first_prediction_utc": "2026-09-23T23:40:02.185687+00:00",
+    "last_prediction_utc": "2026-09-23T23:40:12.172270+00:00",
     "monitor_alarms": 0,
     "model_sha256": [
       "266562d39d67b93c6ba2d333dd075504493945c47079a0f530e9fdba7bc27ea9"
@@ -84,7 +84,8 @@
       "dashboard delivery",
       "edge hardware",
       "energy"
-    ]
+    ],
+    "achieved_rate_per_s": "(sent - 1) / (last send - first send), producer monotonic clock"
   },
   "environment": {
     "python": "3.11.16",
@@ -102,6 +103,6 @@
       "pydantic": "2.13.5",
       "shap": "0.51.0"
     },
-    "git_commit": "3306791fbb4ca4ea3f83ddb71031ee360f55aeb4"
+    "git_commit": "d331c8f1d292fea1300474872017650500eab618"
   }
 }
