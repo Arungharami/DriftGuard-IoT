@@ -113,3 +113,11 @@ Arun Kumar Gharami, Shefatha Rabbany and Ankith Gajam (Florida Atlantic Universi
 **Not yet chosen.** A code license, and the terms under which trained artifacts may be
 redistributed (which depend on each dataset's license), are open decisions for the project
 owner. Until a license is added, all rights are reserved by the authors.
+
+### M5 readiness
+
+The [M0–M4 audit](docs/m5-audit.md) found M3/M4 and local real datasets absent.
+M5 provides tested offline evaluation primitives and interactive readiness evidence on
+`/experiments`; **the real-data research campaign remains blocked**. See the
+[protocol and reproduction commands](docs/m5-protocol.md). No M5 research metrics,
+deployment, or merge are claimed.

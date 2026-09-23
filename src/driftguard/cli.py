@@ -114,5 +114,28 @@ def train(
     typer.echo(f"run directory: {result['run_dir']}")
 
 
+@app.command("m5-audit")
+def m5_audit(
+    root: Annotated[Path, typer.Option(help="Local dataset root")] = Path("data"),
+) -> None:
+    """Print fail-closed M5 inventory; exit 2 while the research campaign is blocked."""
+    from driftguard.m5.readiness import inventory
+
+    typer.echo(json.dumps(inventory(root), indent=2))
+    raise typer.Exit(code=2)
+
+
+@app.command("m5-smoke")
+def m5_smoke(
+    output_dir: Annotated[Path, typer.Option()] = Path("experiments/runs/m5-smoke"),
+    explain: Annotated[bool, typer.Option(help="Exercise optional actual TreeSHAP")] = False,
+) -> None:
+    """Exercise M5 primitives with synthetic data only; never exports portal metrics."""
+    from driftguard.m5.smoke import run_smoke
+
+    result = run_smoke(output_dir, explain=explain)
+    typer.echo(result["notice"])
+
+
 if __name__ == "__main__":  # pragma: no cover
     app()

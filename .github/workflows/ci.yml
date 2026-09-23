@@ -44,7 +44,7 @@ jobs:
       - name: Install
         run: |
           python -m pip install --upgrade pip
-          pip install -e ".[dev]" -c requirements/constraints-py311.txt
+          pip install -e ".[dev,explain]" -c requirements/constraints-py311.txt
       - name: Ruff lint
         run: ruff check --output-format=github .
       - name: Ruff format
@@ -53,6 +53,8 @@ jobs:
         run: mypy
       - name: Pytest (synthetic fixtures only)
         run: pytest -m "not slow and not real_data" --cov --cov-report=term-missing
+      - name: M5 synthetic integration with actual SHAP
+        run: driftguard m5-smoke --explain --output-dir "$RUNNER_TEMP/m5-smoke"
       - name: Portal dataset catalog in sync with registry
         run: driftguard data export-catalog --check
       - name: CLI smoke run

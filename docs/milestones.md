@@ -18,3 +18,10 @@ publication require explicit approval from the project owner.
 | M8 | Research portal and API integration | All pages data-driven; simulated vs recorded distinction; secured server route to the Space; PR preview deployments |
 | M9 | Full experiment campaign, ablations, statistics | Pre-registered matrix executed; ablations; statistical tests |
 | M10 | Manuscript and public release readiness | Paper drafted from verified artifacts; release checklist |
+
+## Audited state (2026-09-23)
+
+M0–M2 exist as stacked draft PRs, not merged milestones. No M3/M4 refs or PRs were
+found. The expanded M5 request is **blocked for real-data execution**; see
+[M5 audit](m5-audit.md) and [prospective protocol](m5-protocol.md). Passing synthetic
+checks does not satisfy M5 research exit criteria.
