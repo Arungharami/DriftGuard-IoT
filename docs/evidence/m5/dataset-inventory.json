@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-09-23T16:57:46Z",
+  "campaign_status": "blocked",
+  "reportable": false,
+  "datasets": [
+    {
+      "dataset": "edge_iiotset",
+      "table": "ml_edgeiiot",
+      "license": "CC BY-NC-SA 4.0 (as listed on the first-party Kaggle upload)",
+      "license_source": "https://www.kaggle.com/datasets/mohamedamineferrag/edgeiiotset-cyber-security-dataset-of-iot-iiot",
+      "license_verified_on": "2026-09-22",
+      "expected_sha256": "53101fad091af20bee815860962a5016b802ee45d456a141042f6183094c3c1a",
+      "observed_sha256": null,
+      "blockers": [
+        "ML-EdgeIIoT-dataset.csv not found under data/raw/edge_iiotset. See `driftguard data show edge_iiotset` for acquisition instructions."
+      ],
+      "inventory_passed": false
+    },
+    {
+      "dataset": "ton_iot",
+      "table": "train_test_network",
+      "license": "TON_IoT terms of use (publisher-specific, no standard license)",
+      "license_source": "https://research.unsw.edu.au/projects/toniot-datasets",
+      "license_verified_on": "2026-09-22",
+      "expected_sha256": null,
+      "observed_sha256": null,
+      "blockers": [
+        "schema is not confirmed",
+        "no registry fingerprint",
+        "train_test_network.csv not found under data/raw/ton_iot. See `driftguard data show ton_iot` for acquisition instructions."
+      ],
+      "inventory_passed": false
+    },
+    {
+      "dataset": "wustl_iiot_2021",
+      "table": "wustl_iiot_2021",
+      "license": "No license stated by the publisher",
+      "license_source": "http://www.cse.wustl.edu/~jain/iiot2/index.html",
+      "license_verified_on": "2026-09-22",
+      "expected_sha256": "f897b24578cc6fdeb3e7a0e9ff63efd5bbdc926a545abbda725e0dbb348c6bca",
+      "observed_sha256": null,
+      "blockers": [
+        "explicit verified academic-use permission required",
+        "wustl_iiot_2021.csv not found under data/raw/wustl_iiot_2021. See `driftguard data show wustl_iiot_2021` for acquisition instructions."
+      ],
+      "inventory_passed": false
+    }
+  ],
+  "campaign_blockers": [
+    "M3 research benchmarks and M4 validated alignment/splits are absent from audited refs",
+    "No reviewed cross-dataset semantic contract is implemented",
+    "No validated timestamp/session boundaries or attack-family ontology",
+    "No real-data campaign runner or reviewed M5 detector/adaptation implementation"
+  ]
+}

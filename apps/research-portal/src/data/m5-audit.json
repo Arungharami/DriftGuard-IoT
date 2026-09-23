@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "audited_on": "2026-09-23",
+  "base_commit": "ca0c7a49d9c8d4389111db3d72115586b840c54b",
+  "status": "blocked",
+  "reportable": false,
+  "milestones": [
+    {
+      "id": "M0",
+      "status": "draft",
+      "evidence": "https://github.com/Arungharami/DriftGuard-IoT/pull/1",
+      "detail": "Foundation and portal scaffold exist; four remote CI checks passed at 722648f. Not merged."
+    },
+    {
+      "id": "M1",
+      "status": "draft",
+      "evidence": "https://github.com/Arungharami/DriftGuard-IoT/pull/2",
+      "detail": "Registry, acquisition and schema tooling exist at 1fcea75. Dataset permissions and availability remain constraints."
+    },
+    {
+      "id": "M2",
+      "status": "draft",
+      "evidence": "https://github.com/Arungharami/DriftGuard-IoT/pull/3",
+      "detail": "Baselines exist at ca0c7a4; four remote CI checks passed. PR reports development runs only; run artifacts are not present in this checkout."
+    },
+    {
+      "id": "M3",
+      "status": "absent",
+      "evidence": "https://github.com/Arungharami/DriftGuard-IoT/branches",
+      "detail": "No M3 remote ref or PR in audited inventory; no reportable research results in the portal index."
+    },
+    {
+      "id": "M4",
+      "status": "absent",
+      "evidence": "https://github.com/Arungharami/DriftGuard-IoT/branches",
+      "detail": "No M4 remote ref or PR in audited inventory; no validated alignment, rolling-origin or domain-shift artifacts."
+    }
+  ],
+  "experiments": [
+    {
+      "id": "transfer",
+      "title": "Cross-dataset generalization",
+      "status": "blocked",
+      "implementation": "Source-only frozen-fit primitive; no certified dataset alignment or campaign runner.",
+      "blockers": [
+        "No pair of locally available, licensed, fingerprint-verified datasets.",
+        "Packet and flow features lack an approved semantic/unit/granularity contract."
+      ],
+      "evidence": "docs/m5-audit.md"
+    },
+    {
+      "id": "drift",
+      "title": "Chronological drift and adaptation",
+      "status": "blocked",
+      "implementation": "Delayed-label prequential primitive with frozen, periodic and simple error-triggered policies.",
+      "blockers": [
+        "Timestamp, session separation and initial-label availability are unverified.",
+        "Simple error trigger is not a validated drift detector; detection delay and false-alarm campaign pending."
+      ],
+      "evidence": "docs/m5-protocol.md"
+    },
+    {
+      "id": "robustness",
+      "title": "Offline defensive robustness",
+      "status": "blocked",
+      "implementation": "Bounded aggregate-only random measurement-noise sensitivity utility.",
+      "blockers": [
+        "Reviewed independent continuous fields and physical constraints unavailable.",
+        "No real-data robustness measurements; no operational evasion claims."
+      ],
+      "evidence": "docs/m5-protocol.md"
+    },
+    {
+      "id": "unknown",
+      "title": "Unknown-attack recognition",
+      "status": "blocked",
+      "implementation": "Held-out family isolation guard and known-validation threshold utilities.",
+      "blockers": [
+        "Attack-family ontology and family-disjoint partitions unavailable.",
+        "Synthetic outlier smoke exercise is not unknown-attack recognition evidence."
+      ],
+      "evidence": "docs/m5-protocol.md"
+    },
+    {
+      "id": "shap",
+      "title": "SHAP feature stability",
+      "status": "blocked",
+      "implementation": "Actual TreeSHAP smoke path and tie-aware top-k Jaccard utility.",
+      "blockers": [
+        "No verified real models or aligned feature windows.",
+        "SHAP stability is descriptive, not causal evidence."
+      ],
+      "evidence": "docs/m5-protocol.md"
+    },
+    {
+      "id": "resources",
+      "title": "Resource benchmarks",
+      "status": "blocked",
+      "implementation": "Warm batch latency percentiles, throughput and CPU-time utility.",
+      "blockers": [
+        "No real fitted pipeline or representative edge hardware.",
+        "Isolated peak-RSS and full training-cost benchmarks not implemented."
+      ],
+      "evidence": "docs/m5-protocol.md"
+    },
+    {
+      "id": "ablations",
+      "title": "Controlled ablations and intervals",
+      "status": "blocked",
+      "implementation": "Paired circular moving-block bootstrap of macro-F1 deltas.",
+      "blockers": [
+        "Full real-data multi-seed ablation campaign not executed.",
+        "Block length and analysis units require source-validation evidence."
+      ],
+      "evidence": "docs/m5-protocol.md"
+    }
+  ]
+}

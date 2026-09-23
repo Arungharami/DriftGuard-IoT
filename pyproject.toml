@@ -77,7 +77,7 @@ warn_unreachable = true
 plugins = ["pydantic.mypy"]
 
 [[tool.mypy.overrides]]
-module = ["sklearn.*", "imblearn.*", "lightgbm.*", "scipy.*", "shap.*", "pandas.*", "joblib.*"]
+module = ["sklearn.*", "imblearn.*", "lightgbm.*", "scipy.*", "shap.*", "pandas.*", "joblib.*", "threadpoolctl"]
 ignore_missing_imports = true
 
 # ---------------------------------------------------------------- pytest
