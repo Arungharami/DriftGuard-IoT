@@ -1,4 +1,4 @@
-# Pinned, tested dependency set for Python 3.11 (generated with pip freeze on 2026-09-22).
+# Pinned dependency set for Python 3.11 (reconciled 2026-09-23 for pydantic 2.13.5).
 # Use as a constraints file:  pip install -e ".[dev]" -c requirements/constraints-py311.txt
 # Regenerate deliberately; Dependabot proposes bumps via PR. Lower bounds in pyproject.toml are
 # declared minimums and are NOT separately tested.
@@ -41,7 +41,7 @@ platformdirs==4.11.12
 pluggy==1.6.0
 py-serializable==2.1.0
 pydantic==2.13.5
-pydantic_core==2.49.0
+pydantic_core==2.46.5
 Pygments==2.21.0
 pyparsing==3.3.3
 pytest==9.1.1
