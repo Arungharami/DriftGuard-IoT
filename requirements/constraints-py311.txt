@@ -32,6 +32,7 @@ narwhals==2.26.0
 numpy==2.4.6
 packageurl-python==0.17.6
 packaging==26.3
+paho-mqtt==2.1.0
 pandas==3.0.6
 pathspec==1.1.1
 pip-requirements-parser==32.0.1
