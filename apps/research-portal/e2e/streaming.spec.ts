@@ -21,7 +21,7 @@ test("loading, live, stale and failure states do not mislabel evidence", async (
   await page.route("**/api/stream", async (route) => {
     await pending;
     if (fail) { await route.fulfill({ status: 502, body: "private backend error" }); return; }
-    await route.fulfill({ json: { summary: recording.summary, events: [{ received_at_utc: recording.recorded_at_utc, status: "predicted", decision: "normal", evidence_tier: "synthetic_fixture", inference_ms: 1 }] } });
+    await route.fulfill({ json: { summary: { ...recording.summary, counters: { rejected_malformed: 3, rejected_schema: 2, duplicates_suppressed: 4 }, last_replay: { completed_at_utc: recording.recorded_at_utc, dataset_sha256: "a".repeat(64), sent: 500, target_rate_per_s: 50, achieved_rate_per_s: 49, evidence_tier: "synthetic_fixture" }, model_provenance: [{ model_sha256: recording.summary.model_sha256[0], dataset_sha256: "a".repeat(64), synthetic: true }] }, events: [{ received_at_utc: recording.recorded_at_utc, status: "predicted", decision: "normal", evidence_tier: "synthetic_fixture", inference_ms: 1 }] } });
   });
   await page.goto("/demo");
   await expect(page.getByText("Connecting to streaming backend…", { exact: true })).toBeVisible();
@@ -29,6 +29,10 @@ test("loading, live, stale and failure states do not mislabel evidence", async (
   await expect(page.getByText("Streaming API connected", { exact: true })).toBeVisible();
   await expect(page.getByText("Idle or stale — no recent predictions", { exact: true })).toBeVisible();
   await expect(page.getByText(/predicted · normal · synthetic_fixture/)).toBeVisible();
+  await expect(page.getByText("Rejected: 5 · Dropped: 0", { exact: true })).toBeVisible();
+  await expect(page.getByText("Duplicates: 4", { exact: true })).toBeVisible();
+  await expect(page.getByText("49.00 / 50.00 events/s", { exact: true })).toBeVisible();
+  await expect(page.getByText(/Model .*Dataset SHA-256:/)).toBeVisible();
   fail = true;
   await expect(page.getByText("Backend offline · Recorded demonstration", { exact: true })).toBeVisible({ timeout: 10000 });
   await expect(page.getByText("private backend error")).toHaveCount(0);

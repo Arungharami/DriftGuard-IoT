@@ -139,6 +139,9 @@ def replay(
     rate: Annotated[float, typer.Option(min=0.1, max=1000)] = 10.0,
     max_events: Annotated[int, typer.Option(min=1)] = 500,
     device: Annotated[str, typer.Option()] = "lab-replay-01",
+    metrics_store: Annotated[
+        Path | None, typer.Option(help="Same-host API store for completed replay telemetry")
+    ] = None,
 ) -> None:
     """Publish feature messages at a fixed imposed rate (never original event time)."""
     from driftguard.streaming.contract import features_topic
@@ -167,6 +170,14 @@ def replay(
         time.sleep(0.2)
         client.loop_stop()
         client.disconnect()
+    if metrics_store is not None:
+        from driftguard.streaming.store import EventStore
+
+        telemetry = EventStore(metrics_store)
+        try:
+            telemetry.record_replay(src.dataset_sha256, stats)
+        finally:
+            telemetry.close()
     typer.echo(json.dumps({"source": src.description, **stats}, indent=2))
 
 

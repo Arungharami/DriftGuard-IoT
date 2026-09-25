@@ -89,3 +89,11 @@ time, dashboard delivery time, edge-hardware latency and energy.
   at `/demo` via `/api/stream` and uses a labeled, sanitized synthetic recording offline.
   See `apps/research-portal/README.md` for server-only configuration.
 - Any real-data replay, and any edge-device measurement.
+
+## Portal telemetry additions (2026-09-25)
+
+Workers record verified model/dataset digest pairs in the local event store. On a
+single host, replay may opt into `--metrics-store .local/stream/events.sqlite3` to
+persist measured rates and the completion timestamp. This does not add an API write
+endpoint or transmit credentials. The portal labels the last completed replay separately
+from the retained prediction window and continues to support older API responses.

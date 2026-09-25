@@ -42,8 +42,11 @@ Unavailable, invalid or unauthorized upstream responses show a recorded syntheti
 workstation demonstration from `docs/evidence/streaming/2026-09-23-tier-a-synthetic-demo.json`.
 The recording contains aggregates only; no fake individual alerts are generated.
 UI tests cover desktop/mobile, accessibility, loading, connected, stale and failed states.
-A connected API is not proof of worker/broker health. Live producer rate and dataset
-fingerprint are not in the current API contract and are explicitly shown as unavailable.
+A connected API is not proof of worker/broker health. Verified-bundle dataset fingerprints are available from current workers. For completed
+producer rates, pass `--metrics-store .local/stream/events.sqlite3` to same-host replay.
+This records only measured rates, completion time, evidence tier and dataset digest;
+it is the last completed replay, not current producer activity. Older API versions
+without these fields show unavailable, never inferred values.
 Processing rate is (retained predictions - 1)/(last completion - first completion),
 not instantaneous throughput. No demo measurements enter the research result index.
 

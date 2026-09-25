@@ -7,9 +7,11 @@ after a worker restart) is still recorded only once.
 
 from __future__ import annotations
 
+import json
 import sqlite3
 import threading
 from collections import OrderedDict
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 from uuid import UUID
@@ -33,6 +35,7 @@ CREATE TABLE IF NOT EXISTS events (
     end_to_end_ms REAL
 );
 CREATE TABLE IF NOT EXISTS counters (name TEXT PRIMARY KEY, value INTEGER NOT NULL);
+CREATE TABLE IF NOT EXISTS demo_metadata (name TEXT PRIMARY KEY, value TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS monitor_alarms (
     seq INTEGER PRIMARY KEY AUTOINCREMENT,
     detected_at_utc TEXT NOT NULL,
@@ -120,6 +123,41 @@ class EventStore:
                 (detected_at_utc, observations, detector),
             )
 
+    def record_model_provenance(
+        self, model_sha256: str, dataset_sha256: str, *, synthetic: bool
+    ) -> None:
+        """Keep only verified bundle fingerprints, never its paths or training rows."""
+        self._metadata(
+            f"model:{model_sha256}",
+            {
+                "model_sha256": model_sha256,
+                "dataset_sha256": dataset_sha256,
+                "synthetic": synthetic,
+            },
+        )
+
+    def record_replay(self, dataset_sha256: str, stats: dict[str, Any]) -> None:
+        """Explicit same-host producer opt-in: persist measured, completed replay stats."""
+        self._metadata(
+            "last_replay",
+            {
+                "completed_at_utc": datetime.now(UTC).isoformat(),
+                "dataset_sha256": dataset_sha256,
+                **{
+                    key: stats[key]
+                    for key in ("sent", "target_rate_per_s", "achieved_rate_per_s", "evidence_tier")
+                },
+            },
+        )
+
+    def _metadata(self, name: str, value: dict[str, Any]) -> None:
+        with self._lock:
+            self._db.execute(
+                "INSERT INTO demo_metadata VALUES (?,?) "
+                "ON CONFLICT(name) DO UPDATE SET value=excluded.value",
+                (name, json.dumps(value, allow_nan=False)),
+            )
+
     def summary(self) -> dict[str, Any]:
         """Sanitised aggregates only: no feature values, identifiers or payloads."""
         with self._lock:
@@ -148,6 +186,10 @@ class EventStore:
                 " WHERE status='predicted'"
             ).fetchone()
             alarms = self._db.execute("SELECT COUNT(*) FROM monitor_alarms").fetchone()[0]
+            metadata = {
+                name: json.loads(value)
+                for name, value in self._db.execute("SELECT name, value FROM demo_metadata")
+            }
             models = [
                 r[0]
                 for r in self._db.execute(
@@ -165,6 +207,10 @@ class EventStore:
             "last_prediction_utc": window[1],
             "monitor_alarms": alarms,
             "model_sha256": models,
+            "model_provenance": [
+                metadata[f"model:{digest}"] for digest in models if f"model:{digest}" in metadata
+            ],
+            "last_replay": metadata.get("last_replay"),
             "reportable": False,
         }
 

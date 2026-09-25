@@ -10,6 +10,16 @@ export const summarySchema = z.object({
   first_prediction_utc: z.iso.datetime({ offset: true }).nullable(),
   last_prediction_utc: z.iso.datetime({ offset: true }).nullable(),
   monitor_alarms: count, model_sha256: z.array(z.string().regex(/^[a-f0-9]{64}$/)).max(100),
+  model_provenance: z.array(z.object({
+    model_sha256: z.string().regex(/^[a-f0-9]{64}$/),
+    dataset_sha256: z.string().regex(/^[a-f0-9]{64}$/), synthetic: z.boolean(),
+  })).max(100).optional(),
+  last_replay: z.object({
+    completed_at_utc: z.iso.datetime({ offset: true }), dataset_sha256: z.string().regex(/^[a-f0-9]{64}$/),
+    sent: count, target_rate_per_s: z.number().finite().positive(),
+    achieved_rate_per_s: z.number().finite().nonnegative().nullable(),
+    evidence_tier: z.enum(["synthetic_fixture", "dataset_replay", "lab_capture"]),
+  }).nullable().optional(),
   reportable: z.literal(false),
 });
 const eventSchema = z.object({

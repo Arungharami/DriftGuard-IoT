@@ -89,6 +89,10 @@ class InferenceWorker:
     ) -> None:
         self.store = store
         self.bundle = bundle
+        if bundle:
+            store.record_model_provenance(
+                bundle.model_sha256, bundle.dataset_sha256, synthetic=bundle.synthetic
+            )
         self.contract = (
             FeatureContract(
                 features=tuple(bundle.metadata["features"]),

@@ -12,7 +12,7 @@ export function SiteFooter() {
           . Not affiliated with the reference authors.
         </p>
         <p>
-          Metrics on this site come only from versioned, provenance-checked result files.{" "}
+          Research metrics come only from provenance-checked result files. Streaming demonstrations are labeled separately.{" "}
           <a className="underline" href={REPO_URL}>
             Source on GitHub
           </a>

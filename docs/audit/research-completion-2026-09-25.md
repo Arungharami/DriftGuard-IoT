@@ -13,7 +13,10 @@ origin/main. Merging the dependency branch preserved #16 history, all streaming 
 and reproducibility fixes, without conflicts. The original clean worktree at `e79e292`
 and MQTT worktree at `091be0b` were preserved. No unrelated branch was rewritten.
 
-Draft PR and final CI run: recorded below after the remote checks finish.
+Draft PR: [#17](https://github.com/Arungharami/DriftGuard-IoT/pull/17).
+Integration merge: `f7a1034`; portal/compiler/manuscript commit: `59f2d4f`.
+All five Actions jobs passed on `59f2d4f`, run `36181891452`; final telemetry revision
+checks are recorded in the PR checks and the final delivery.
 
 ## CI and dependency repair
 
@@ -32,13 +35,13 @@ Local validation:
 
 - Fresh Python 3.11 environment; editable installation of dev/explain/platform/notebooks/streaming extras with constraints; pip check passed.
 - Ruff lint/format and mypy passed (71 source files).
-- Pytest: 286 passed, 10 deselected, 85% coverage. These are software/synthetic checks.
+- Pytest: 287 passed, 10 deselected on the telemetry revision (initial run: 286 passed, 85% coverage). These are software/synthetic checks.
 - Dedicated real-Mosquitto test run: **8 passed, zero skipped**, covering authentication, ACLs, replay, duplicates, malformed/oversized packets, reconnect and TLS.
 - pip-audit pinned set and npm audit (including dev dependencies): zero known vulnerabilities.
 - Portal lint, typecheck, 21 unit tests and production build passed.
 - Playwright: 10 passed across desktop/mobile, including axe accessibility, loading, connected/stale, disconnected and failure states.
 - Documentation and notebook validation passed; three representative notebooks executed locally; M5 synthetic SHAP integration, catalog check and CLI smoke passed.
-- Gitleaks full reachable Git history (`--all`, redacted): 30 commits scanned, no leaks. Final staged-file scan recorded below.
+- Gitleaks full reachable Git history (`--all`, redacted): 30 commits scanned, no leaks. Staged-file scan also found no leaks.
 
 ## Vercel — existing project retained and protected
 
@@ -99,16 +102,21 @@ timeouts, response-size bounds, schema filtering and no-store responses.
 When offline, the portal displays the existing 2026-09-23 synthetic recording with its
 source commit and measurement limits. It creates no invented alert rows. Live API
 availability is distinguished from worker/broker health and stale prediction activity.
-Producer replay rate and dataset fingerprint are not provided by the current live API;
-the UI explicitly reports them unavailable instead of deriving unsupported values.
-A richer authenticated telemetry contract and hosted private backend remain follow-ups.
+The API now exposes verified-bundle dataset fingerprints and optional measured rates
+from the last completed producer replay (`--metrics-store` on the same host). These
+carry their own dataset hash, evidence tier and completion time, distinct from the
+retained aggregate window. Older backends still show unavailable fields explicitly.
+Hosted private backend infrastructure and broker/worker heartbeat monitoring remain
+follow-ups; no current activity is inferred from a completed producer measurement.
 Workstation latency is never presented as edge hardware performance; imposed replay time
 is separate from original data time. Recorded/synthetic values are excluded from results.
 
 Browser automation: the in-app browser failed to initialize (`sandboxPolicy` missing).
 Playwright tests and the browser CLI were used; desktop/mobile screenshots were inspected
-locally. No portal release was deployed. Synthetic full-chain verification is recorded
-separately when available, never admitted as a research result.
+locally. No portal release was deployed. The synthetic full-chain check produced 40 predictions and 20 recent alerts through
+Mosquitto → worker → authenticated API → Next proxy. Direct anonymous API access was
+401; the proxy returned 200 with no token or backend address in its response. Evidence:
+`docs/evidence/integration/portal-boundary-check.json`, never admitted as research.
 
 ## Manuscript and scientific limits
 
@@ -121,6 +129,7 @@ The paper separates the reproduction track, proposed delayed-label contribution 
 output-mix demonstration. Added an explicit reproducibility statement and aligned the
 experiment matrix with group-isolated partitions and existing campaign seeds.
 The verified-results generator ran against zero admitted entries and produced no figure.
-Independent methodological review, a frozen statistical comparison plan, broader novelty
+The prospective analysis is in `paper/statistical-analysis-plan.md`.
+Independent methodological review, approval of that statistical plan, broader novelty
 review, licensed real-data evaluation, temporal annotations, semantic cross-domain mapping,
 and physical hardware/resource measurements remain prerequisites to publication.

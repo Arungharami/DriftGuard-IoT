@@ -38,6 +38,13 @@ def test_prediction_alert_is_sanitised_and_downgraded_to_synthetic(
     assert alert is not None and alert.status == "predicted"
     assert alert.decision in bundle.metadata["labels"]
     assert alert.evidence_tier == "synthetic_fixture" and alert.reportable is False
+    assert store.summary()["model_provenance"] == [
+        {
+            "model_sha256": bundle.model_sha256,
+            "dataset_sha256": bundle.dataset_sha256,
+            "synthetic": True,
+        }
+    ]
     assert alert.model_sha256 == bundle.model_sha256
     assert alert.inference_ms is not None and alert.inference_ms > 0
     assert alert.end_to_end_ms is not None and alert.end_to_end_ms >= 0
@@ -197,3 +204,28 @@ def test_api_rate_limit(tmp_path: Path) -> None:
         for _ in range(5)
     ]
     assert 429 in codes and codes[0] == 200
+
+
+def test_provenance_and_replay_telemetry_survive_restart_without_private_fields(tmp_path):
+    from driftguard.streaming.store import EventStore
+
+    path = tmp_path / "telemetry.sqlite3"
+    store = EventStore(path)
+    store.record_replay(
+        "a" * 64,
+        {
+            "sent": 2,
+            "target_rate_per_s": 10.0,
+            "achieved_rate_per_s": 9.0,
+            "evidence_tier": "synthetic_fixture",
+            "private": "do not expose",
+        },
+    )
+    store.close()
+    restarted = EventStore(path)
+    replay = restarted.summary()["last_replay"]
+    assert replay["dataset_sha256"] == "a" * 64
+    assert replay["achieved_rate_per_s"] == 9.0
+    assert replay["completed_at_utc"]
+    assert "private" not in replay
+    restarted.close()

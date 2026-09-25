@@ -34,7 +34,9 @@ export function StreamingDemo() {
   const snapshot = live ?? recorded;
   const summary = snapshot.summary;
   const last = summary.last_prediction_utc;
+  const replay = live ? summary.last_replay : recording.replay;
   const fresh = live && last && checkedAt - Date.parse(last) < 30000 && checkedAt >= Date.parse(last);
+  const rejected = Object.entries(summary.counters).filter(([name]) => name.startsWith("rejected_")).reduce((total, [, count]) => total + count, 0);
   const duplicate = summary.counters.duplicates_suppressed ?? 0;
   const dropped = (summary.counters.dropped_queue_full ?? 0) + (summary.counters.dropped_rate_limited ?? 0);
   return <section aria-label="Streaming demonstration" className="space-y-6">
@@ -42,19 +44,19 @@ export function StreamingDemo() {
       <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-accent">MQTT 5 · Read-only observatory</p>
       <p role="status" className="text-xl font-semibold">{state === "loading" ? "Connecting to streaming backend…" : state === "connected" ? "Streaming API connected" : "Backend offline · Recorded demonstration"}</p>
       <p className="mt-3 text-sm text-ink-muted">{live ? "Live API aggregates. The broker and worker have no health heartbeat; API connectivity alone does not establish that they are running." : `Recorded synthetic workstation demonstration · ${recording.recorded_at_utc}. These are measured software-demo values, not real-dataset research findings.`}</p>
-      <p className="mt-2 text-sm text-simulated">Non-reportable demonstration. Replay timing is imposed, not original dataset time. No physical edge-device measurements.</p>
+      <p className="mt-2 text-sm text-simulated">Evidence: {Object.keys(summary.events_by_evidence_tier).join(", ") || "Not reported"}. Non-reportable demonstration. Replay timing is imposed, not original dataset time. No physical edge-device measurements.</p>
     </div>
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       <Card title="Model activity"><p className="text-lg text-ink">{live ? fresh ? "Recent predictions observed" : "Idle or stale — no recent predictions" : "Recorded synthetic Decision Tree"}</p><p>Models observed: {summary.model_sha256.length}. This is historical activity, not a health check.</p></Card>
       <Card title="Processing throughput"><p className="text-2xl text-accent">{number(completionRate(summary), " events/s")}</p><p>Average over retained prediction completions; not an instantaneous rate.</p></Card>
-      <Card title="Replay rate"><p className="text-lg text-ink">{live ? "Not reported by live API" : `${number(recording.replay.achieved_rate_per_s)} / ${number(recording.replay.target_rate_per_s)} events/s`}</p><p>{live ? "Producer measurements must be collected separately." : "Achieved / requested producer rate, imposed schedule."}</p></Card>
+      <Card title="Replay rate"><p className="text-lg text-ink">{replay ? `${number(replay.achieved_rate_per_s)} / ${number(replay.target_rate_per_s)} events/s` : "Not reported by live API"}</p><p>{live ? "Last completed replay, achieved / requested rate; not current producer activity." : "Achieved / requested producer rate, imposed schedule."}{live && summary.last_replay ? <span className="block break-all">Completed {summary.last_replay.completed_at_utc} · {summary.last_replay.evidence_tier}</span> : null}</p></Card>
       <Card title="Warm inference latency"><p className="text-2xl text-accent">{number(summary.inference_ms.p95, " ms")} <span className="text-sm">p95</span></p><p>p50 {number(summary.inference_ms.p50, " ms")} · p99 {number(summary.inference_ms.p99, " ms")}. Batch size 1, workstation.</p></Card>
       <Card title="Message-to-alert latency"><p className="text-2xl text-accent">{number(summary.end_to_end_ms.p95, " ms")} <span className="text-sm">p95</span></p><p>Send to worker completion; excludes dashboard delivery. Valid only with producer and worker on one host.</p></Card>
-      <Card title="Message handling"><p>Predicted: {summary.events_by_status.predicted ?? 0}</p><p>Duplicates: {duplicate}</p><p>Rejected: {summary.events_by_status.rejected ?? 0} · Dropped: {dropped}</p><p>Unavailable model: {summary.events_by_status.model_unavailable ?? 0}</p></Card>
+      <Card title="Message handling"><p>Predicted: {summary.events_by_status.predicted ?? 0}</p><p>Duplicates: {duplicate}</p><p>Rejected: {rejected} · Dropped: {dropped}</p><p>Unavailable model: {summary.events_by_status.model_unavailable ?? 0}</p></Card>
     </div>
     <div className="grid gap-4 md:grid-cols-2">
       <Card title="Aggregate classifications"><ul className="space-y-2">{Object.entries(summary.predictions_by_decision).map(([label, count]) => <li key={label} className="flex justify-between gap-3"><span className="break-all">{label}</span><span className="font-mono text-ink">{count}</span></li>)}</ul>{!Object.keys(summary.predictions_by_decision).length ? <p>No predictions received.</p> : null}</Card>
-      <Card title="Output-shift monitor"><p className="font-semibold text-simulated">ADWIN output-mix signal · Uncalibrated</p><p>Recorded alarms: {summary.monitor_alarms}</p><p>This is not a scientifically validated concept-drift detector. An alarm does not establish a new attack or concept change.</p></Card>
+      <Card title="Output-shift monitor"><p className="font-semibold text-simulated">ADWIN output-mix signal · Uncalibrated</p><p>Recorded alarms: {summary.monitor_alarms}</p><p>Current monitor enablement is not reported; this count is historical.</p><p>This is not a scientifically validated concept-drift detector. An alarm does not establish a new attack or concept change.</p></Card>
     </div>
     <Card title="Recent alerts">
       {snapshot.events.length ? <ul className="space-y-3">{snapshot.events.map((event, index) => <li key={`${event.received_at_utc}-${index}`} className="flex flex-wrap justify-between gap-2 border-b border-line pb-2"><time className="break-all">{event.received_at_utc}</time><span>{event.status} · {event.decision ?? "No classification"} · {event.evidence_tier ?? "Unverified"}</span></li>)}</ul> : <p>{live ? "No recent alerts." : "The archived recording contains aggregates only; individual alerts were not retained."}</p>}
@@ -62,7 +64,8 @@ export function StreamingDemo() {
     <Card title="Model version and dataset provenance">
       {summary.model_sha256.map((hash) => <p key={hash} className="break-all font-mono text-xs">SHA-256: {hash}</p>)}
       <p>Evidence: {Object.keys(summary.events_by_evidence_tier).join(", ") || "Not reported"}</p>
-      <p>{live ? "Dataset fingerprint is not exposed by this API version. Do not infer dataset admission from a model hash." : "Synthetic held-out fixture rows. No official Edge-IIoTset file or admitted real model was used."}</p>
+      {live && summary.model_provenance?.length ? summary.model_provenance.map((provenance) => <p key={provenance.model_sha256} className="break-all">Model {provenance.model_sha256.slice(0, 16)} · Dataset SHA-256: {provenance.dataset_sha256} · {provenance.synthetic ? "Synthetic fixture" : "Bundle dataset fingerprint; admission evidence remains in the private run manifest"}</p>) : <p>{live ? "Dataset fingerprint not reported by this backend. Do not infer admission from a model hash." : "Synthetic held-out fixture rows. No official Edge-IIoTset file or admitted real model was used."}</p>}
+      {live && summary.last_replay ? <p className="break-all">Last replay dataset SHA-256: {summary.last_replay.dataset_sha256}. This completed producer run may differ from the retained aggregate window.</p> : null}
       {!live ? <p className="break-all">Recording source commit: {recording.git_commit}</p> : null}
       <p>Last prediction: {last ?? "Not observed"}</p>
     </Card>
