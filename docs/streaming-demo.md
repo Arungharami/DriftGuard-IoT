@@ -85,6 +85,7 @@ time, dashboard delivery time, edge-hardware latency and energy.
 
 - Tier B (physical ESP32/Raspberry Pi telemetry) and tier C (authorised lab flow capture).
 - A Docker Compose profile. There was no container runtime to test one with, so none is shipped.
-- Portal integration. The portal still has no live-demo route; it must call this API
-  server-side with the token and fall back to a sanitised recording.
+- Production streaming service hosting. The portal now integrates the read-only API
+  at `/demo` via `/api/stream` and uses a labeled, sanitized synthetic recording offline.
+  See `apps/research-portal/README.md` for server-only configuration.
 - Any real-data replay, and any edge-device measurement.

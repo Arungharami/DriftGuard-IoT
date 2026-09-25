@@ -1,8 +1,5 @@
 {
   "git": {
-    "deploymentEnabled": {
-      "m5/generalization-audit": false,
-      "integration/platform-completion": false
-    }
+    "deploymentEnabled": false
   }
 }

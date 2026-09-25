@@ -1,0 +1,45 @@
+{
+  "checked_on": "2026-09-25",
+  "project_id": "prj_uuEZYidwoSaF8nA9t57aCFJmv2P0",
+  "project_name": "driftguard-iot",
+  "team_id": "team_r62VZS6u8GtiCFAvauwwqo6B",
+  "git_link": null,
+  "ssoProtection": {
+    "deploymentType": "all"
+  },
+  "gitProviderOptions": {
+    "createDeployments": "disabled"
+  },
+  "production": {
+    "id": "dpl_APiUtSrTmRzZixfCssb4VwdFwubo",
+    "url": "driftguard-5nvar78z5-aruns-projects-ba93fc58.vercel.app",
+    "aliases": [
+      "driftguard-iot.vercel.app",
+      "driftguard-iot-aruns-projects-ba93fc58.vercel.app"
+    ],
+    "source_branch": "m3/edge-real-baseline",
+    "source_commit": "ec98d3750109f9f3bbbb5faf05d31abd1b2605bd"
+  },
+  "anonymous_checks": [
+    {
+      "url": "https://driftguard-iot.vercel.app/",
+      "status": 302,
+      "login_redirect": true
+    },
+    {
+      "url": "https://driftguard-iot.vercel.app/demo",
+      "status": 302,
+      "login_redirect": true
+    },
+    {
+      "url": "https://driftguard-iot.vercel.app/api/inference",
+      "status": 302,
+      "login_redirect": true
+    },
+    {
+      "url": "https://driftguard-5nvar78z5-aruns-projects-ba93fc58.vercel.app/",
+      "status": 302,
+      "login_redirect": true
+    }
+  ]
+}

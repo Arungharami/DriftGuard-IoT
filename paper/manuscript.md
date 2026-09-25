@@ -61,6 +61,17 @@ queried for drift adaptation, online IDS, LightGBM, ADWIN and IoT. No claim of e
 coverage is made. Verified metadata and the search scope are retained in
 `docs/evidence/platform/bibliography.json` and `paper/literature-review.md`.
 
+River [8] supplies streaming-learning implementations; it does not validate our detector
+configuration. SHAP [9] motivates additive feature attributions and LightGBM [10] supplies
+the boosting baseline. The resource-constrained drift survey by Øren et al. [11] reinforces
+the need to measure adaptation cost on actual hardware. Xu et al. [12] combine drift
+detection, interpretation and adaptation, so explainability plus adaptation is also prior
+art. Full methodological comparisons with those studies remain pending.
+
+The separate MQTT demonstration monitors predicted attack proportions without labels.
+That uncalibrated output-mix signal must not be confused with the released-error ADWIN
+policy evaluated by the sequential research framework.
+
 ## III. Research Gap and Scope
 
 The proposed contribution is an auditable evaluation of delayed-label adaptation under
@@ -133,6 +144,17 @@ Repeated-seed variation is reported separately. Paired moving-block bootstrap su
 prespecified temporal contrasts; block size needs source-validation evidence. A complete
 real study must choose independent sampling units and a multiplicity plan before opening
 held-out labels. See `docs/m5-protocol.md` for detailed assumptions and limitations.
+
+### Reproducibility statement
+
+The implementation, dependency constraints, experiment YAML, seed list and split policy
+are versioned. A real run must retain the full dataset SHA-256, acquisition/license
+snapshot, duplicate/conflict audit, split indices and hashes, train-only preprocessing,
+model hashes, per-class metrics, confusion matrices and host-specific timing context.
+Raw data and credentials are excluded from Git. The first DT/LightGBM run and subsequent
+five-model, five-seed campaign remain blocked at admission; no test-derived settings
+may be fed back into the frozen configuration. The current engineering integration and
+its limits are recorded in `docs/audit/research-completion-2026-09-25.md`.
 
 ## VII. Results
 
@@ -250,3 +272,25 @@ Adaptation in IoT Data Streams,” author preprint, 2021. https://arxiv.org/abs/
 [7] Y. Wu, L. Liu, Y. Yu, G. Chen, and J. Hu, “Online ensemble learning-based anomaly
 detection for IoT systems,” *Applied Soft Computing*, vol. 173, article 112931, 2025.
 https://doi.org/10.1016/j.asoc.2025.112931.
+
+[8] J. Montiel et al., “River: Machine Learning for Streaming Data in Python,”
+*Journal of Machine Learning Research*, vol. 22, no. 110, pp. 1–8, 2021.
+https://www.jmlr.org/papers/v22/20-1380.html.
+
+[9] S. M. Lundberg and S.-I. Lee, “A Unified Approach to Interpreting Model Predictions,”
+*Advances in Neural Information Processing Systems*, vol. 30, 2017.
+https://papers.neurips.cc/paper_files/paper/2017/hash/8a20a8621978632d76c43dfd28b67767-Abstract.html.
+
+[10] G. Ke et al., “LightGBM: A Highly Efficient Gradient Boosting Decision Tree,”
+*Advances in Neural Information Processing Systems*, vol. 30, 2017.
+https://papers.neurips.cc/paper_files/paper/2017/hash/6449f44a102fde848669bdd9eb6b76fa-Abstract.html.
+
+[11] A. E. Øren, N. K. Peuker, A.-M. A. Adeniran-Lowe, S. Ruepp, and M. N. Petersen,
+“Concept Drift Under Harsh Constraints: A Review of Potential Strategies for IoT Systems,”
+*IEEE Access*, vol. 13, pp. 182220–182237, 2025.
+https://doi.org/10.1109/ACCESS.2025.3622973.
+
+[12] L. Xu, Z. Han, D. Zhao, X. Li, F. Yu, and C. Chen, “Addressing Concept Drift in IoT
+Anomaly Detection: Drift Detection, Interpretation, and Adaptation,”
+*IEEE Transactions on Sustainable Computing*, vol. 9, no. 6, pp. 913–924, 2024.
+https://doi.org/10.1109/TSUSC.2024.3386667.
