@@ -1,0 +1,81 @@
+{
+  "kind": "synthetic_portal_boundary_check",
+  "reportable": false,
+  "checked_on": "2026-09-25",
+  "notice": "Synthetic fixture software verification on this workstation only; no real-data or edge-device result. Working tree contains integration edits.",
+  "commands": [
+    "driftguard stream demo-bundle",
+    "driftguard stream broker-config --port 18983",
+    "mosquitto -c .local/stream/broker/mosquitto.conf",
+    "driftguard stream worker --bundle .local/stream/synthetic-bundle --benign-label normal --store .local/stream/telemetry-events.sqlite3",
+    "driftguard stream api --port 18766 --store .local/stream/telemetry-events.sqlite3",
+    "npm run dev -- --hostname 127.0.0.1 --port 3101",
+    "driftguard stream replay --bundle .local/stream/synthetic-bundle --rate 20 --max-events 40 --metrics-store .local/stream/telemetry-events.sqlite3"
+  ],
+  "unauthenticated_api_status": 401,
+  "portal_proxy_status": 200,
+  "replay": {
+    "source": "held-out rows of synthetic run stream-demo-synthetic-20260925T194506Z-5cb1beda (NON-REPORTABLE)",
+    "sent": 40,
+    "target_rate_per_s": 20.0,
+    "achieved_rate_per_s": 19.897715121954498,
+    "evidence_tier": "synthetic_fixture",
+    "timing": "imposed replay schedule; not original event time"
+  },
+  "summary": {
+    "events_by_status": {
+      "predicted": 40
+    },
+    "predictions_by_decision": {
+      "dos": 7,
+      "injection": 3,
+      "normal": 25,
+      "scan": 5
+    },
+    "events_by_evidence_tier": {
+      "synthetic_fixture": 40
+    },
+    "counters": {},
+    "inference_ms": {
+      "n": 40,
+      "p50": 6.986479498664266,
+      "p95": 10.832328847391182,
+      "p99": 12.016031238526919
+    },
+    "end_to_end_ms": {
+      "n": 40,
+      "p50": 57.2115,
+      "p95": 63.45515,
+      "p99": 64.51325999999999
+    },
+    "first_prediction_utc": "2026-09-25T19:52:10.845963+00:00",
+    "last_prediction_utc": "2026-09-25T19:52:12.805998+00:00",
+    "monitor_alarms": 0,
+    "model_sha256": [
+      "266562d39d67b93c6ba2d333dd075504493945c47079a0f530e9fdba7bc27ea9"
+    ],
+    "model_provenance": [
+      {
+        "model_sha256": "266562d39d67b93c6ba2d333dd075504493945c47079a0f530e9fdba7bc27ea9",
+        "dataset_sha256": "ede09533ed173266c8de3ffd63a1c2ccecf40c265e750cdf6e9e2cdb1e8adb97",
+        "synthetic": true
+      }
+    ],
+    "last_replay": {
+      "completed_at_utc": "2026-09-25T19:52:13.839892+00:00",
+      "dataset_sha256": "ede09533ed173266c8de3ffd63a1c2ccecf40c265e750cdf6e9e2cdb1e8adb97",
+      "sent": 40,
+      "target_rate_per_s": 20,
+      "achieved_rate_per_s": 19.897715121954498,
+      "evidence_tier": "synthetic_fixture"
+    },
+    "reportable": false
+  },
+  "recent_alerts_returned": 20,
+  "secret_and_backend_url_absent": true,
+  "telemetry_assertions": [
+    "completed replay sent count equals 40",
+    "verified bundle dataset digest equals producer replay dataset digest",
+    "model provenance retains synthetic=true"
+  ]
+}

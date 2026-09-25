@@ -1,3 +1,13 @@
 import { PageHeader } from "@/components/ui";
 import { ModelDemo } from "@/components/ModelDemo";
-export default function Page() { return <><PageHeader title="Live Model Demo" lede="The inference connection is prepared. An approved model and authorized service are required before predictions can be served." /><ModelDemo /></>; }
+import { StreamingDemo } from "@/components/StreamingDemo";
+export default function Page() {
+  return <>
+    <PageHeader title="Live Streaming Demo" lede="Follow the MQTT inference pipeline, inspect its evidence, and distinguish observed software behavior from validated research." />
+    <StreamingDemo />
+    <section aria-label="Approved model query" className="mt-10 space-y-4">
+      <h2 className="text-xl font-semibold">Query an approved research model</h2>
+      <ModelDemo />
+    </section>
+  </>;
+}

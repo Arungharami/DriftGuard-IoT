@@ -1,0 +1,273 @@
+{
+  "checked_on": "2026-09-25",
+  "records": [
+    {
+      "doi": "10.1109/ACCESS.2025.3554083",
+      "title": [
+        "Intrusion Detection in IoT and IIoT: Comparing Lightweight Machine Learning Techniques Using TON_IoT, WUSTL-IIOT-2021, and EdgeIIoTset Datasets"
+      ],
+      "authors": [
+        {
+          "given": "Shereen",
+          "family": "Ismail"
+        },
+        {
+          "given": "Salah",
+          "family": "Dandan"
+        },
+        {
+          "given": "Ala'a",
+          "family": "Qushou"
+        }
+      ],
+      "venue": [
+        "IEEE Access"
+      ],
+      "volume": "13",
+      "issue": null,
+      "pages": "73468-73485",
+      "article_number": null,
+      "published": {
+        "date-parts": [
+          [
+            2025
+          ]
+        ]
+      },
+      "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+      "source": "https://api.crossref.org/works/10.1109/ACCESS.2025.3554083",
+      "status": "publisher-deposited metadata verified; full text not assessed"
+    },
+    {
+      "doi": "10.1109/ACCESS.2022.3165809",
+      "title": [
+        "Edge-IIoTset: A New Comprehensive Realistic Cyber Security Dataset of IoT and IIoT Applications for Centralized and Federated Learning"
+      ],
+      "authors": [
+        {
+          "given": "Mohamed Amine",
+          "family": "Ferrag"
+        },
+        {
+          "given": "Othmane",
+          "family": "Friha"
+        },
+        {
+          "given": "Djallel",
+          "family": "Hamouda"
+        },
+        {
+          "given": "Leandros",
+          "family": "Maglaras"
+        },
+        {
+          "given": "Helge",
+          "family": "Janicke"
+        }
+      ],
+      "venue": [
+        "IEEE Access"
+      ],
+      "volume": "10",
+      "issue": null,
+      "pages": "40281-40306",
+      "article_number": null,
+      "published": {
+        "date-parts": [
+          [
+            2022
+          ]
+        ]
+      },
+      "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+      "source": "https://api.crossref.org/works/10.1109/ACCESS.2022.3165809",
+      "status": "publisher-deposited metadata verified; full text not assessed"
+    },
+    {
+      "doi": "10.1109/ACCESS.2020.3022862",
+      "title": [
+        "TON_IoT Telemetry Dataset: A New Generation Dataset of IoT and IIoT for Data-Driven Intrusion Detection Systems"
+      ],
+      "authors": [
+        {
+          "given": "Abdullah",
+          "family": "Alsaedi"
+        },
+        {
+          "given": "Nour",
+          "family": "Moustafa"
+        },
+        {
+          "given": "Zahir",
+          "family": "Tari"
+        },
+        {
+          "given": "Abdun",
+          "family": "Mahmood"
+        },
+        {
+          "given": "Adnan",
+          "family": "Anwar"
+        }
+      ],
+      "venue": [
+        "IEEE Access"
+      ],
+      "volume": "8",
+      "issue": null,
+      "pages": "165130-165150",
+      "article_number": null,
+      "published": {
+        "date-parts": [
+          [
+            2020
+          ]
+        ]
+      },
+      "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+      "source": "https://api.crossref.org/works/10.1109/ACCESS.2020.3022862",
+      "status": "publisher-deposited metadata verified; full text not assessed"
+    },
+    {
+      "doi": "10.1109/IOTM.0001.2100012",
+      "status": "unavailable",
+      "error": "HTTPError"
+    },
+    {
+      "doi": "10.1109/TSUSC.2024.3386667",
+      "status": "unavailable",
+      "error": "HTTPError"
+    },
+    {
+      "doi": "10.1016/j.asoc.2025.112931",
+      "title": [
+        "Online ensemble learning-based anomaly detection for IoT systems"
+      ],
+      "authors": [
+        {
+          "given": "Yafeng",
+          "family": "Wu"
+        },
+        {
+          "given": "Lan",
+          "family": "Liu"
+        },
+        {
+          "given": "Yongjie",
+          "family": "Yu"
+        },
+        {
+          "given": "Guiming",
+          "family": "Chen"
+        },
+        {
+          "given": "Junhan",
+          "family": "Hu"
+        }
+      ],
+      "venue": [
+        "Applied Soft Computing"
+      ],
+      "volume": "173",
+      "issue": null,
+      "pages": "112931",
+      "article_number": "112931",
+      "published": {
+        "date-parts": [
+          [
+            2025,
+            4
+          ]
+        ]
+      },
+      "publisher": "Elsevier BV",
+      "source": "https://api.crossref.org/works/10.1016/j.asoc.2025.112931",
+      "status": "publisher-deposited metadata verified; full text not assessed"
+    },
+    {
+      "doi": "10.1109/ACCESS.2025.3622973",
+      "title": [
+        "Concept Drift Under Harsh Constraints: A Review of Potential Strategies for IoT Systems"
+      ],
+      "authors": [
+        {
+          "given": "Ask",
+          "family": "Espens\u00f8nn \u00d8ren"
+        },
+        {
+          "given": "Nina",
+          "family": "Kuna Peuker"
+        },
+        {
+          "given": "Akira-Miranda",
+          "family": "Adeyomi Adeniran-Lowe"
+        },
+        {
+          "given": "Sarah",
+          "family": "Ruepp"
+        },
+        {
+          "given": "Martin",
+          "family": "Nordal Petersen"
+        }
+      ],
+      "venue": [
+        "IEEE Access"
+      ],
+      "volume": "13",
+      "issue": null,
+      "pages": "182220-182237",
+      "article_number": null,
+      "published": {
+        "date-parts": [
+          [
+            2025
+          ]
+        ]
+      },
+      "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+      "source": "https://api.crossref.org/works/10.1109/ACCESS.2025.3622973",
+      "status": "publisher-deposited metadata verified; full text not assessed"
+    },
+    {
+      "doi": "10.1137/1.9781611972771.42",
+      "title": [
+        "Learning from Time-Changing Data with Adaptive Windowing"
+      ],
+      "authors": [
+        {
+          "given": "Albert",
+          "family": "Bifet"
+        },
+        {
+          "given": "Ricard",
+          "family": "Gavald\u00e0"
+        }
+      ],
+      "venue": [
+        "Proceedings of the 2007 SIAM International Conference on Data Mining"
+      ],
+      "volume": null,
+      "issue": null,
+      "pages": "443-448",
+      "article_number": null,
+      "published": {
+        "date-parts": [
+          [
+            2007,
+            4,
+            26
+          ]
+        ]
+      },
+      "publisher": "Society for Industrial and Applied Mathematics",
+      "source": "https://api.crossref.org/works/10.1137/1.9781611972771.42",
+      "status": "publisher-deposited metadata verified; full text not assessed"
+    },
+    {
+      "doi": "10.6028/NIST.SP.800-82r3",
+      "status": "unavailable",
+      "error": "HTTPError"
+    }
+  ]
+}

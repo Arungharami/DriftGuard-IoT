@@ -28,9 +28,9 @@ test("all academic pages load and dataset descriptions retain provenance", async
 test("model demo handles unavailable service and invalid JSON accessibly", async ({ page }) => {
   await page.goto("/demo");
   await page.getByRole("button", { name: "Check model service" }).click();
-  await expect(page.getByRole("status")).toContainText("No approved research model");
+  await expect(page.getByRole("status").filter({ hasText: /No approved research model|Check JSON formatting/ })).toContainText("No approved research model");
   await page.getByLabel("Feature rows (JSON)").fill("not-json");
   await page.getByRole("button", { name: "Check model service" }).click();
-  await expect(page.getByRole("status")).toContainText("Check JSON formatting");
+  await expect(page.getByRole("status").filter({ hasText: /No approved research model|Check JSON formatting/ })).toContainText("Check JSON formatting");
   expect((await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa"]).analyze()).violations).toEqual([]);
 });

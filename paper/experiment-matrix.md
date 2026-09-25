@@ -9,8 +9,8 @@ before M9, and later changes are listed with justification.
 | --- | --- |
 | Dataset | TON_IoT, WUSTL-IIOT-2021, Edge-IIoTset |
 | Model | DT, RF, Bagging, Stacking (DT/RF/MLP), LightGBM |
-| Split | Stratified holdout (ratio fixed in M2 to match the reference study where stated) |
-| Seeds | ≥ 5 |
+| Split | Primary: feature-group-isolated holdout; paper-faithful stratification is a separate reproduction track |
+| Seeds | 11, 23, 42, 71, 101 (matches CampaignConfig and the study plan) |
 | Primary metric | Macro-F1 with 95% bootstrap CI |
 
 ## E2: Temporal and domain shift (RQ2)

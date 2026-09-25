@@ -3,8 +3,10 @@
 **Purpose:** determine whether the proposed drift-triggered, resource-constrained IDS
 strategy already exists in equivalent form, before any novelty claim is made.
 
-**Status (M0): search not started.** No row below has been reviewed. Bibliographic details
-are recorded only after reading the primary source; nothing is filled in from memory.
+**Status: targeted primary-source metadata/abstract review updated 2026-09-25.**
+See `reference-review-2026-09-25.md`, `literature-review.md` and manuscript references [1–12].
+The detailed comparison matrix below remains an incomplete historical M0 template;
+it must not be treated as a completed systematic review.
 
 ## Search protocol
 

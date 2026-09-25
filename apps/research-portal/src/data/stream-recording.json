@@ -1,0 +1,47 @@
+{
+  "recorded_at_utc": "2026-09-23T23:40:28Z",
+  "git_commit": "d331c8f1d292fea1300474872017650500eab618",
+  "replay": {
+    "source": "held-out rows of synthetic run stream-demo-synthetic-20260923T233957Z-5cb1beda (NON-REPORTABLE)",
+    "sent": 500,
+    "target_rate_per_s": 50.0,
+    "achieved_rate_per_s": 49.96667073363509,
+    "evidence_tier": "synthetic_fixture",
+    "timing": "imposed replay schedule; not original event time"
+  },
+  "summary": {
+    "events_by_status": {
+      "predicted": 500
+    },
+    "predictions_by_decision": {
+      "dos": 70,
+      "injection": 21,
+      "normal": 357,
+      "scan": 52
+    },
+    "events_by_evidence_tier": {
+      "synthetic_fixture": 500
+    },
+    "counters": {},
+    "inference_ms": {
+      "n": 500,
+      "p50": 4.6889790010027355,
+      "p95": 5.502348202207941,
+      "p99": 5.889264337383793
+    },
+    "end_to_end_ms": {
+      "n": 500,
+      "p50": 24.898,
+      "p95": 28.097599999999996,
+      "p99": 34.562470000000005
+    },
+    "first_prediction_utc": "2026-09-23T23:40:02.185687+00:00",
+    "last_prediction_utc": "2026-09-23T23:40:12.172270+00:00",
+    "monitor_alarms": 0,
+    "model_sha256": [
+      "266562d39d67b93c6ba2d333dd075504493945c47079a0f530e9fdba7bc27ea9"
+    ],
+    "reportable": false
+  },
+  "events": []
+}
