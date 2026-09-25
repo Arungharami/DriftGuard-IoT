@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import shutil
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
@@ -64,3 +65,29 @@ def prepare_bundle(run_dir: Path, model_name: str, destination: Path) -> dict[st
         "Only load this pickle when its producer and the reference manifest are trusted.\n"
     )
     return meta
+
+
+@dataclass(frozen=True)
+class LoadedBundle:
+    pipeline: Any
+    metadata: dict[str, Any]
+    dataset_sha256: str
+    path: Path
+
+    @property
+    def model_sha256(self) -> str:
+        return str(self.metadata["sha256"])
+
+    @property
+    def synthetic(self) -> bool:
+        return bool(self.metadata["synthetic_data"])
+
+
+def load_bundle(bundle: Path) -> LoadedBundle:
+    """Verify the manifest and pipeline digests before unpickling a local bundle."""
+    metadata = json.loads((bundle / "bundle.json").read_text())
+    if sha256_file(bundle / "manifest.json") != metadata["source_manifest_sha256"]:
+        raise ValueError("source manifest integrity failure")
+    manifest = ExperimentManifest.model_validate_json((bundle / "manifest.json").read_text())
+    pipeline = load_verified_pipeline(bundle / "pipeline.joblib", metadata["sha256"])
+    return LoadedBundle(pipeline, metadata, manifest.dataset.source_sha256, bundle)

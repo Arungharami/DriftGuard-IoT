@@ -1,0 +1,17 @@
+# Model for the tier-A MQTT demonstration's SYNTHETIC-FIXTURE mode only.
+# Its outputs are NON-REPORTABLE and must be watermarked as simulated wherever shown.
+# Replace it with a bundle from an admitted real-data run once one exists.
+name: stream-demo-synthetic
+seed: 20260923
+dataset: ../datasets/synthetic.yaml
+models:
+  - ../models/decision_tree_default.yaml
+split:
+  strategy: stratified_holdout
+  test_size: 0.3
+preprocessing:
+  protocol: leakage_safe
+  mi_threshold: 0.0
+  deduplicate: true
+  resampling:
+    strategy: none

@@ -14,6 +14,7 @@ from driftguard.config import load_experiment_config
 from driftguard.data.synthetic import generate_synthetic_flows
 from driftguard.data_cli import data_app
 from driftguard.reporting.provenance import environment_snapshot
+from driftguard.streaming.cli import stream_app
 
 app = typer.Typer(
     name="driftguard",
@@ -22,6 +23,7 @@ app = typer.Typer(
     add_completion=False,
 )
 app.add_typer(data_app, name="data")
+app.add_typer(stream_app, name="stream")
 
 DEFAULT_SMOKE_CONFIG = Path("configs/experiments/smoke-synthetic.yaml")
 
