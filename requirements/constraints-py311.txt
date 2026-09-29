@@ -51,7 +51,7 @@ python-dateutil==2.9.0.post0
 PyYAML==6.0.3
 requests==2.34.2
 rich==15.0.0
-ruff==0.16.8
+ruff==0.16.9
 scikit-learn==1.9.1
 scipy==1.17.1
 shellingham==1.5.4
