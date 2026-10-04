@@ -8,17 +8,17 @@ closed and records ``model_unavailable`` instead of inventing predictions.
 
 from __future__ import annotations
 
+import math
 import queue
 import threading
 import time
 from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import UTC, datetime
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import pandas as pd
 
-from driftguard.platform.bundle import LoadedBundle
 from driftguard.streaming.contract import (
     Alert,
     ContractViolationError,
@@ -28,6 +28,9 @@ from driftguard.streaming.contract import (
     parse_feature_message,
 )
 from driftguard.streaming.store import EventDeduplicator, EventStore
+
+if TYPE_CHECKING:
+    from driftguard.platform.bundle import LoadedBundle
 
 
 class OutputShiftMonitor:
@@ -56,6 +59,10 @@ class OutputShiftMonitor:
 
 class TokenBucket:
     def __init__(self, rate_per_s: float, burst: int) -> None:
+        if not math.isfinite(rate_per_s) or rate_per_s <= 0:
+            raise ValueError("rate_per_s must be finite and positive")
+        if not isinstance(burst, int) or isinstance(burst, bool) or burst < 1:
+            raise ValueError("burst must be a positive integer")
         self.rate, self.capacity = rate_per_s, float(burst)
         self.tokens, self.updated = float(burst), time.monotonic()
 
@@ -87,6 +94,14 @@ class InferenceWorker:
         queue_size: int = 1000,
         rate_limit_per_s: float | None = None,
     ) -> None:
+        # queue.Queue(0) silently creates an unbounded queue, violating the
+        # worker's backpressure contract. Reject invalid limits at startup.
+        if not isinstance(queue_size, int) or isinstance(queue_size, bool) or queue_size < 1:
+            raise ValueError("queue_size must be a positive integer")
+        if rate_limit_per_s is not None and (
+            not math.isfinite(rate_limit_per_s) or rate_limit_per_s <= 0
+        ):
+            raise ValueError("rate_limit_per_s must be finite and positive")
         self.store = store
         self.bundle = bundle
         if bundle:
