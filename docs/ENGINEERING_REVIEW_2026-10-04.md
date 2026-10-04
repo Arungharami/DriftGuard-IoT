@@ -18,6 +18,11 @@ All changed Python files were syntax-compiled. Package installation from this wo
 
 ## Next implementation work
 
+GitHub CI also exposed an existing dependency-resolution failure: Pydantic 2.13.5
+requires pydantic-core 2.46.5, but the constraints file pinned 2.49.0. The pin was
+reconciled to the version required by the installed package metadata; Python/MQTT
+tests and the dependency audit must rerun on the corrected constraints.
+
 Acquire and fingerprint the authorized TON_IoT, WUSTL-IIoT and Edge-IIoT files, then run the real-data admission and campaign gates. Synthetic streaming tests establish software behavior only; they do not establish intrusion-detection effectiveness.
 
 ## Evidence boundary
