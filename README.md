@@ -121,3 +121,7 @@ M5 provides tested offline evaluation primitives and interactive readiness evide
 `/experiments`; **the real-data research campaign remains blocked**. See the
 [protocol and reproduction commands](docs/m5-protocol.md). No M5 research metrics,
 deployment, or merge are claimed.
+
+## Engineering review
+
+See [the October 4 correctness review](docs/ENGINEERING_REVIEW_2026-10-04.md) for repairs, exact verification results, and the next implementation work.
