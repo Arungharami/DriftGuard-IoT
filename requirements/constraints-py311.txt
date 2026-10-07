@@ -86,7 +86,7 @@ click==8.5.0
 comm==0.2.3
 debugpy==1.8.22
 executing==2.2.1
-fastapi==0.141.1
+fastapi==0.142.2
 fastjsonschema==2.22.2
 fsspec==2026.9.0
 h11==0.16.0
