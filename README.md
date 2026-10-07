@@ -1,5 +1,11 @@
 # DriftGuard-IoT
 
+## Start here
+
+Read the [contribution workflow](CONTRIBUTING.md), [scientific protocol](docs/scientific-protocol.md), and dataset guidance under `data/`. Development and synthetic runs are non-reportable; a real-data research campaign remains separate.
+
+**Help improve this project:** [Contribution guide](CONTRIBUTING.md) · [Issues](https://github.com/Arungharami/DriftGuard-IoT/issues)
+
 **Trustworthy, drift-aware and resource-efficient intrusion detection across IoT and IIoT environments.**
 
 > **Status: M2 (leakage-safe baselines).** Only bounded development runs exist. The repository
