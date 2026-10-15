@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { TeamPortraits } from "@/components/TeamPortraits";
 import { WorkflowExplainer } from "@/components/WorkflowExplainer";
 
 import { Card, Section, StatusBadge } from "@/components/ui";
@@ -41,6 +42,7 @@ export default function HomePage() {
       </div>
 
       <WorkflowExplainer />
+      <TeamPortraits />
 
       <div
         role="status"
