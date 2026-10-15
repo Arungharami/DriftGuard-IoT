@@ -23,7 +23,7 @@ export default function TeamPage() {
         ))}
       </ul>
       <p className="mb-10 text-sm text-ink-muted">
-        Public profile portraits are credited below. Shefatha and Ankith’s preferred photos are pending. Names follow our existing deck.
+        Public profile portraits are credited below. Ankith’s preferred photo is pending. Names follow our existing deck.
         Detailed biographies and individual research roles will be added after team review. Contributions are tracked in
         the{" "}
         <a className="underline" href={REPO_URL}>
@@ -41,7 +41,7 @@ export default function TeamPage() {
           <p className="mt-4 text-sm text-ink-muted">This acknowledgment describes course guidance. Research responsibilities and authorship will be agreed separately.</p>
         </div>
       </Section>
-      <p className="mb-8 text-xs text-ink-muted">Portrait sources: <a className="underline" href="https://huggingface.co/arun-gharami">Arun’s public profile</a> and <a className="underline" href="https://www.fau.edu/engineering/directory/faculty/ilyas/">Professor Ilyas’s official FAU profile</a>.</p>
+      <p id="portrait-credits" className="mb-8 text-xs text-ink-muted">Sifat’s portrait is an AI-assisted extraction from the screenshot supplied by Arun; contact details are excluded. Other portrait sources: <a className="underline" href="https://huggingface.co/arun-gharami">Arun’s public profile</a> and <a className="underline" href="https://www.fau.edu/engineering/directory/faculty/ilyas/">Professor Ilyas’s official FAU profile</a>.</p>
       <Section title="How we coordinate our work">
         <p className="max-w-3xl text-ink-muted">We can use repository issues to agree on tasks, attach evidence and request review. The history page records development milestones, while Presentation 1 gives everyone a common review point. New roles, photos and credits should reflect the team’s agreement.</p>
         <div className="flex flex-wrap gap-5 text-sm"><a className="underline underline-offset-4" href={`${REPO_URL}/issues`}>View project tasks</a><Link className="underline underline-offset-4" href="/project-history">Read our journey</Link><Link className="underline underline-offset-4" href="/presentation-1">Review Presentation 1</Link></div>
