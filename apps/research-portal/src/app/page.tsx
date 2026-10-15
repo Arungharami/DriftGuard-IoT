@@ -18,12 +18,15 @@ export default function HomePage() {
           Trustworthy, drift-aware and resource-efficient intrusion detection
         </h1>
         <p className="max-w-3xl text-lg text-ink-muted">
-          DriftGuard-IoT independently reproduces five lightweight baselines on TON_IoT,
-          WUSTL-IIOT-2021 and Edge-IIoTset under a leakage-safe protocol, then evaluates a
-          separate drift-monitoring and adaptation strategy under chronological and cross-domain
-          shift.
+          We are Grad1, a three-member CNT 6167 team at Florida Atlantic University.
+          Our project builds a leakage-safe reproduction framework for five lightweight
+          intrusion-detection baselines. We plan to evaluate drift monitoring and adaptation
+          across IoT and IIoT environments using verified benchmark data.
         </p>
         <div className="flex flex-wrap gap-3">
+          <Link href="/presentation-1" className="rounded border border-line px-4 py-2 font-medium">Presentation 1</Link>
+          <Link href="/project-history" className="rounded border border-line px-4 py-2 font-medium">Our project journey</Link>
+          <Link href="/team" className="rounded border border-line px-4 py-2 font-medium">Meet Grad1</Link>
           <Link
             href="/research"
             className="rounded bg-accent px-4 py-2 font-medium text-accent-ink hover:opacity-90"
@@ -44,8 +47,9 @@ export default function HomePage() {
           Recorded research results: {nResults === 0 ? "none yet" : nResults}
         </p>
         <p className="mt-1 text-ink-muted">
-          The project is at milestone M0. No model has been trained on a real dataset, so this
-          portal intentionally shows no performance metrics.
+          The repository includes baseline infrastructure and a synthetic MQTT workflow.
+          No reportable benchmark results are recorded here. Software progress and
+          simulated demonstrations are tracked separately from research evidence.
         </p>
       </div>
 
