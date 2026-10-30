@@ -85,7 +85,7 @@ attrs==26.1.0
 click==8.5.0
 comm==0.2.3
 debugpy==1.8.22
-executing==2.2.1
+executing==2.3.0
 fastapi==0.143.0
 fastjsonschema==2.22.2
 fsspec==2026.9.0
