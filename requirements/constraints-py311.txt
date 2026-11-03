@@ -94,7 +94,7 @@ hf-xet==1.6.0
 httpcore==1.0.9
 httpx==0.28.1
 huggingface_hub==1.32.0
-ipykernel==7.3.0
+ipykernel==7.4.0
 ipython==9.17.1
 ipython_pygments_lexers==1.1.1
 jedi==0.20.0
