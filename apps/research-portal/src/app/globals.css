@@ -51,3 +51,18 @@ body {
     transition: none !important;
   }
 }
+
+@media print {
+  html {
+    color-scheme: light;
+  }
+  body {
+    background: #fff;
+    color: #111;
+  }
+  body > header,
+  body > footer,
+  body > a[href="#main"] {
+    display: none !important;
+  }
+}

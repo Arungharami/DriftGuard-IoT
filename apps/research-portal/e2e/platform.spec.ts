@@ -17,7 +17,7 @@ test("navigation, evidence filtering and empty research charts", async ({ page }
 });
 
 test("all academic pages load and dataset descriptions retain provenance", async ({ page }) => {
-  for (const route of ["/", "/research", "/reference-paper", "/contribution", "/architecture", "/datasets", "/model-explorer", "/cross-domain", "/drift-lab", "/explainability", "/robustness", "/resources", "/reproducibility", "/publications", "/team"]) {
+  for (const route of ["/", "/paper", "/research", "/reference-paper", "/contribution", "/architecture", "/datasets", "/model-explorer", "/cross-domain", "/drift-lab", "/explainability", "/robustness", "/resources", "/reproducibility", "/publications", "/team"]) {
     const response = await page.goto(route); expect(response?.status()).toBe(200);
     await expect(page.locator("h1")).toHaveCount(1);
   }
@@ -33,4 +33,22 @@ test("model demo handles unavailable service and invalid JSON accessibly", async
   await page.getByRole("button", { name: "Check model service" }).click();
   await expect(page.getByRole("status").filter({ hasText: /No approved research model|Check JSON formatting/ })).toContainText("Check JSON formatting");
   expect((await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa"]).analyze()).violations).toEqual([]);
+});
+
+test("paper switches between modern and classic views without layout overflow", async ({ page }) => {
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await page.goto("/paper");
+  await expect(page.locator("h1")).toContainText("DriftGuard-IoT");
+  await expect(page.getByRole("button", { name: /Modern/ })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByText("Sensor-node battery-life calculator")).toBeVisible();
+  await page.getByRole("button", { name: /Classic paper/ }).click();
+  await expect(page.getByRole("button", { name: /Classic paper/ })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByText("Sensor-node battery-life calculator")).toBeHidden();
+  await expect(page.getByRole("img", { name: /Grouped bar chart of post-drift macro-F1/ })).toBeVisible();
+  await page.reload();
+  await expect(page.getByRole("button", { name: /Classic paper/ })).toHaveAttribute("aria-pressed", "true");
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  expect((await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa"]).analyze()).violations).toEqual([]);
+  expect(errors).toEqual([]);
 });
