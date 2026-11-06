@@ -6,6 +6,7 @@ export const NAV: NavItem[] = [
   { href: "/presentation-1", label: "Presentation 1" },
   { href: "/project-history", label: "Our Journey" },
   { href: "/research", label: "Research" },
+  { href: "/related-research", label: "Related Research" },
   { href: "/reference-paper", label: "Reference Paper" },
   { href: "/contribution", label: "Our Contribution" },
   { href: "/architecture", label: "Architecture" },
@@ -30,7 +31,7 @@ export const TEAM: { name: string; affiliation: string }[] = [
   { name: "Ankith Gajam", affiliation: "Grade 1 · CNT 6167 Internet of Things · Florida Atlantic University" },
 ];
 
-export const REPO_URL ="https://github.com/Arungharami/DriftGuard-IoT";
+export const REPO_URL = "https://github.com/Arungharami/DriftGuard-IoT";
 
 export const REFERENCE_PAPER = {
   citation:
