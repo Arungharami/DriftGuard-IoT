@@ -1,0 +1,23 @@
+{
+  "ldo_min_input_V": 3.4779999999999998,
+  "ldo_efficiency_nominal_pct": 89.18918918918918,
+  "led_R_ideal_ohm": 129.99999999999997,
+  "led_R_chosen_ohm": 150.0,
+  "led_I_mA": 8.666666666666664,
+  "led_P_resistor_mW": 11.266666666666667,
+  "divider_Vadc_at_4V2": 2.1,
+  "divider_Vadc_at_3V0": 1.5,
+  "divider_leak_uA": 21.0,
+  "adc_LSB_mV_battery": 1.1965811965811965,
+  "dht_pullup_sink_mA": 0.33,
+  "avg_current_mA": 4.0815133333333335,
+  "battery_life_hours": 509.6148977421773,
+  "battery_life_days": 21.23395407259072,
+  "energy_per_report_mJ": 899.1,
+  "avg_current_mA_5min": 0.8423826666666667,
+  "battery_life_days_5min": 102.88277536574826,
+  "bytes_per_report": 120,
+  "gateway_reports_per_s_50nodes": 0.8333333333333334,
+  "gateway_bitrate_bps_50nodes": 800.0,
+  "gateway_daily_energy_Wh": 81.6
+}
