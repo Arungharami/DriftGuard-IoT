@@ -90,7 +90,7 @@ fastapi==0.143.0
 fastjsonschema==2.22.2
 fsspec==2026.9.0
 h11==0.16.0
-hf-xet==1.6.0
+hf-xet==1.8.0
 httpcore==1.0.9
 httpx==0.28.1
 huggingface_hub==1.32.0
