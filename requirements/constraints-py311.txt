@@ -87,7 +87,7 @@ comm==0.2.3
 debugpy==1.8.22
 executing==2.3.0
 fastapi==0.143.0
-fastjsonschema==2.22.2
+fastjsonschema==2.22.3
 fsspec==2026.9.0
 h11==0.16.0
 hf-xet==1.6.0
