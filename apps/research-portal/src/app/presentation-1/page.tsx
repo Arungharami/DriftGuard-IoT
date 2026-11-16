@@ -1,12 +1,21 @@
 import type { Metadata } from "next";
-import { PageHeader } from "@/components/ui";
+import Link from "next/link";
+
 import { PRESENTATION_FOLDER, SLIDE_REVIEW } from "@/content/group";
 
 export const metadata: Metadata = { title: "Presentation 1 review" };
 
 export default function PresentationOnePage() {
   return <>
-    <PageHeader title="Presentation 1" lede="Grad1’s review of lightweight intrusion detection for IoT and IIoT, with our implementation update and proposed next steps." />
+    <div className="mb-9 rounded-3xl border border-line bg-gradient-to-br from-[#0e3b64] via-[#112941] to-[#101a30] p-7 shadow-sm sm:p-10">
+      <p className="text-xs font-bold uppercase tracking-[.2em] text-[#d7eafd]">Florida Atlantic University · CNT 6167 · Fall 2026</p>
+      <h1 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">Presentation 1 <span className="block text-[#a7e1ed]">Lightweight IDS Paper Review</span></h1>
+      <p className="mt-4 max-w-3xl leading-relaxed text-[#dbe9f4]">Our original Grad1 paper review of intrusion detection for IoT and IIoT, including the comparative study, implementation update, and future research questions.</p>
+      <div className="mt-6 flex flex-wrap gap-3">
+        <a className="rounded-lg bg-white px-4 py-2 text-sm font-semibold text-[#102b48]" href={PRESENTATION_FOLDER}>Open archived slides folder</a>
+        <Link className="rounded-lg border border-[#7fa3c2] px-4 py-2 text-sm font-semibold text-white" href="/presentation-2">Continue to Presentation 2</Link>
+      </div>
+    </div>
     <div className="mb-8 rounded-xl border border-line bg-surface-muted p-6">
       <p className="text-sm font-medium text-accent">CNT 6167 / Professor Mohammad Ilyas</p>
       <h2 className="mt-3 text-2xl font-semibold">Our first shared presentation</h2>
