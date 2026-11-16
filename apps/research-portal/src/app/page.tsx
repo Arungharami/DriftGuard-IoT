@@ -25,7 +25,7 @@ export default function HomePage() {
             <h1 className="mt-6 max-w-2xl text-4xl font-extrabold leading-[1.09] tracking-tight sm:text-5xl">Intrusion detection that <span className="bg-gradient-to-r from-[#85d7ff] via-[#c6dcff] to-white bg-clip-text text-transparent">adapts as IoT traffic changes.</span></h1>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-white/75 sm:text-lg">DriftGuard-IoT explores leakage-safe learning, delayed labels, and resource-conscious model updates at the edge. Follow our research paper and the two CNT 6167 presentations.</p>
             <div className="mt-7 flex flex-wrap gap-3">
-              <Link href="/presentation-2" className="rounded-xl bg-white px-5 py-3 text-sm font-bold text-[#07152f] transition hover:bg-sky-50">Explore Presentation 2 ↗</Link>
+              <Link href="/course" className="rounded-xl bg-white px-5 py-3 text-sm font-bold text-[#07152f] transition hover:bg-sky-50">Explore course presentation ↗</Link>
               <Link href="/paper" className="rounded-xl border border-white/25 bg-white/10 px-5 py-3 text-sm font-semibold backdrop-blur transition hover:bg-white/20">Read the paper</Link>
               <Link href="/presentation-1" className="rounded-xl border border-white/25 bg-white/10 px-5 py-3 text-sm font-semibold backdrop-blur transition hover:bg-white/20">Presentation 1</Link>
             </div>
