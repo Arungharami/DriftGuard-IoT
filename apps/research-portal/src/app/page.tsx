@@ -20,13 +20,15 @@ export default function HomePage() {
           Trustworthy, drift-aware and resource-efficient intrusion detection
         </h1>
         <p className="max-w-3xl text-lg text-ink-muted">
-          We are Grad1, a three-member CNT 6167 team at Florida Atlantic University.
+          Our original CNT 6167 Grad1 group at Florida Atlantic University began with three members. Presentation 2 is delivered by Arun Kumar Gharami and Ankith Gajam.
           Our project builds a leakage-safe reproduction framework for five lightweight
           intrusion-detection baselines. We plan to evaluate drift monitoring and adaptation
           across IoT and IIoT environments using verified benchmark data.
         </p>
         <div className="flex flex-wrap gap-3">
           <Link href="/presentation-1" className="rounded border border-line px-4 py-2 font-medium">Presentation 1</Link>
+          <Link href="/presentation-2" className="rounded bg-accent px-4 py-2 font-semibold text-accent-ink hover:opacity-90">Presentation 2</Link>
+          <Link href="/paper" className="rounded border border-line px-4 py-2 font-medium">Research paper</Link>
           <Link href="/project-history" className="rounded border border-line px-4 py-2 font-medium">Our project journey</Link>
           <Link href="/team" className="rounded border border-line px-4 py-2 font-medium">Meet Grad1</Link>
           <Link
@@ -41,6 +43,24 @@ export default function HomePage() {
         </div>
       </div>
 
+      <section aria-labelledby="presentation-showcase" className="mb-12">
+        <h2 id="presentation-showcase" className="mb-4 text-2xl font-semibold">Our research presentations</h2>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <article className="rounded-2xl border border-line bg-surface-muted p-6">
+            <p className="text-xs font-medium uppercase tracking-widest text-accent">First · October 2026</p>
+            <h3 className="mt-2 text-xl font-semibold">Presentation 1 — Reference paper review</h3>
+            <p className="mt-3 text-sm text-ink-muted">Explore the 25-slide review of lightweight IoT intrusion detection, original group credits, and the archived slide-folder link.</p>
+            <Link href="/presentation-1" className="mt-5 inline-block rounded-lg border border-line px-4 py-2 font-medium">Explore Presentation 1</Link>
+          </article>
+          <article className="rounded-2xl border border-[#45739a] bg-gradient-to-br from-[#143856] to-[#132236] p-6">
+            <p className="text-xs font-medium uppercase tracking-widest text-[#a2daf1]">Second · Fall 2026</p>
+            <h3 className="mt-2 text-xl font-semibold text-white">Presentation 2 — DriftGuard-IoT research</h3>
+            <p className="mt-3 text-sm text-[#d4e0ed]">Arun Kumar Gharami and Ankith Gajam present the paper, drift-aware edge workflow, research mind map and available materials.</p>
+            <Link href="/presentation-2" className="mt-5 inline-block rounded-lg bg-white px-4 py-2 font-semibold text-[#102a44]">Explore Presentation 2</Link>
+            <Link href="/paper" className="ml-3 mt-5 inline-block text-sm text-white underline underline-offset-4">Read full paper</Link>
+          </article>
+        </div>
+      </section>
       <WorkflowExplainer />
       <TeamPortraits />
 
