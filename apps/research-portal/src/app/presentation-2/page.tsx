@@ -46,11 +46,11 @@ export default function PresentationTwoPage(){
     </div>
 
     <section aria-labelledby="materials-heading" className="space-y-5">
-      <div><h2 id="materials-heading" className="text-2xl font-semibold">Presentation 2 · Research materials</h2><p className="mt-2 text-sm text-ink-muted">Publicly accessible resources appear as active links. Uploaded media must be published to the repository or trusted file hosting before playback can be enabled.</p></div>
+      <div><h2 id="materials-heading" className="text-2xl font-semibold">Presentation 2 · Research materials</h2><p className="mt-2 text-sm text-ink-muted">The complete 21-slide deck is available through Google Slides (access follows its sharing settings). Videos and the infographic require stable public hosting before embedded playback or downloads can be enabled.</p></div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <ResourceCard title="Research paper" href="/paper" description="Complete manuscript, documented methods, figures, simulation labels and references." />
         <ResourceCard title="Presentation video" description="Second 10-minute research presentation. MP4 files were supplied for review but are not yet hosted at a stable public URL." />
-        <ResourceCard title="Presentation slides" description="Editable Presentation 2 PPTX or PDF presentation; publish the finished deck to enable this viewer." />
+        <ResourceCard title="Presentation slides" href="https://docs.google.com/presentation/d/1LTQs5JwvnbwJjxSYeeAMVchC1KtSeYXUo8eW5Hakgmo/edit?usp=drivesdk" description="Open the complete 21-slide FAU research presentation by Arun Kumar Gharami and Ankith Gajam. Slides cover architecture, MQTT, drift detection, evidence, resource limits and validation roadmap. Google Drive sharing permissions apply." status="21 slides · Google Slides" />
         <ResourceCard title="Research infographic" description="The uploaded IoT Intrusion Detection research poster is awaiting a public asset URL for full-resolution viewing." />
         <ResourceCard title="Interactive mind map" href="#mind-map" description="Expandable research topics covering problem, architecture, adaptation, evaluation and next steps." status="Live below" />
         <ResourceCard title="Source repository" href="https://github.com/Arungharami/DriftGuard-IoT" description="Versioned implementation, research documentation and reproducibility resources." />
@@ -79,13 +79,62 @@ export default function PresentationTwoPage(){
     </section>
 
     <section aria-labelledby="team-heading" className="space-y-5">
-      <h2 id="team-heading" className="text-2xl font-semibold">Presentation 2 · Presenters and instructor</h2>
-      <div className="grid gap-4 md:grid-cols-3">
-        <article className="rounded-xl border border-line p-5"><PersonPortrait name="Arun Kumar Gharami" src={PORTRAITS["Arun Kumar Gharami"]?.src}/><h3 className="mt-2 font-semibold">Arun Kumar Gharami</h3><p className="text-sm text-ink-muted">Grad1 · Co-presenter</p><a className="mt-3 inline-block text-sm underline" href="https://huggingface.co/arun-gharami">Public profile and photo source</a></article>
-        <article className="rounded-xl border border-line p-5"><PersonPortrait name="Ankith Gajam"/><h3 className="mt-2 font-semibold">Ankith Gajam</h3><p className="text-sm text-ink-muted">Grad1 · Co-presenter · Portrait pending</p><a className="mt-3 inline-block text-sm underline" href="https://www.linkedin.com/in/ankithgajam/">LinkedIn profile</a></article>
-        <article className="rounded-xl border border-line p-5"><PersonPortrait name="Professor Mohammad Ilyas" src={PORTRAITS["Professor Mohammad Ilyas"]?.src}/><h3 className="mt-2 font-semibold">Professor Mohammad Ilyas</h3><p className="text-sm text-ink-muted">CNT 6167 course instructor · Not a student team member</p><a className="mt-3 inline-block text-sm underline" href="https://www.fau.edu/engineering/directory/faculty/ilyas/">Official FAU faculty profile</a></article>
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[.2em] text-accent">Our people</p>
+          <h2 id="team-heading" className="mt-2 text-2xl font-semibold tracking-tight">Presentation 2 · Presenters and instructor</h2>
+          <p className="mt-2 max-w-2xl text-sm text-ink-muted">Two graduate co-presenters, with course instruction from Professor Mohammad Ilyas.</p>
+        </div>
+        <Link href="/paper" className="text-sm font-medium text-accent underline underline-offset-4">Research paper ↗</Link>
       </div>
-      <p className="text-xs text-ink-muted">Presentation 1 retains its original team credits for historical accuracy. Presentation 2 credits Arun and Ankith as co-presenters.</p>
+      <div className="grid gap-4 lg:grid-cols-3">
+        <article className="group rounded-2xl border border-line bg-surface-muted p-5 transition-colors hover:border-[#5c91b4]">
+          <div className="flex items-start gap-4">
+            <div className="w-[78px] shrink-0 sm:w-[88px] [&>div]:mb-0 [&>div]:rounded-xl">
+              <PersonPortrait name="Arun Kumar Gharami" src={PORTRAITS["Arun Kumar Gharami"]?.src}/>
+            </div>
+            <div className="min-w-0 pt-1">
+              <p className="text-[11px] font-bold uppercase tracking-widest text-[#8be1d3]">Co-presenter · Grad1</p>
+              <h3 className="mt-1 text-lg font-semibold leading-snug">Arun Kumar Gharami</h3>
+              <p className="mt-1 text-xs text-ink-muted">Florida Atlantic University</p>
+            </div>
+          </div>
+          <div className="mt-5 border-t border-line pt-4">
+            <a className="inline-flex min-h-10 items-center rounded-lg border border-line px-3 text-sm font-medium hover:bg-[#274055] focus-visible:outline" href="https://huggingface.co/arun-gharami" target="_blank" rel="noopener noreferrer">Public profile & photo source <span aria-hidden="true" className="ml-2">↗</span></a>
+          </div>
+        </article>
+        <article className="group rounded-2xl border border-line bg-surface-muted p-5 transition-colors hover:border-[#5c91b4]">
+          <div className="flex items-start gap-4">
+            <div className="w-[78px] shrink-0 sm:w-[88px] [&>div]:mb-0 [&>div]:rounded-xl">
+              <PersonPortrait name="Ankith Gajam"/>
+            </div>
+            <div className="min-w-0 pt-1">
+              <p className="text-[11px] font-bold uppercase tracking-widest text-[#8be1d3]">Co-presenter · Grad1</p>
+              <h3 className="mt-1 text-lg font-semibold leading-snug">Ankith Gajam</h3>
+              <p className="mt-1 text-xs text-ink-muted">Portrait pending · No generated photo</p>
+            </div>
+          </div>
+          <div className="mt-5 border-t border-line pt-4">
+            <a className="inline-flex min-h-10 items-center rounded-lg border border-line px-3 text-sm font-medium hover:bg-[#274055] focus-visible:outline" href="https://www.linkedin.com/in/ankithgajam/" target="_blank" rel="noopener noreferrer">LinkedIn profile <span aria-hidden="true" className="ml-2">↗</span></a>
+          </div>
+        </article>
+        <article className="rounded-2xl border border-[#38546c] bg-gradient-to-br from-[#142a40] to-[#0e1b2c] p-5">
+          <div className="flex items-start gap-4">
+            <div className="w-[78px] shrink-0 sm:w-[88px] [&>div]:mb-0 [&>div]:rounded-xl">
+              <PersonPortrait name="Professor Mohammad Ilyas" src={PORTRAITS["Professor Mohammad Ilyas"]?.src}/>
+            </div>
+            <div className="min-w-0 pt-1">
+              <p className="text-[11px] font-bold uppercase tracking-widest text-[#f2c5a2]">Course instructor</p>
+              <h3 className="mt-1 text-lg font-semibold leading-snug">Professor Mohammad Ilyas</h3>
+              <p className="mt-1 text-xs text-ink-muted">CNT 6167 · FAU</p>
+            </div>
+          </div>
+          <div className="mt-5 border-t border-[#38546c] pt-4">
+            <a className="inline-flex min-h-10 items-center rounded-lg border border-[#38546c] px-3 text-sm font-medium hover:bg-[#274055] focus-visible:outline" href="https://www.fau.edu/engineering/directory/faculty/ilyas/" target="_blank" rel="noopener noreferrer">Official FAU profile <span aria-hidden="true" className="ml-2">↗</span></a>
+          </div>
+        </article>
+      </div>
+      <p className="text-xs leading-relaxed text-ink-muted">Professor Ilyas is the course instructor, not a student team member. The original Presentation 1 credits remain preserved; Presentation 2 features Arun and Ankith.</p>
     </section>
   </div>;
 }
