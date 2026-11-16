@@ -3,6 +3,7 @@ import Link from "next/link";
 import { PageHeader, StatusBadge } from "@/components/ui";
 import { PersonPortrait } from "@/components/PersonPortrait";
 import { PORTRAITS } from "@/content/portraits";
+import { PresentationMediaStudio } from "@/components/PresentationMediaStudio";
 
 export const metadata: Metadata = {
   title: "Presentation 2",
@@ -44,6 +45,8 @@ export default function PresentationTwoPage(){
       <p className="mt-1 text-sm text-[#d9e5f3]"><strong>Presented to:</strong> Professor Mohammad Ilyas, PhD · Course instructor</p>
       <div className="mt-7 flex flex-wrap gap-3"><Link href="/paper" className="rounded-lg bg-white px-5 py-3 text-sm font-semibold text-[#0b2545]">Read research paper</Link><Link href="/presentation-1" className="rounded-lg border border-[#8195ac] px-5 py-3 text-sm font-semibold text-white">View Presentation 1</Link></div>
     </div>
+
+    <PresentationMediaStudio />
 
     <section aria-labelledby="materials-heading" className="space-y-5">
       <div><h2 id="materials-heading" className="text-2xl font-semibold">Presentation 2 · Research materials</h2><p className="mt-2 text-sm text-ink-muted">The complete 21-slide deck is available through Google Slides (access follows its sharing settings). Videos and the infographic require stable public hosting before embedded playback or downloads can be enabled.</p></div>
