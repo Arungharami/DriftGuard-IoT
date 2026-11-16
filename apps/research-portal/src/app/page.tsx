@@ -12,39 +12,46 @@ export default function HomePage() {
   const nResults = resultsIndex.results.length;
   return (
     <>
-      <div className="mb-12 space-y-5">
-        <p className="text-sm font-medium uppercase tracking-wider text-accent">
-          IoT / IIoT intrusion detection research
-        </p>
-        <h1 className="max-w-3xl text-4xl font-semibold tracking-tight sm:text-5xl">
-          Trustworthy, drift-aware and resource-efficient intrusion detection
-        </h1>
-        <p className="max-w-3xl text-lg text-ink-muted">
-          Our original CNT 6167 Grad1 group at Florida Atlantic University began with three members. Presentation 2 is delivered by Arun Kumar Gharami and Ankith Gajam.
-          Our project builds a leakage-safe reproduction framework for five lightweight
-          intrusion-detection baselines. We plan to evaluate drift monitoring and adaptation
-          across IoT and IIoT environments using verified benchmark data.
-        </p>
-        <div className="flex flex-wrap gap-3">
-          <Link href="/presentation-1" className="rounded border border-line px-4 py-2 font-medium">Presentation 1</Link>
-          <Link href="/presentation-2" className="rounded bg-accent px-4 py-2 font-semibold text-accent-ink hover:opacity-90">Presentation 2</Link>
-          <Link href="/paper" className="rounded border border-line px-4 py-2 font-medium">Research paper</Link>
-          <Link href="/project-history" className="rounded border border-line px-4 py-2 font-medium">Our project journey</Link>
-          <Link href="/team" className="rounded border border-line px-4 py-2 font-medium">Meet Grad1</Link>
-          <Link
-            href="/research"
-            className="rounded bg-accent px-4 py-2 font-medium text-accent-ink hover:opacity-90"
-          >
-            Research questions
-          </Link>
-          <Link href="/reproducibility" className="rounded border border-line px-4 py-2 font-medium">
-            Reproducibility
-          </Link>
+      <section className="relative mb-14 overflow-hidden rounded-3xl border border-[#294e76] text-white shadow-2xl shadow-[#07122b]/20">
+        <div className="pointer-events-none absolute inset-0 bg-[#07152f]" />
+        <div className="pointer-events-none absolute inset-0" style={{background:"radial-gradient(70% 85% at 0% 0%,rgba(34,108,199,.48),transparent 70%),radial-gradient(45% 75% at 100% 100%,rgba(177,34,52,.3),transparent 75%)"}}/>
+        <div className="pointer-events-none absolute inset-0 opacity-[.06]" style={{backgroundImage:"linear-gradient(white 1px,transparent 1px),linear-gradient(90deg,white 1px,transparent 1px)",backgroundSize:"40px 40px"}}/>
+        <div className="relative grid gap-9 px-6 py-11 sm:px-10 sm:py-14 lg:grid-cols-[1.15fr_.85fr] lg:items-center">
+          <div>
+            <div className="flex flex-wrap gap-2">
+              <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold">CNT 6167 · Internet of Things</span>
+              <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold">Florida Atlantic University</span>
+            </div>
+            <h1 className="mt-6 max-w-2xl text-4xl font-extrabold leading-[1.09] tracking-tight sm:text-5xl">Intrusion detection that <span className="bg-gradient-to-r from-[#85d7ff] via-[#c6dcff] to-white bg-clip-text text-transparent">adapts as IoT traffic changes.</span></h1>
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-white/75 sm:text-lg">DriftGuard-IoT explores leakage-safe learning, delayed labels, and resource-conscious model updates at the edge. Follow our research paper and the two CNT 6167 presentations.</p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <Link href="/presentation-2" className="rounded-xl bg-white px-5 py-3 text-sm font-bold text-[#07152f] transition hover:bg-sky-50">Explore Presentation 2 ↗</Link>
+              <Link href="/paper" className="rounded-xl border border-white/25 bg-white/10 px-5 py-3 text-sm font-semibold backdrop-blur transition hover:bg-white/20">Read the paper</Link>
+              <Link href="/presentation-1" className="rounded-xl border border-white/25 bg-white/10 px-5 py-3 text-sm font-semibold backdrop-blur transition hover:bg-white/20">Presentation 1</Link>
+            </div>
+            <p className="mt-5 text-xs text-white/55">Arun Kumar Gharami & Ankith Gajam · Presentation 2 · Professor Mohammad Ilyas</p>
+          </div>
+          <div className="rounded-2xl border border-white/20 bg-white/[.07] p-5 shadow-xl backdrop-blur-md">
+            <p className="mb-4 text-[11px] font-bold uppercase tracking-[.18em] text-[#acdafa]">IoT edge security workflow</p>
+            <div className="space-y-2 text-sm">
+              <div className="rounded-xl border border-white/15 bg-white/10 px-4 py-3"><strong className="block">01 · Devices & telemetry</strong><span className="text-xs text-white/60">Sensors / MQTT streams / time-ordered flow events</span></div>
+              <div className="mx-auto h-3 w-px bg-[#93b9df]"/>
+              <div className="rounded-xl border border-white/15 bg-white/10 px-4 py-3"><strong className="block">02 · Edge gateway IDS</strong><span className="text-xs text-white/60">Preprocess → inference → event audit</span></div>
+              <div className="mx-auto h-3 w-px bg-[#93b9df]"/>
+              <div className="rounded-xl border border-[#f18b9b]/45 bg-[#a82439]/25 px-4 py-3"><strong className="block">03 · Drift + delayed labels</strong><span className="text-xs text-white/65">ADWIN signals / eligible ground truth / policies</span></div>
+              <div className="mx-auto h-3 w-px bg-[#93b9df]"/>
+              <div className="rounded-xl border border-sky-200/40 bg-sky-400/15 px-4 py-3"><strong className="block">04 · Bounded adaptation</strong><span className="text-xs text-white/65">Controlled retraining and measurable resource costs</span></div>
+            </div>
+            <p className="mt-4 text-[11px] leading-relaxed text-white/55">Research architecture; physical edge and real-data validation remain separate evidence gates.</p>
+          </div>
         </div>
-      </div>
+        <div className="relative grid grid-cols-2 border-t border-white/15 bg-black/20 sm:grid-cols-4">
+          {[["2","Course presentations"],["21","Slides in Presentation 2"],["5","Adaptation policies studied"],[String(nResults),"Reportable results recorded"]].map(([v,l])=><div key={l} className="border-r border-white/10 px-5 py-4 last:border-r-0 sm:px-7"><p className="text-2xl font-extrabold tabular-nums">{v}</p><p className="text-xs text-white/55">{l}</p></div>)}
+        </div>
+      </section>
 
       <section aria-labelledby="presentation-showcase" className="mb-12">
-        <h2 id="presentation-showcase" className="mb-4 text-2xl font-semibold">Our research presentations</h2>
+        <h2 id="presentation-showcase" className="mb-5 text-2xl font-bold tracking-tight sm:text-3xl">Our research presentations</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           <article className="rounded-2xl border border-line bg-surface-muted p-6">
             <p className="text-xs font-medium uppercase tracking-widest text-accent">First · October 2026</p>
