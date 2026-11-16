@@ -46,11 +46,11 @@ export default function PresentationTwoPage(){
     </div>
 
     <section aria-labelledby="materials-heading" className="space-y-5">
-      <div><h2 id="materials-heading" className="text-2xl font-semibold">Presentation 2 · Research materials</h2><p className="mt-2 text-sm text-ink-muted">Publicly accessible resources appear as active links. Uploaded media must be published to the repository or trusted file hosting before playback can be enabled.</p></div>
+      <div><h2 id="materials-heading" className="text-2xl font-semibold">Presentation 2 · Research materials</h2><p className="mt-2 text-sm text-ink-muted">The complete 21-slide deck is available through Google Slides (access follows its sharing settings). Videos and the infographic require stable public hosting before embedded playback or downloads can be enabled.</p></div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <ResourceCard title="Research paper" href="/paper" description="Complete manuscript, documented methods, figures, simulation labels and references." />
         <ResourceCard title="Presentation video" description="Second 10-minute research presentation. MP4 files were supplied for review but are not yet hosted at a stable public URL." />
-        <ResourceCard title="Presentation slides" description="Editable Presentation 2 PPTX or PDF presentation; publish the finished deck to enable this viewer." />
+        <ResourceCard title="Presentation slides" href="https://docs.google.com/presentation/d/1LTQs5JwvnbwJjxSYeeAMVchC1KtSeYXUo8eW5Hakgmo/edit?usp=drivesdk" description="Open the complete 21-slide FAU research presentation by Arun Kumar Gharami and Ankith Gajam. Slides cover architecture, MQTT, drift detection, evidence, resource limits and validation roadmap. Google Drive sharing permissions apply." status="21 slides · Google Slides" />
         <ResourceCard title="Research infographic" description="The uploaded IoT Intrusion Detection research poster is awaiting a public asset URL for full-resolution viewing." />
         <ResourceCard title="Interactive mind map" href="#mind-map" description="Expandable research topics covering problem, architecture, adaptation, evaluation and next steps." status="Live below" />
         <ResourceCard title="Source repository" href="https://github.com/Arungharami/DriftGuard-IoT" description="Versioned implementation, research documentation and reproducibility resources." />
