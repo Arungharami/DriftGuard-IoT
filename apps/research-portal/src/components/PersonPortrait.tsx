@@ -10,7 +10,7 @@ export function PersonPortrait({ name, src }: Props) {
 
   const initials = name.replace(/^Professor\s+/, "").split(" ").map((part) => part[0]).join("");
   const showImage = Boolean(src && !broken);
-  const isLandscape = name === "Arun Kumar Gharami";
+  const isLandscape = Boolean(src?.includes("beach"));
 
   return (
     <div className="relative mb-3 aspect-square w-full overflow-hidden rounded-xl border border-line bg-surface-muted shadow-sm">
@@ -20,7 +20,7 @@ export function PersonPortrait({ name, src }: Props) {
         <img
           key={src}
           src={src}
-          alt={isLandscape ? "Original beach photograph of Arun Kumar Gharami at night, seen from behind" : `Portrait of ${name}`}
+          alt={isLandscape ? `Original nighttime beach photograph supplied for ${name}` : `Portrait of ${name}`}
           loading="lazy"
           decoding="async"
           className={`absolute inset-0 h-full w-full ${isLandscape ? "object-cover object-center" : "object-cover object-top"}`}
