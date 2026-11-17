@@ -66,3 +66,34 @@ body {
     display: none !important;
   }
 }
+
+
+/* Persistent day/night mode, while retaining the project's semantic color tokens. */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --color-surface: #f7f9fd;
+  --color-surface-muted: #ffffff;
+  --color-ink: #10263d;
+  --color-ink-muted: #4d6075;
+  --color-line: #cbd7e5;
+  --color-accent: #126497;
+  --color-accent-ink: #ffffff;
+  --color-research: #235cbe;
+  --color-simulated: #b56c25;
+  --color-planned: #64748b;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-surface: #0b1220;
+  --color-surface-muted: #142033;
+  --color-ink: #edf3f8;
+  --color-ink-muted: #b1bfd0;
+  --color-line: #304157;
+  --color-accent: #5ee0ca;
+  --color-accent-ink: #062321;
+  --color-research: #8ab4ff;
+  --color-simulated: #fdba74;
+  --color-planned: #b6c4d5;
+}
+html, body { transition: background-color 180ms ease, color 180ms ease; }
+@media (prefers-reduced-motion: reduce) {html, body {transition:none;}}

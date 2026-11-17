@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { NavLinks } from "./NavLinks";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function SiteHeader() {
   return (
@@ -11,6 +12,7 @@ export function SiteHeader() {
         </Link>
         <nav aria-label="Primary navigation" className="hidden lg:block"><NavLinks orientation="horizontal" /></nav>
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           <a href="https://github.com/Arungharami/DriftGuard-IoT" target="_blank" rel="noopener noreferrer" className="hidden rounded-full border border-line px-3 py-2 text-xs font-semibold transition hover:border-accent hover:text-accent sm:inline-flex">GitHub ↗</a>
           <details className="relative lg:hidden">
             <summary className="cursor-pointer list-none rounded-xl border border-line px-3 py-2 text-sm font-semibold marker:hidden focus-visible:outline">Menu ☰</summary>
