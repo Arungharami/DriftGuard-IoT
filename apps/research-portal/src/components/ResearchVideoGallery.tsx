@@ -9,7 +9,7 @@ const videos = [
 
 export function ResearchVideoGallery() {
   const [selected,setSelected] = useState(0);
-  const active = videos[selected];
+  const active = videos[selected] ?? videos[0]!;
   return <div className="space-y-4">
     <div className="grid gap-3 sm:grid-cols-2" role="tablist" aria-label="Choose a research video">
       {videos.map((video,i)=><button key={video.id} type="button" role="tab" aria-selected={selected===i} aria-controls="driftguard-video-panel" onClick={()=>setSelected(i)} className={`rounded-2xl border p-4 text-left transition ${selected===i?"border-accent bg-surface-muted ring-2 ring-accent/25":"border-line hover:border-accent/50"}`}>
